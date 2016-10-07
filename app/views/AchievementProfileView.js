@@ -1,7 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native'
-import ProgressBar from './ProgressBar'
+import ProgressBar from '../components/ProgressBar'
 
 class AchievementProfileView extends Component {
   render() {

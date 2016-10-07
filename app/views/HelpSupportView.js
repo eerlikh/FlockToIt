@@ -2,8 +2,8 @@
 import React, { Component } from 'react';
 import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import renderIf from '../components/renderIf'
-import ThankYouMsg from './ThankYouMsg'
-import HelpSupportInput from './HelpSupportInput'
+import ThankYouMsg from '../components/ThankYouMsg'
+import HelpSupportInput from '../components/HelpSupportInput'
 
 class HelpSupportView extends Component {
   constructor(props) {

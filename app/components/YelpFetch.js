@@ -15,8 +15,8 @@ class YelpFetch extends Component {
       yelpPinSelected: false,
       selectedYelpPin: {},
       yelpResults: [],
-      latitude: "unknown",
-      longitude:"unknown",
+      latitude: 0,
+      longitude: 0,
       searched: false
     };
   }
@@ -145,13 +145,7 @@ class YelpFetch extends Component {
       <View style={styles.container}>
         <SearchInputBox handleOnSubmitEditing={this._getYelpData.bind(this)} />
         <View style={styles.body}>
-          <MapView
-            style={styles.map}
-            showsUserLocation={true}
-            onRegionChangeComplete={this._handleOnRegionChangeComplete.bind(this)}
-            annotations={this._createPins()}
-            onAnnotationPress={this._handleOnAnnotationPress.bind(this)}
-          />
+          
         </View>
       {this._showFooter()}
       </View>

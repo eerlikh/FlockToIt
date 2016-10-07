@@ -1,11 +1,15 @@
 'use strict';
 import React, { Component } from 'react';
-import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
 import YelpFetch from '../components/YelpFetch';
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
+
+var Geolocation = require('Geolocation');
+
+
 
 class DiscoveryScreen extends Component {
   constructor(props){
@@ -29,17 +33,22 @@ class DiscoveryScreen extends Component {
           </View>
         </NavBar>
 
-        <View style={styles.discoveryViewContainer}>
-          <YelpFetch />
+        <View>
+        <TouchableOpacity onPress={this.SettingsPressed.bind(this)}>
+          <Text > Google Login </Text>
+        </TouchableOpacity>
         </View>
       </ViewContainer>
     );
   }
 
   SettingsPressed(){
-    this.props.navigator.push({
-      name: "settingscreen",
-    })
+    Geolocation.getCurrentPosition((position) => {
+         console.log(position);
+    },
+    (error) => {
+        console.log(error);
+    });
   }
   DashboardPressed(){
     this.props.navigator.push({

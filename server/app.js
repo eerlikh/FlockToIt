@@ -13,13 +13,12 @@ var yelp = require("yelp").createClient({
 app.get( '/search', function( req, res ){
 
 // sample url, using local server for testing.
-//http://localhost:3000/search?latitude=37.977479733447154&longitude=-122.43600535&term=thai%20food
   var searchTerm = req.query.term,
       searchLL = req.query.latitude + "," +req.query.longitude;
 
   yelp.search({
     term: searchTerm,
-    limit: 18,
+    limit: 28,
     ll: searchLL
     }, function( error, data ) {
       // TODO add error handling to let user know request failed
@@ -27,6 +26,6 @@ app.get( '/search', function( req, res ){
   });
 });
 
-app.listen(3000, function() {
+app.listen(8081, function() {
   console.log("Node/Express server for YelpMapViewer React Native app started");
 });

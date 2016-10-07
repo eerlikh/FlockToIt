@@ -4,10 +4,10 @@ import { Navigator, AppRegistry, StyleSheet, Text, View, Image, TouchableHighlig
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
-import AchievementProfileView from '../components/AchievementProfileView'
-import MatchedLocationsView from '../components/MatchedLocationsView'
 import DashNavBar from '../components/DashNavBar'
-import GlobalRankView from '../components/GlobalRankView'
+import AchievementProfileView from '../views/AchievementProfileView'
+import MatchedLocationsView from '../views/MatchedLocationsView'
+import GlobalRankView from '../views/GlobalRankView'
 
 class GlobeRankingScreen extends Component {
   render(){

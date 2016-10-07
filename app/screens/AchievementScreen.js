@@ -5,8 +5,8 @@ import { Navigator, AppRegistry, StyleSheet, Text, View, TabBarIOS, Image, Touch
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
-import AchievementProfileView from '../components/AchievementProfileView'
-import AchievementListView from '../components/AchievementListView'
+import AchievementProfileView from '../views/AchievementProfileView'
+import AchievementListView from '../views/AchievementListView'
 import DashNavBar from '../components/DashNavBar'
 
 

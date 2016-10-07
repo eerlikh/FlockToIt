@@ -4,10 +4,10 @@ import { AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity, ActivityI
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
-import DiscoveryCriteriaView from '../components/DiscoveryCriteriaView'
-import SuggestAchievementView from '../components/SuggestAchievementView'
-import HelpSupportView from '../components/HelpSupportView'
-import LegalPrivacyView from '../components/LegalPrivacyView'
+import DiscoveryCriteriaView from '../views/DiscoveryCriteriaView'
+import SuggestAchievementView from '../views/SuggestAchievementView'
+import HelpSupportView from '../views/HelpSupportView'
+import LegalPrivacyView from '../views/LegalPrivacyView'
 import renderIf from '../components/renderIf'
 
 

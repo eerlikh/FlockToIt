@@ -5,8 +5,8 @@ import { Navigator, AppRegistry, StyleSheet, Text, View, TabBarIOS, Image, Touch
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
-import AchievementProfileView from '../components/AchievementProfileView'
-import MatchedLocationsView from '../components/MatchedLocationsView'
+import AchievementProfileView from '../views/AchievementProfileView'
+import MatchedLocationsView from '../views/MatchedLocationsView'
 import DashNavBar from '../components/DashNavBar'
 
 class DashboardScreen extends Component {
