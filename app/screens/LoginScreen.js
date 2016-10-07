@@ -7,30 +7,66 @@ import ViewContainer from '../components/ViewContainer'
 const FBSDK = require('react-native-fbsdk');
 const {
   LoginButton,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager
 } = FBSDK;
 
-var Login = React.createClass({
-  render: function() {
+class Login extends Component {
+  render() {
     return (
       <View>
-        <LoginButton
-          publishPermissions={["publish_actions"]}
-          onLoginFinished={
-            (error, result) => {
-              if (error) {
-                alert("Login failed with error: " + result.error);
-              } else if (result.isCancelled) {
-                alert("Login was cancelled");
-              } else {
-                alert("Login was successful with permissions: " + result.grantedPermissions)
+      <LoginButton
+      onLoginFinished={
+      (error, result) => {
+        if (error) {
+          alert("login has error: " + result.error);
+        } else if (result.isCancelled) {
+          alert("login is cancelled.");
+        } else {
+
+          AccessToken.getCurrentAccessToken().then(
+            (data) => {
+              let accessToken = data.accessToken
+              alert(accessToken.toString())
+
+              const responseInfoCallback = (error, result) => {
+                if (error) {
+                  console.log(error)
+                  alert('Error fetching data: ' + error.toString());
+                } else {
+                  console.log(result)
+                  alert('Success fetching data: ' + result.toString());
+                }
               }
+
+              const infoRequest = new GraphRequest(
+                '/me',
+                {
+                  accessToken: accessToken,
+                  parameters: {
+                    fields: {
+                      string: 'email,name,first_name,middle_name,last_name'
+                    }
+                  }
+                },
+                responseInfoCallback
+              );
+
+              // Start the graph request.
+              new GraphRequestManager().addRequest(infoRequest).start()
+
             }
-          }
-          onLogoutFinished={() => alert("User logged out")}/>
-      </View>
+          )
+          this.props.onLoginFinishedFunction();
+        }
+      }
+    }
+    onLogoutFinished={() => alert("logout.")}/>
+    </View>
     );
   }
-});
+}
 
 class LoginScreen extends Component {
 
@@ -47,7 +83,7 @@ class LoginScreen extends Component {
 
             <View style={styles.loginButtonContainer}>
 
-              <Login />
+            <Login onLoginFinishedFunction={this.LoginPressed.bind(this)}/>
               <TouchableHighlight onPress={this.LoginPressed.bind(this)} style={styles.googleLoginButton}>
                 <Text style={styles.loginMsg}> Google Login </Text>
               </TouchableHighlight>
