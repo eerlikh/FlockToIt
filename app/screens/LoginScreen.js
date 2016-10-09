@@ -3,72 +3,27 @@ import React, { Component } from 'react';
 import { AppRegistry, Navigator, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
+import Login from '../components/Login'
 
 const FBSDK = require('react-native-fbsdk');
 const {
-  LoginButton,
   AccessToken,
-  GraphRequest,
-  GraphRequestManager
 } = FBSDK;
 
-class Login extends Component {
-  render() {
-    return (
-      <View>
-      <LoginButton
-      onLoginFinished={
-      (error, result) => {
-        if (error) {
-          alert("login has error: " + result.error);
-        } else if (result.isCancelled) {
-          alert("login is cancelled.");
-        } else {
-
-          AccessToken.getCurrentAccessToken().then(
-            (data) => {
-              let accessToken = data.accessToken
-              alert(accessToken.toString())
-
-              const responseInfoCallback = (error, result) => {
-                if (error) {
-                  console.log(error)
-                  alert('Error fetching data: ' + error.toString());
-                } else {
-                  console.log(result)
-                  alert('Success fetching data: ' + result.toString());
-                }
-              }
-
-              const infoRequest = new GraphRequest(
-                '/me',
-                {
-                  accessToken: accessToken,
-                  parameters: {
-                    fields: {
-                      string: 'email,name,first_name,middle_name,last_name'
-                    }
-                  }
-                },
-                responseInfoCallback
-              );
-
-              // Start the graph request.
-              new GraphRequestManager().addRequest(infoRequest).start()
-
-            }
-          )
-          this.props.onLoginFinishedFunction();
-        }
-      }
-    }
-    onLogoutFinished={() => alert("logout.")}/>
-    </View>
-    );
-  }
-}
-
 class LoginScreen extends Component {
+
+  isUserLoggedIn() {
+    AccessToken.getCurrentAccessToken().then(
+      (data) => {
+        if (data != null) {
+          this.LoginPressed();
+        }
+    });
+  }
+
+  componentWillMount() {
+    this.isUserLoggedIn();
+  }
 
   render(){
     console.log(this.props.navigator)
@@ -83,13 +38,13 @@ class LoginScreen extends Component {
 
             <View style={styles.loginButtonContainer}>
 
-            <Login onLoginFinishedFunction={this.LoginPressed.bind(this)}/>
               <TouchableHighlight onPress={this.LoginPressed.bind(this)} style={styles.googleLoginButton}>
                 <Text style={styles.loginMsg}> Google Login </Text>
               </TouchableHighlight>
-              <TouchableHighlight onPress={this.LoginPressed.bind(this)} style={styles.fbLoginButton}>
-                <Text style={styles.loginMsg}> Facebook Login </Text>
-              </TouchableHighlight>
+
+
+              <Login onLoginFinishedFunction={this.LoginPressed.bind(this)}/>
+
             </View>
           </View>
         </Image>
