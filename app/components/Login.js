@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import {View, StyleSheet} from 'react-native';
-import AccessTokenManager from '../components/AccessTokenManager'
 
 const FBSDK = require('react-native-fbsdk');
 const {

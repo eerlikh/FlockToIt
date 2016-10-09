@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { MapView, StyleSheet, View  } from 'react-native'
+import { MapView, StyleSheet, Text, TouchableOpacity, View  } from 'react-native'
 
 import SearchInputBox from './SearchInputBox';
 import PinDetailFooter from './PinDetailFooter';
@@ -20,6 +20,23 @@ class YelpFetch extends Component {
       searched: false
     };
   }
+
+  componentDidMount() {
+     navigator.geolocation.getCurrentPosition(
+       (position) => {
+         var latitude = JSON.stringify(position.coords.latitude);
+         this.setState({latitude});
+         var longitude = JSON.stringify(position.coords.longitude);
+         this.setState({longitude});
+       },
+       (error) => alert(JSON.stringify(error)),
+       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+     );
+     this.watchID = navigator.geolocation.watchPosition((position) => {
+       var lastPosition = JSON.stringify(position);
+       this.setState({lastPosition});
+     });
+   }
 
   _handleCloseFooterButton(){
     this.setState({
@@ -64,6 +81,7 @@ class YelpFetch extends Component {
     // TODO make more code into ES 2015 syntax
     YelpApi(latitude, longitude, term)
       .then((data) => {
+
         tempYelpResults = data.map((result) =>{
           return {
             name: result.name,
@@ -81,6 +99,7 @@ class YelpFetch extends Component {
           yelpResults: tempYelpResults
         })
       });
+      console.log(this.state.yelpResults);
   }
 
   _handleOnRegionChangeComplete(region) {
@@ -144,13 +163,32 @@ class YelpFetch extends Component {
     return (
       <View style={styles.container}>
         <SearchInputBox handleOnSubmitEditing={this._getYelpData.bind(this)} />
+
         <View style={styles.body}>
-          
+        <TouchableOpacity onPress={this.SettingsPressed.bind(this)}>
+          <Text > Google Login </Text>
+        </TouchableOpacity>
+          <View>
+            <Text>
+              <Text style={styles.title}>Initial position: </Text>
+              {this.state.initialPosition}
+            </Text>
+            <Text>
+              <Text style={styles.title}>Current position: </Text>
+              {this.state.lastPosition}
+            </Text>
+          </View>
         </View>
       {this._showFooter()}
       </View>
     );
   }
+
+  SettingsPressed(){
+      console.log(this.state.yelpResults);
+      console.log("this.state.yelpResults");
+
+    }
 };
 
 const styles = StyleSheet.create({
