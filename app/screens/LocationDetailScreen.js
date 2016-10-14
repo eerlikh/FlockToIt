@@ -34,22 +34,13 @@ class DiscoveryScreen extends Component {
         </NavBar>
 
         <View>
-        <TouchableOpacity onPress={this.SettingsPressed.bind(this)}>
-          <Text > Google Login </Text>
-        </TouchableOpacity>
+          <YelpFetch />
         </View>
       </ViewContainer>
     );
   }
 
-  SettingsPressed(){
-    Geolocation.getCurrentPosition((position) => {
-         console.log(position);
-    },
-    (error) => {
-        console.log(error);
-    });
-  }
+
   DashboardPressed(){
     this.props.navigator.push({
       name: "dashboardscreen",
