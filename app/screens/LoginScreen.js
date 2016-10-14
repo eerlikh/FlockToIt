@@ -4,6 +4,7 @@ import { AppRegistry, Navigator, StyleSheet, Text, View, Image, TouchableHighlig
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
 import Login from '../components/Login'
+import FBAccessTokenManager from '../utils/FBAccessTokenManager'
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -11,6 +12,9 @@ const {
 } = FBSDK;
 
 class LoginScreen extends Component {
+  constructor(props){
+    super(props);
+  }
 
   isUserLoggedIn() {
     AccessToken.getCurrentAccessToken().then(
@@ -42,7 +46,6 @@ class LoginScreen extends Component {
                 <Text style={styles.loginMsg}> Google Login </Text>
               </TouchableHighlight>
 
-
               <Login onLoginFinishedFunction={this.LoginPressed.bind(this)}/>
 
             </View>
@@ -51,15 +54,23 @@ class LoginScreen extends Component {
       </ViewContainer>
     );
   }
+
   configureScene(route, routeStack){
      return Navigator.SceneConfigs.FloatFromBottom
   }
+
   LoginPressed(){
+
+    //create an instance of token manager
+    FBAccessTokenManager.setFacebookData();
+
+    //bring up the discovery screen and pass the token manager
     this.props.navigator.push({
       name: 'discoveryscreen',
-      type: 'bottom'
+      type: 'bottom',
     })
   }
+
 }
 
 var styles = StyleSheet.create({

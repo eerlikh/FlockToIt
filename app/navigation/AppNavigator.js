@@ -8,7 +8,6 @@ import DashboardScreen from '../screens/DashboardScreen'
 import AchievementScreen from '../screens/AchievementScreen'
 import GlobalRankingScreen from '../screens/GlobalRankingScreen'
 
-
 class AppNavigator extends Component {
 
     renderScene(route, navigator) {
