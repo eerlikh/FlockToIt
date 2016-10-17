@@ -32,10 +32,10 @@ class YelpFetch extends Component {
        (error) => alert(JSON.stringify(error)),
        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
      );
-     this.watchID = navigator.geolocation.watchPosition((position) => {
-       var lastPosition = JSON.stringify(position);
-       this.setState({lastPosition});
-     });
+    //  this.watchID = navigator.geolocation.watchPosition((position) => {
+    //    var lastPosition = JSON.stringify(position);
+    //    this.setState({lastPosition});
+    //  });
    }
 
   _handleCloseFooterButton(){
