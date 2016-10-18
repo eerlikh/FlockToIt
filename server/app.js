@@ -18,7 +18,7 @@ app.get( '/search', function( req, res ){
 
   yelp.search({
     term: searchTerm,
-    limit: 18,
+    limit: 20,
     ll: searchLL
     }, function( error, data ) {
       // TODO add error handling to let user know request failed
