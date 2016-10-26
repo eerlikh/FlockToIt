@@ -17,7 +17,7 @@ module.exports = {
       "radius=" + radius +
       "&keyword=" + keyword.replace(/\s/g, '+') +
       "&maxprice=" + maxPrice +
-      "&location=19.430347,-99.145857" + //make this actually use geolocation
+      "&location=19.430347,-99.145857" + //TODO: make this actually use geolocation
       "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc"
       //TODO: add pageToken once you figure out how that should work
     );

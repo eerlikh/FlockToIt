@@ -1,5 +1,3 @@
-//TODO: make state persistent when changing scenes (don't know why it isn't by default)
-
 'use strict';
 import React, { Component } from 'react';
 import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View, AsyncStorage} from 'react-native';
@@ -13,7 +11,7 @@ class DiscoveryScreen extends Component {
     super(props);
     this.state = {
       showProgress: false,
-      resultIndex: 0, //TODO: set this initial value via a prop (not sure if that is the right way to do this though...)
+      resultIndex: this.props.resultIndex,
       uri0: "https://placehold.it/400x400",
       uri1: "https://placehold.it/400x400",
       uri2: "https://placehold.it/400x400",
@@ -23,8 +21,12 @@ class DiscoveryScreen extends Component {
 
     //TODO: check if this is being called only once
     //TODO: make this get the parameters from the settings
-    googleFetchUtilities.storeResults(
-      "tacos", 50000, 4, this.setImageUris.bind(this));
+    if (this.state.resultIndex === 0) {
+      googleFetchUtilities.storeResults(
+        "tacos", 50000, 4, this.setImageUris.bind(this));
+    } else {
+      this.setImageUris();
+    };
   }
 
   setImageUris() {
@@ -116,6 +118,7 @@ class DiscoveryScreen extends Component {
     //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
     this.setState({ resultIndex: newIndex });
     googleFetchUtilities.storeDetails(newIndex, this.setImageUris.bind(this));
+    this.props.iterateIndex();
   }
 }
 const windowWidth = Dimensions.get('window').width;
@@ -129,7 +132,7 @@ var styles = StyleSheet.create({
   },
   navButtonLeft: {
     marginRight: 40,
-    marginLeft: 10,
+    marginLeft: 20,
     width: 15,
     height: 30,
   },
