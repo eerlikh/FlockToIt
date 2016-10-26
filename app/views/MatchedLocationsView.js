@@ -90,6 +90,7 @@ var styles = StyleSheet.create({
   headerText: {
     fontWeight: 'bold',
     fontSize: 16,
+    backgroundColor:'transparent'
   },
   locationRow: {
     marginTop: 15,

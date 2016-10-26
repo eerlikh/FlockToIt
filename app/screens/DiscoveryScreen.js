@@ -1,18 +1,46 @@
+//TODO: make state persistent when changing scenes (don't know why it isn't by default)
+
 'use strict';
 import React, { Component } from 'react';
-import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View} from 'react-native';
-
+import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View, AsyncStorage} from 'react-native';
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
-
+import googleFetchUtilities from '../utils/googleFetchUtilities'
 
 class DiscoveryScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showProgress: false
+      showProgress: false,
+      resultIndex: 0, //TODO: set this initial value via a prop (not sure if that is the right way to do this though...)
+      uri0: "https://placehold.it/400x400",
+      uri1: "https://placehold.it/400x400",
+      uri2: "https://placehold.it/400x400",
+      uri3: "https://placehold.it/400x400",
+      name: "",
     }
+
+    //TODO: check if this is being called only once
+    //TODO: make this get the parameters from the settings
+    googleFetchUtilities.storeResults(
+      "tacos", 50000, 4, this.setImageUris.bind(this));
+  }
+
+  setImageUris() {
+    AsyncStorage.multiGet(["result " + this.state.resultIndex + ", image 1",
+                           "result " + this.state.resultIndex + ", image 2",
+                           "result " + this.state.resultIndex + ", image 3",
+                           "result " + this.state.resultIndex + ", image 4"], (err, stores) => {
+      stores.map((result, i, store) => {
+        let val = store[i][1];
+        this.setState({ ["uri" + i]: val });
+      });
+    });
+
+    AsyncStorage.getItem("result " + this.state.resultIndex + " name", (err, result) => {
+      this.setState({ name: result });
+    });
   }
 
   render(){
@@ -39,13 +67,14 @@ class DiscoveryScreen extends Component {
         <View style={styles.discoveryViewContainer}>
 
           <View style={styles.discoveryPhotoContainer}>
-            <Image style={styles.venuePhoto} source={require('../img/sampleFood01.jpg')} />
-            <Image style={styles.venuePhoto} source={require('../img/sampleFood02.jpg')} />
-            <Image style={styles.venuePhoto} source={require('../img/sampleFood03.jpg')} />
-            <Image style={styles.venuePhoto} source={require('../img/sampleFood04.jpg')} />
+            {/*<Image style={styles.venuePhoto} source={require('../img/sampleFood01.jpg')} /> */}
+            <Image style={styles.venuePhoto} source={{uri: this.state.uri0}} />
+            <Image style={styles.venuePhoto} source={{uri: this.state.uri1}} />
+            <Image style={styles.venuePhoto} source={{uri: this.state.uri2}} />
+            <Image style={styles.venuePhoto} source={{uri: this.state.uri3}} />
           </View>
           <View style={styles.discoveryNameContainer}>
-            <Text style={styles.discoveryHeader}>Brunswick Bagels</Text>
+            <Text style={styles.discoveryHeader}>{this.state.name}</Text>
             <Text style={styles.discoveryDistance}>1.8 mi.</Text>
           </View>
           <View style={styles.discoveryInfoContainer}>
@@ -82,7 +111,11 @@ class DiscoveryScreen extends Component {
     })
   }
   XPressed(){
-    console.log('works')
+    console.log('works');
+    var newIndex = this.state.resultIndex + 1;
+    //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
+    this.setState({ resultIndex: newIndex });
+    googleFetchUtilities.storeDetails(newIndex, this.setImageUris.bind(this));
   }
 }
 const windowWidth = Dimensions.get('window').width;
@@ -96,7 +129,7 @@ var styles = StyleSheet.create({
   },
   navButtonLeft: {
     marginRight: 40,
-    marginLeft: 20,
+    marginLeft: 10,
     width: 15,
     height: 30,
   },

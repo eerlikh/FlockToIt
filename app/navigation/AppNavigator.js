@@ -50,7 +50,7 @@ class AppNavigator extends Component {
       } else if (route.type === 'left') {
         return Navigator.SceneConfigs.FloatFromLeft
       }
-      return Navigator.SceneConfigs.PushFromRight
+      return Navigator.SceneConfigs.FloatFromRight
     }
 }
 

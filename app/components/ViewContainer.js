@@ -5,7 +5,7 @@ import { View, StyleSheet } from 'react-native'
 class ViewContainer extends Component {
   render() {
     return (
-      <View style={[styles.viewContainer, this.props.style || {}]}>
+      <View style={[styles.viewContainer, this.props.style || {}]} shouldRasterizeIOS={true}>
         {this.props.children}
       </View>
     )
@@ -18,7 +18,8 @@ var styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-start",
-    alignItems: "stretch"
+    alignItems: "stretch",
+    backgroundColor: "#FFFFFF"
   }
 
 

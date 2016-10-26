@@ -60,11 +60,8 @@ class LoginScreen extends Component {
   }
 
   LoginPressed(){
-
-    //create an instance of token manager
     FBAccessTokenManager.setFacebookData();
 
-    //bring up the discovery screen and pass the token manager
     this.props.navigator.push({
       name: 'discoveryscreen',
       type: 'bottom',

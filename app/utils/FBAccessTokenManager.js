@@ -24,7 +24,7 @@ module.exports = {
           } else {
 
             //store the user's name in AsyncStorage (you should put this in its
-            //own method along with other setItem() calls when you eventually
+            //own method along with other AsyncStorage calls when you eventually
             //need to save more values)
             AsyncStorage.setItem("name", result.name);
           }
