@@ -8,9 +8,6 @@ import DashboardScreen from '../screens/DashboardScreen'
 import AchievementScreen from '../screens/AchievementScreen'
 import GlobalRankingScreen from '../screens/GlobalRankingScreen'
 
-//TODO: determine if using a custom navigator is necessary
-import CustomNavigator from '../navigation/CustomNavigator'
-
 class AppNavigator extends Component {
   constructor(props){
     super(props);
