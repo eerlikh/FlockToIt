@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { MapView, StyleSheet, Text, TouchableOpacity, View  } from 'react-native'
+import { Image, MapView, StyleSheet, Text, TouchableOpacity, View  } from 'react-native'
 
 import SearchInputBox from './SearchInputBox';
 import PinDetailFooter from './PinDetailFooter';
@@ -17,7 +17,8 @@ class YelpFetch extends Component {
       yelpResults: [],
       latitude: 0,
       longitude: 0,
-      searched: false
+      searched: false,
+      searchTerm: " "
     };
   }
 
@@ -32,10 +33,10 @@ class YelpFetch extends Component {
        (error) => alert(JSON.stringify(error)),
        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
      );
-     this.watchID = navigator.geolocation.watchPosition((position) => {
-       var lastPosition = JSON.stringify(position);
-       this.setState({lastPosition});
-     });
+    //  this.watchID = navigator.geolocation.watchPosition((position) => {
+    //    var lastPosition = JSON.stringify(position);
+    //    this.setState({lastPosition});
+    //  });
    }
 
   _handleCloseFooterButton(){
@@ -71,12 +72,12 @@ class YelpFetch extends Component {
    )
   }
 
-  _getYelpData(e) {
+  _getYelpData(searchTerm) {
     // NOTE I make variables to hold state data as reference
     //      to not have long arguements in functions and be consistent
     let latitude = this.state.latitude,
         longitude = this.state.longitude,
-        term = e.nativeEvent.text,
+        term = searchTerm,
         tempYelpResults;
     // TODO make more code into ES 2015 syntax
     YelpApi(latitude, longitude, term)
@@ -99,7 +100,6 @@ class YelpFetch extends Component {
           yelpResults: tempYelpResults
         })
       });
-      console.log(this.state.yelpResults);
   }
 
   _handleOnRegionChangeComplete(region) {
@@ -162,12 +162,12 @@ class YelpFetch extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <SearchInputBox handleOnSubmitEditing={this._getYelpData.bind(this)} />
 
-        <View style={styles.body}>
-        <TouchableOpacity onPress={this.SettingsPressed.bind(this)}>
-          <Text > Google Login </Text>
+
+        <TouchableOpacity onPress={()=>this.EatSelected()}>
+          <Image style={styles.discoveryImage} source={require('../img/notEat.png')} />
         </TouchableOpacity>
+        <View style={styles.body}>
           <View>
             <Text>
               <Text style={styles.title}>Initial position: </Text>
@@ -184,9 +184,40 @@ class YelpFetch extends Component {
     );
   }
 
-  SettingsPressed(){
+  EatSelected(){
+      this._getYelpData("strip club");
       console.log(this.state.yelpResults);
-      console.log("this.state.yelpResults");
+
+      setTimeout(
+        () => {
+          this._getYelpData("music venue");
+          console.log(this.state.yelpResults);
+        },
+        1500
+      );
+
+
+
+      // this._getYelpData("burlesque");
+      // console.log(this.state.yelpResults);
+      //
+      // this._getYelpData("circus");
+      // console.log(this.state.yelpResults);
+      //
+      // this._getYelpData("micro brewery");
+      // console.log(this.state.yelpResults);
+      //
+      // this._getYelpData("go carts");
+      // console.log(this.state.yelpResults);
+      //
+      // this._getYelpData("lakes");
+      // console.log(this.state.yelpResults);
+      //
+      // this._getYelpData("kayaking");
+      // console.log(this.state.yelpResults);
+      //
+      // this._getYelpData("rock climbing");
+      // console.log(this.state.yelpResults);
 
     }
 };

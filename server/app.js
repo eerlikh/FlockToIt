@@ -18,7 +18,7 @@ app.get( '/search', function( req, res ){
 
   yelp.search({
     term: searchTerm,
-    limit: 28,
+    limit: 20,
     ll: searchLL
     }, function( error, data ) {
       // TODO add error handling to let user know request failed
@@ -26,6 +26,6 @@ app.get( '/search', function( req, res ){
   });
 });
 
-app.listen(8081, function() {
-  console.log("Node/Express server for YelpMapViewer React Native app started");
+app.listen(3000, function() {
+  console.log("Node/Express server for Flock React Native app started");
 });
