@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import { Navigator, AppRegistry, StyleSheet, Text, View, TabBarIOS, Image, TouchableHighlight } from 'react-native';
+import { Navigator, AppRegistry, StyleSheet, Text, View, TabBarIOS, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 
 
 import NavBar from '../components/NavBar'
@@ -15,9 +15,9 @@ class DashboardScreen extends Component {
       <ViewContainer>
         <NavBar>
         <View style={styles.NavBar}>
-          <TouchableHighlight onPress={this.DiscoveryPressed.bind(this)}>
+          <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
             <Image style={styles.navButtonLeft} source={require('../img/ArrowLeft.png')} />
-          </TouchableHighlight>
+          </TouchableOpacity>
           <Text style={styles.navTitle}>Dashboard</Text>
         </View>
         </NavBar>
@@ -72,21 +72,22 @@ class DashboardScreen extends Component {
 
 var styles = StyleSheet.create({
   NavBar: {
-  paddingLeft: 20,
-  paddingRight: 20,
-  paddingTop: 25,
-  paddingBottom: 25,
-  flexDirection:'row',
+    paddingTop: 25,
+    paddingBottom: 25,
+    flexDirection:'row',
   },
   navButtonLeft: {
-    width: 14,
-    height: 28,
+    marginRight: 40,
+    marginLeft: 10,
+    width: 15,
+    height: 30,
   },
   navButtonRight: {
     width: 14,
     height: 28,
   },
   navTitle: {
+    //marginRight: 43,
     fontSize: 20,
     color: 'black',
     textAlign: 'center',

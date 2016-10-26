@@ -69,6 +69,7 @@ class DiscoveryScreen extends Component {
     },
     navTitle: {
       marginTop: -2,
+      marginRight: 40,
       color: 'white',
       fontWeight: "900",
       fontFamily: 'Arial Rounded MT Bold',

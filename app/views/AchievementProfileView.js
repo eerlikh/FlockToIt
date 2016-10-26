@@ -2,9 +2,6 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, AsyncStorage } from 'react-native'
 import ProgressBar from '../components/ProgressBar'
-import FBAccessTokenManager from '../utils/FBAccessTokenManager'
-
-//var FBAccessTokenManager = require('../utils/FBAccessTokenManager');
 
 const FBSDK = require('react-native-fbsdk');
 const {

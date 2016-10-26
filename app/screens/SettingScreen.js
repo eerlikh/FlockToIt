@@ -26,21 +26,32 @@ class SettingScreen extends Component {
       showLegalPrivacy: false,
       criteriaArrow: false,
       suggestArrow: false,
-      pressStatus: false,
     }
   }
 
   render(){
     let criteria = this.icons['right'];
 
-    if(this.state.criteriaArrow){
+    if(this.state.showDiscoveryCriteria){
         criteria = this.icons['down'];
     }
 
     let suggest = this.icons['right'];
 
-    if(this.state.suggestArrow){
+    if(this.state.showSuggestAchievement){
         suggest = this.icons['down'];
+    }
+
+    let help = this.icons['right'];
+
+    if(this.state.showHelpSupport){
+        help = this.icons['down'];
+    }
+
+    let legal = this.icons['right'];
+
+    if(this.state.showLegalPrivacy){
+        legal = this.icons['down'];
     }
 
     return (
@@ -61,7 +72,7 @@ class SettingScreen extends Component {
             <TouchableOpacity onPress={()=>this.DiscoveryCriteriaPressed()}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Discovery Criterias</Text>
-                <Image style={ this.state.pressStatus ? styles.optionButtonDown : styles.optionButtonRight } source={criteria} />
+                <Image style={ this.state.showDiscoveryCriteria ? styles.optionButtonDown : styles.optionButtonRight } source={criteria} />
               </View>
             </TouchableOpacity>
             {renderIf(this.state.showDiscoveryCriteria)(
@@ -73,7 +84,7 @@ class SettingScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Suggest Achievement </Text>
-                <Image style={styles.optionButtonRight} source={suggest} />
+                <Image style={ this.state.showSuggestAchievement ? styles.optionButtonDown : styles.optionButtonRight } source={suggest} />
               </View>
 
               {renderIf(this.state.showSuggestAchievement)(
@@ -86,7 +97,7 @@ class SettingScreen extends Component {
             <TouchableOpacity onPress={()=>this.HelpSupportPressed()}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Help & Support </Text>
-                <Image style={styles.optionButtonRight} source={require('../img/ArrowRight.png')} />
+                <Image style={ this.state.showHelpSupport ? styles.optionButtonDown : styles.optionButtonRight } source={help} />
               </View>
             </TouchableOpacity>
               {renderIf(this.state.showHelpSupport)(
@@ -98,7 +109,7 @@ class SettingScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}> Legal & Privacy </Text>
-                <Image style={styles.optionButtonRight} source={require('../img/ArrowRight.png')} />
+                <Image style={ this.state.showLegalPrivacy ? styles.optionButtonDown : styles.optionButtonRight } source={legal} />
               </View>
 
             {renderIf(this.state.showLegalPrivacy)(
@@ -127,15 +138,12 @@ class SettingScreen extends Component {
   }
   DiscoveryCriteriaPressed(){
     this.setState({showDiscoveryCriteria: !this.state.showDiscoveryCriteria});
-    this.setState({criteriaArrow: !this.state.criteriaArrow});
-    this.setState({pressStatus: !this.state.pressStatus});
     this.setState({showSuggestAchievement: false});
     this.setState({showHelpSupport: false});
     this.setState({showLegalPrivacy: false});
   }
   SuggestAchievementPressed(){
     this.setState({showSuggestAchievement: !this.state.showSuggestAchievement});
-    this.setState({suggestArrow: !this.state.suggestArrow});
     this.setState({showDiscoveryCriteria: false});
     this.setState({showHelpSupport: false});
     this.setState({showLegalPrivacy: false});
@@ -148,7 +156,9 @@ class SettingScreen extends Component {
   }
   LegalPrivacyPressed(){
     this.setState({showLegalPrivacy: !this.state.showLegalPrivacy});
-    //console.log('toggle button handler: '+ this.state.showLegalPrivacy);
+    this.setState({showHelpSupport: false});
+    this.setState({showSuggestAchievement: false});
+    this.setState({showDiscoveryCriteria: false});
   }
 
 }
