@@ -16,7 +16,7 @@ class DashboardScreen extends Component {
         <NavBar>
         <View style={styles.NavBar}>
           <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
-            <Image style={styles.navButtonLeft} source={require('../img/ArrowLeft.png')} />
+            <Image style={styles.navButtonLeft} source={require('../img/ArrowLeftWhite.png')} />
           </TouchableOpacity>
           <Text style={styles.navTitle}>Dashboard</Text>
         </View>
@@ -78,7 +78,7 @@ var styles = StyleSheet.create({
   },
   navButtonLeft: {
     marginRight: 40,
-    marginLeft: 10,
+    marginLeft: 20,
     width: 15,
     height: 30,
   },
@@ -87,11 +87,14 @@ var styles = StyleSheet.create({
     height: 28,
   },
   navTitle: {
-    //marginRight: 43,
-    fontSize: 20,
-    color: 'black',
-    textAlign: 'center',
+    marginRight: 40,
+    marginTop: -2,
+    color: 'white',
+    fontWeight: "900",
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 30,
     flex: 1,
+    textAlign: 'center',
   },
   mainDashboardContainer: {
     flexDirection: 'column',

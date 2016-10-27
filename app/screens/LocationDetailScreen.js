@@ -25,34 +25,14 @@ class DiscoveryScreen extends Component {
       />
         <NavBar>
           <View style={styles.NavBar}>
-
-            <Text style={styles.navTitle}>Location Detail</Text>
-            <TouchableOpacity onPress={()=>this.getYelpApiAsync()}>
-              <Image style={styles.discoveryImage} source={require('../img/notEat.png')} />
-            </TouchableOpacity>
+            <Text style={styles.navTitle}>Details</Text>
           </View>
         </NavBar>
-
         <View>
 
         </View>
       </ViewContainer>
     );
-  }
-  getYelpApiAsync() {
-    return fetch('https://api.yelp.com/v3/businesses/search?term=park,biking&latitude=40.432838&longitude=-74.399071&', {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer 56V5k6StrQ085Vgv57Gdesj5ndcvdXajm7PbuAoEUOHoPnltsX13wiE2rJEEkfbcEuMuBAHq2_87iFdIq2i7Bb-j9HNnozkm9j9HfT7VYEwd38rSmdfKOoKH70LwV3Yx',
-      }
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   }
 }
 
@@ -63,21 +43,8 @@ class DiscoveryScreen extends Component {
       paddingBottom: 25,
       flexDirection:'row',
     },
-    navButtonLeft: {
-      marginRight: 40,
-      marginLeft: 20,
-      width: 15,
-      height: 30,
-    },
-    navButtonRight: {
-      marginRight: 20,
-      marginLeft: 40,
-      width: 15,
-      height: 30,
-    },
     navTitle: {
       marginTop: -2,
-      marginRight: 40,
       color: 'white',
       fontWeight: "900",
       fontFamily: 'Arial Rounded MT Bold',
