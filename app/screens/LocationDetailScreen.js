@@ -2,13 +2,11 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
-import YelpFetch from '../components/YelpFetch';
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
 
 var Geolocation = require('Geolocation');
-
 
 
 class DiscoveryScreen extends Component {
@@ -29,25 +27,35 @@ class DiscoveryScreen extends Component {
           <View style={styles.NavBar}>
 
             <Text style={styles.navTitle}>Location Detail</Text>
-
+            <TouchableOpacity onPress={()=>this.getYelpApiAsync()}>
+              <Image style={styles.discoveryImage} source={require('../img/notEat.png')} />
+            </TouchableOpacity>
           </View>
         </NavBar>
 
         <View>
-          <YelpFetch />
+
         </View>
       </ViewContainer>
     );
   }
-
-
-  DashboardPressed(){
-    this.props.navigator.push({
-      name: "dashboardscreen",
-      type: 'left',
+  getYelpApiAsync() {
+    return fetch('https://api.yelp.com/v3/businesses/search?term=park,biking&latitude=40.432838&longitude=-74.399071&', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer 56V5k6StrQ085Vgv57Gdesj5ndcvdXajm7PbuAoEUOHoPnltsX13wiE2rJEEkfbcEuMuBAHq2_87iFdIq2i7Bb-j9HNnozkm9j9HfT7VYEwd38rSmdfKOoKH70LwV3Yx',
+      }
     })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
+
 
   var styles = StyleSheet.create({
     NavBar: {
