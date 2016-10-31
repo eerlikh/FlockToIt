@@ -63,7 +63,7 @@ class LoginScreen extends Component {
     FBAccessTokenManager.setFacebookData();
 
     this.props.navigator.push({
-      name: 'discoveryscreen',
+      name: 'subnavigator',
       type: 'bottom',
     })
   }

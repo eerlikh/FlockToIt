@@ -4,14 +4,14 @@ import { Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpa
 
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
-import googleFetchUtilities from '../utils/googleFetchUtilities'
+import GoogleFetchUtilities from '../utils/GoogleFetchUtilities'
 
 class DiscoveryScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
       showProgress: false,
-      resultIndex: this.props.resultIndex,
+      resultIndex: 0,
       uri0: "https://placehold.it/400x400",
       uri1: "https://placehold.it/400x400",
       uri2: "https://placehold.it/400x400",
@@ -22,8 +22,8 @@ class DiscoveryScreen extends Component {
     //TODO: check if this is being called only once
     //TODO: make this get the parameters from the settings
     if (this.state.resultIndex === 0) {
-      googleFetchUtilities.storeResults(
-        "tacos", 50000, 4, this.setImageUris.bind(this));
+      GoogleFetchUtilities.storeResults(
+        "italian", 50000, 4, this.setImageUris.bind(this));
     } else {
       this.setImageUris();
     };
@@ -97,15 +97,18 @@ class DiscoveryScreen extends Component {
   }
 
   SettingsPressed(){
-    this.props.navigator.push({
-      name: "settingscreen",
-    })
+    this.props.navigator.jumpBack();
   }
   DashboardPressed(){
-    this.props.navigator.push({
-      name: "dashboardscreen",
-      type: 'left',
-    })
+    var routes = this.props.navigator.getCurrentRoutes();
+    if (routes.length > 2) {
+      this.props.navigator.jumpForward();
+    } else {
+      this.props.navigator.push({
+        name: "dashboardscreen",
+        type: 'right',
+      })
+    }
   }
   LikePressed(){
     this.props.navigator.push({
@@ -117,8 +120,7 @@ class DiscoveryScreen extends Component {
     var newIndex = this.state.resultIndex + 1;
     //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
     this.setState({ resultIndex: newIndex });
-    googleFetchUtilities.storeDetails(newIndex, this.setImageUris.bind(this));
-    this.props.iterateIndex();
+    GoogleFetchUtilities.storeDetails(newIndex, this.setImageUris.bind(this));
   }
 }
 const windowWidth = Dimensions.get('window').width;

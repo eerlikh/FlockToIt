@@ -6,14 +6,12 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
-import AppNavigator from './app/navigation/AppNavigator'
-
-
+import MainNavigator from './app/navigation/MainNavigator'
 
 class FlockToIt extends Component {
   render() {
     return (
-      <AppNavigator />
+      <MainNavigator />
     );
   }
 }
