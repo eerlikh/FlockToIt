@@ -60,7 +60,7 @@ class SettingScreen extends Component {
         <NavBar>
         <View style={styles.NavBar}>
           <Text style={styles.navTitle}>Settings</Text>
-          <TouchableOpacity onPress={this.LocationDetailPressed.bind(this)}>
+          <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
             <Image style={styles.navButtonRight} source={require('../img/ArrowRightWhite.png')} />
           </TouchableOpacity>
         </View>
@@ -75,7 +75,7 @@ class SettingScreen extends Component {
                 <Image style={ this.state.showDiscoveryCriteria ? styles.optionButtonDown : styles.optionButtonRight } source={criteria} />
               </View>
             </TouchableOpacity>
-            {renderIf(this.state.showDiscoveryCriteria)(
+            {renderIf(false)(
               <DiscoveryCriteriaView style={styles.DiscoveryCriteriaView} />
             )}
           </View>
@@ -119,10 +119,7 @@ class SettingScreen extends Component {
           </TouchableOpacity>
 
           <Login onLogoutFinishedFunction={() =>
-            this.props.navigator.push({
-              name: "loginscreen",
-              type: 'bottom',
-            })
+            this.props.onLogoutFinishedFunction()
           }/>
 
         </View>
@@ -130,11 +127,8 @@ class SettingScreen extends Component {
     );
   }
 
-  LocationDetailPressed(){
-    this.props.navigator.push({
-      name: "discoveryscreen",
-      type: 'left',
-    })
+  DiscoveryPressed(){
+    this.props.navigator.jumpForward();
   }
   DiscoveryCriteriaPressed(){
     this.setState({showDiscoveryCriteria: !this.state.showDiscoveryCriteria});
