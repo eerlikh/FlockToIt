@@ -47,18 +47,25 @@ class AppNavigator extends Component {
     }
   }
 
+
+
   render() {
+    const routes = [
+      {name: 'loginscreen'},
+    ]
+
     return (
         <Navigator
-          initialRoute={{name: 'loginscreen'}}
+          initialRouteStack={routes}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.configureScene}
         />
     );
   }
   configureScene(route, routeStack){
+    console.log(routeStack);
     if(route.type === 'bottom') {
-      return Navigator.SceneConfigs.FloatFromBottom
+      return Navigator.SceneConfigs.PushFromRight
     } else if (route.type === 'left') {
       return Navigator.SceneConfigs.FloatFromLeft
     }

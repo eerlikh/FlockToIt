@@ -18,7 +18,7 @@ module.exports = {
       "&keyword=" + keyword.replace(/\s/g, '+') +
       "&maxprice=" + maxPrice +
       "&location=19.430347,-99.145857" + //TODO: make this actually use geolocation
-      "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc"
+      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk"
       //TODO: add pageToken once you figure out how that should work
     );
   },
@@ -43,7 +43,7 @@ module.exports = {
     var placeId = jsonResults.results[resultIndex].place_id;
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
       "placeid=" + placeId +
-      "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc";
+      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
     return url;
   },
 
@@ -69,22 +69,22 @@ module.exports = {
     var url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc";
+      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
     photoReference = json.result.photos[1].photo_reference;
     var url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc";
+      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
     photoReference = json.result.photos[2].photo_reference;
     var url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc";
+      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
     photoReference = json.result.photos[3].photo_reference;
     var url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=AIzaSyAalRdzkY1-mgYFcjzUGM-4dyhAbsInVFc";
+      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
     var name = json.result.name;
 
     AsyncStorage.multiSet([["result " + resultIndex + ", image 1", url1],

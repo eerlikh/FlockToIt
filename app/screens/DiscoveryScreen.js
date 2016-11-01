@@ -97,8 +97,8 @@ class DiscoveryScreen extends Component {
   }
 
   SettingsPressed(){
-    this.props.navigator.push({
-      name: "settingscreen",
+    this.props.navigator.replace({
+      name: "settingscreen"
     })
   }
   DashboardPressed(){
