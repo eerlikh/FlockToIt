@@ -1,5 +1,6 @@
 //TODO write utility functions for getting various information from the current details JSON
 //TODO rewrite functions to use callbacks, props, and state instead of asyncstorage
+//TODO create some latitude and longitude constants for different locations
 
 'use strict'
 
@@ -14,25 +15,20 @@ module.exports = {
 
   //"maxPrice" is an integer from 0 to 4
   //"pageToken" is an optional parameter that must be taken from the last results
-  buildNearbyUrl(keyword, radius, maxPrice, pageToken?){
+  buildNearbyUrl(name, radius, maxPrice, pageToken?){
     var string = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     return string.concat(
       "radius=" + radius +
-      "&keyword=" + keyword.replace(/\s/g, '+') +
+      "&name=" + name.replace(/\s/g, '+') +
       "&maxprice=" + maxPrice +
-<<<<<<< HEAD
-      "&location=19.430347,-99.145857" + //TODO: make this actually use geolocation
-      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk"
-=======
       "&location=38.900271,-76.989289" + //TODO: make this actually use geolocation
       "&key=" + this.apiKey
->>>>>>> a1ab8e786d113224f922213201fbd62633edac75
       //TODO: add pageToken once you figure out how that should work
     );
   },
 
-  storeResults(keyword, radius, maxPrice, callback?, pageToken?) {
-    fetch(this.buildNearbyUrl(keyword, radius, maxPrice, pageToken))
+  storeResults(name, radius, maxPrice, callback?, pageToken?) {
+    fetch(this.buildNearbyUrl(name, radius, maxPrice, pageToken))
     .then((response) => response.json())
     .then((responseJson) => {
       console.log(responseJson);
@@ -51,11 +47,7 @@ module.exports = {
     var placeId = jsonResults.results[resultIndex].place_id;
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
       "placeid=" + placeId +
-<<<<<<< HEAD
-      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
-=======
       "&key=" + this.apiKey;
->>>>>>> a1ab8e786d113224f922213201fbd62633edac75
     return url;
   },
 
@@ -81,38 +73,22 @@ module.exports = {
     var url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-<<<<<<< HEAD
-      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
-=======
       "&key=" + this.apiKey;
->>>>>>> a1ab8e786d113224f922213201fbd62633edac75
     photoReference = json.result.photos[1].photo_reference;
     var url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-<<<<<<< HEAD
-      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
-=======
       "&key=" + this.apiKey;
->>>>>>> a1ab8e786d113224f922213201fbd62633edac75
     photoReference = json.result.photos[2].photo_reference;
     var url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-<<<<<<< HEAD
-      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
-=======
       "&key=" + this.apiKey;
->>>>>>> a1ab8e786d113224f922213201fbd62633edac75
     photoReference = json.result.photos[3].photo_reference;
     var url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-<<<<<<< HEAD
-      "&key=AIzaSyDjPoEZTLrgG_D_hCu3JSHm0cFMnDwBlsk";
-=======
       "&key=" + this.apiKey;
->>>>>>> a1ab8e786d113224f922213201fbd62633edac75
     var name = json.result.name;
 
     AsyncStorage.multiSet([["result " + resultIndex + ", image 1", url1],
