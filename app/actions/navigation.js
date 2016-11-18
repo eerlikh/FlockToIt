@@ -22,3 +22,22 @@ export function navigateBack(navigatorType) {
     };
   return action;
 }
+
+export function push(navigatorType, route) {
+  var action =
+    {
+      type: types.PUSH,
+      navigatorType,
+      route
+    };
+  return action;
+}
+
+export function pop(navigatorType) {
+  var action =
+    {
+      type: types.POP,
+      navigatorType,
+    };
+  return action;
+}

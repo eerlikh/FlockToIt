@@ -5,7 +5,7 @@ import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
-import GoogleFetchUtilities from '../utils/GoogleFetchUtilities'
+import GoogleFetchUtilities from '../utils/googleFetchUtilities'
 import LinearGradient from 'react-native-linear-gradient';
 
 class DiscoveryScreen extends Component {
@@ -40,7 +40,6 @@ class DiscoveryScreen extends Component {
         this.setState({ ["uri" + i]: val });
       });
     });
-
     AsyncStorage.getItem("result " + this.state.resultIndex + " name", (err, result) => {
       this.setState({ name: result });
     });
@@ -119,23 +118,15 @@ class DiscoveryScreen extends Component {
     this.props.navigateForward("Main Navigator");
   }
   LikePressed(){
-      this.props.navigator.push({
-        name: "locationdetailscreen",
-        resultIndex: this.state.resultIndex,
-      })
-    }
-    //TODO: make this change the current screen instead of navigating to a new one
-    // this.props.navigator.push({
-    //   name: "locationdetailscreen",
-    //   resultIndex: this.state.resultIndex,
-    // })
+    this.props.push("Discovery Navigator", { key: 'Details' } );
+  }
+
   XPressed(){
     console.log('works');
-    var newIndex = this.state.resultIndex + 1;
-    //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
-    this.setState({ resultIndex: newIndex });
-    GoogleFetchUtilities.storeDetails(newIndex, this.setImageUris.bind(this));
+    this.props.iterateResultIndex() //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
+    GoogleFetchUtilities.storeDetails(this.state.googleData.currentResultIndex, this.setImageUris.bind(this));
   }
+
 }
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
