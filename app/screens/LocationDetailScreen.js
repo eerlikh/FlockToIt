@@ -26,7 +26,6 @@ class LocationDetailScreen extends Component {
       rating: "",
       distance: "",
     }
-<<<<<<< HEAD
     this.setData();
     this.setImageUris();
   }
@@ -37,10 +36,8 @@ class LocationDetailScreen extends Component {
         this.setState({ ["uri" + i]: val });
       });
     });
-=======
 
     this.setData();
->>>>>>> d02870a726baabc8618479cd4b9bfb97bfd9cc03
   }
 
   setData() {
@@ -59,10 +56,6 @@ class LocationDetailScreen extends Component {
     AsyncStorage.getItem("result " + this.state.resultIndex + " distance", (err, result) => {
       this.setState({ distance: result });
     });
-<<<<<<< HEAD
-=======
-
->>>>>>> d02870a726baabc8618479cd4b9bfb97bfd9cc03
   }
 
   render(){

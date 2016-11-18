@@ -57,7 +57,7 @@ class LoginScreen extends Component {
     //have to wait for scenes to be rendered or animation will not display properly
     setTimeout(() => {
       this.autoLogin();
-    }, 500);
+    }, 100);
   }
 
   LoginPressed(){
