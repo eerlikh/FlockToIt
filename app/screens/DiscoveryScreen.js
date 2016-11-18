@@ -119,11 +119,11 @@ class DiscoveryScreen extends Component {
     this.props.navigateForward("Main Navigator");
   }
   LikePressed(){
-      this.props.navigator.push({
-        name: "locationdetailscreen",
-        resultIndex: this.state.resultIndex,
-      })
-    }
+    this.props.navigator.push({
+      name: "locationdetailscreen",
+      resultIndex: this.state.resultIndex,
+    })
+  }
     //TODO: make this change the current screen instead of navigating to a new one
     // this.props.navigator.push({
     //   name: "locationdetailscreen",
