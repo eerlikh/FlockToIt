@@ -1,19 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View } from 'react-native';
+'use strict';
 
-import MainNavigator from './app/navigation/MainNavigator'
+import React, { AppRegistry } from 'react-native';
+import App from './app/containers/App';
 
-class FlockToIt extends Component {
-  render() {
-    return (
-      <MainNavigator />
-    );
-  }
-}
-
-AppRegistry.registerComponent('FlockToIt', () => FlockToIt);
+AppRegistry.registerComponent('FlockToIt', () => App);

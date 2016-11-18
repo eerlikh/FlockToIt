@@ -13,7 +13,8 @@ var {
 
 module.exports = {
 
-  setFacebookData() {
+  // getFacebookData(callback) {
+  setFacebookData(callback) {
     AccessToken.getCurrentAccessToken().then(
       (data) => {
         let accessToken = data.accessToken
@@ -26,6 +27,11 @@ module.exports = {
             //store the user's name in AsyncStorage (you should put this in its
             //own method along with other AsyncStorage calls when you eventually
             //need to save more values)
+
+            // callback({
+            //   name: result.name
+            // })
+
             AsyncStorage.setItem("name", result.name);
           }
         }

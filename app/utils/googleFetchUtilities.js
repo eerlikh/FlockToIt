@@ -1,5 +1,4 @@
 //TODO write utility functions for getting various information from the current details JSON
-//TODO rewrite functions to use callbacks, props, and state instead of asyncstorage
 //TODO create some latitude and longitude constants for different locations
 
 'use strict'
@@ -33,7 +32,6 @@ module.exports = {
     fetch(this.buildNearbyUrl(name, radius, maxPrice, pageToken))
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
       AsyncStorage.setItem("current results", JSON.stringify(responseJson), () => {
         this.storeDetails(0, callback);
       });
@@ -44,7 +42,6 @@ module.exports = {
   },
 
   buildDetailUrl(result, resultIndex) {
-    console.log("resultIndex = " + resultIndex);
     var jsonResults = JSON.parse(result);
     var placeId = jsonResults.results[resultIndex].place_id;
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
@@ -76,11 +73,9 @@ module.exports = {
 
     var openingTime = json.result.opening_hours.periods[currentDay].open.time + "";
     openingTime = this.convertTime(openingTime);
-    console.log(openingTime);
 
     var closingTime = json.result.opening_hours.periods[currentDay].close.time + "";
     closingTime = this.convertTime(closingTime);
-    console.log(closingTime);
 
     var rating = "" + json.result.rating;
 
@@ -88,7 +83,6 @@ module.exports = {
     var lon1 = json.result.geometry.location.lng;
 
     var distance = "" + Math.round(this.distance(lat1, lon1, this.latitude, this.longitude, 'M') * 100) / 100;
-    console.log("distance = " + distance);
 
     AsyncStorage.multiSet([["result " + resultIndex + " opening time", openingTime],
                            ["result " + resultIndex + " closing time", closingTime],

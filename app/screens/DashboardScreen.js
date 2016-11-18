@@ -108,7 +108,8 @@ class DashboardScreen extends Component {
   }
 
   DiscoveryPressed(){
-    this.props.navigator.jumpBack();
+    this.props.navigateBack("Main Navigator");
+;
   }
 
   HomePressed(){

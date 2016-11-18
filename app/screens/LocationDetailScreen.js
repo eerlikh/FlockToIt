@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
-
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
@@ -27,6 +26,7 @@ class LocationDetailScreen extends Component {
       rating: "",
       distance: "",
     }
+<<<<<<< HEAD
     this.setData();
     this.setImageUris();
   }
@@ -37,6 +37,10 @@ class LocationDetailScreen extends Component {
         this.setState({ ["uri" + i]: val });
       });
     });
+=======
+
+    this.setData();
+>>>>>>> d02870a726baabc8618479cd4b9bfb97bfd9cc03
   }
 
   setData() {
@@ -55,6 +59,10 @@ class LocationDetailScreen extends Component {
     AsyncStorage.getItem("result " + this.state.resultIndex + " distance", (err, result) => {
       this.setState({ distance: result });
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> d02870a726baabc8618479cd4b9bfb97bfd9cc03
   }
 
   render(){
@@ -93,6 +101,12 @@ class LocationDetailScreen extends Component {
               <Text>Hours: {this.state.openingTime} - {this.state.closingTime}</Text>
             </View>
           </View>
+        <View>
+          <Text>{this.state.name}</Text>
+          <Text>{this.state.openingTime}</Text>
+          <Text>{this.state.closingTime}</Text>
+          <Text>{this.state.rating}</Text>
+          <Text>{this.state.distance}</Text>
         </View>
         <DiscoveryNav>
           <View style={styles.discoveryNav}>

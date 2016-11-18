@@ -21,7 +21,6 @@ class DiscoveryScreen extends Component {
       name: "",
     }
 
-    //TODO: check if this is being called only once
     //TODO: make this get the parameters from the settings
     if (this.state.resultIndex === 0) {
       GoogleFetchUtilities.storeResults(
@@ -114,18 +113,10 @@ class DiscoveryScreen extends Component {
   }
 
   SettingsPressed(){
-    this.props.navigator.jumpBack();
+    this.props.navigateBack("Main Navigator");
   }
   DashboardPressed(){
-    var routes = this.props.navigator.getCurrentRoutes();
-    if (routes.length > 2) {
-      this.props.navigator.jumpForward();
-    } else {
-      this.props.navigator.push({
-        name: "dashboardscreen",
-        type: 'right',
-      })
-    }
+    this.props.navigateForward("Main Navigator");
   }
   LikePressed(){
       this.props.navigator.push({
@@ -133,6 +124,12 @@ class DiscoveryScreen extends Component {
         resultIndex: this.state.resultIndex,
       })
     }
+    //TODO: make this change the current screen instead of navigating to a new one
+    // this.props.navigator.push({
+    //   name: "locationdetailscreen",
+    //   resultIndex: this.state.resultIndex,
+    // })
+  }
   XPressed(){
     console.log('works');
     var newIndex = this.state.resultIndex + 1;
