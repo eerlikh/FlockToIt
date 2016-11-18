@@ -1,5 +1,4 @@
 //TODO write utility functions for getting various information from the current details JSON
-//TODO rewrite functions to use callbacks, props, and state instead of asyncstorage
 //TODO create some latitude and longitude constants for different locations
 
 'use strict'
@@ -12,6 +11,8 @@ var {
 module.exports = {
 
   apiKey: "AIzaSyAm_J6lNvrsnHrKMJYXILl6SqgRNCYbm9k",
+  latitude: "38.900271",
+  longitude: "-76.989289",
 
   //"maxPrice" is an integer from 0 to 4
   //"pageToken" is an optional parameter that must be taken from the last results
@@ -21,7 +22,7 @@ module.exports = {
       "radius=" + radius +
       "&name=" + name.replace(/\s/g, '+') +
       "&maxprice=" + maxPrice +
-      "&location=38.900271,-76.989289" + //TODO: make this actually use geolocation
+      "&location=" + this.latitude + "," + this.longitude + //TODO: make this actually use geolocation
       "&key=" + this.apiKey
       //TODO: add pageToken once you figure out how that should work
     );
@@ -31,7 +32,6 @@ module.exports = {
     fetch(this.buildNearbyUrl(name, radius, maxPrice, pageToken))
     .then((response) => response.json())
     .then((responseJson) => {
-      console.log(responseJson);
       AsyncStorage.setItem("current results", JSON.stringify(responseJson), () => {
         this.storeDetails(0, callback);
       });
@@ -42,7 +42,6 @@ module.exports = {
   },
 
   buildDetailUrl(result, resultIndex) {
-    console.log("resultIndex = " + resultIndex);
     var jsonResults = JSON.parse(result);
     var placeId = jsonResults.results[resultIndex].place_id;
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
@@ -57,7 +56,8 @@ module.exports = {
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        this.storeData(resultIndex, responseJson, 600, callback);
+        this.storeImageURLs(resultIndex, responseJson, 600, callback);
+        this.storeData(resultIndex, responseJson);
       })
       .catch((error) => {
         console.log("error is " + error);
@@ -67,8 +67,63 @@ module.exports = {
     });
   },
 
+  storeData(resultIndex, json) {
+    var d = new Date();
+    var currentDay = d.getDay();
+
+    var openingTime = json.result.opening_hours.periods[currentDay].open.time + "";
+    openingTime = this.convertTime(openingTime);
+
+    var closingTime = json.result.opening_hours.periods[currentDay].close.time + "";
+    closingTime = this.convertTime(closingTime);
+
+    var rating = "" + json.result.rating;
+
+    var lat1 = json.result.geometry.location.lat;
+    var lon1 = json.result.geometry.location.lng;
+
+    var distance = "" + Math.round(this.distance(lat1, lon1, this.latitude, this.longitude, 'M') * 100) / 100;
+
+    AsyncStorage.multiSet([["result " + resultIndex + " opening time", openingTime],
+                           ["result " + resultIndex + " closing time", closingTime],
+                           ["result " + resultIndex + " rating", rating],
+                           ["result " + resultIndex + " distance", distance]]
+                           ).catch((error) => {
+                             console.log("error is " + error);
+                           });
+  },
+
+  distance(lat1, lon1, lat2, lon2, unit) {
+  	var radlat1 = Math.PI * lat1/180
+  	var radlat2 = Math.PI * lat2/180
+  	var theta = lon1-lon2
+  	var radtheta = Math.PI * theta/180
+  	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+  	dist = Math.acos(dist)
+  	dist = dist * 180/Math.PI
+  	dist = dist * 60 * 1.1515
+  	if (unit=="K") { dist = dist * 1.609344 }
+  	if (unit=="N") { dist = dist * 0.8684 }
+  	return dist
+  },
+
+  convertTime(input) {
+
+    var time = input.charAt(0) + input.charAt(1) + ":" + input.charAt(2) + input.charAt(3) +  ":00"; // your input
+    time = time.split(':'); // convert to array
+
+    var hours = Number(time[0]);
+    var minutes = Number(time[1]);
+
+    var timeValue = "" + ((hours >12) ? hours - 12 : hours);  // get hours
+    timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+    timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+    return timeValue;
+  },
+
   //TODO: find out a way to handle the case when there are no photos in a result
-  storeData(resultIndex, json, maxHeight, callback?) {
+  storeImageURLs(resultIndex, json, maxHeight, callback?) {
     var photoReference = json.result.photos[0].photo_reference;
     var url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +

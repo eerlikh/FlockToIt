@@ -20,7 +20,7 @@ class SettingScreen extends Component {
     };
     this.state = {
       showProgress: false,
-      showDiscoveryCriteria: false,
+      showDiscoveryCriteria: true,
       showSuggestAchievement: false,
       showHelpSupport: false,
       showLegalPrivacy: false,
@@ -75,7 +75,7 @@ class SettingScreen extends Component {
                 <Image style={ this.state.showDiscoveryCriteria ? styles.optionButtonDown : styles.optionButtonRight } source={criteria} />
               </View>
             </TouchableOpacity>
-            {renderIf(false)(
+            {renderIf(this.state.showDiscoveryCriteria)(
               <DiscoveryCriteriaView style={styles.DiscoveryCriteriaView} />
             )}
           </View>
@@ -119,7 +119,9 @@ class SettingScreen extends Component {
           </TouchableOpacity>
 
           <Login onLogoutFinishedFunction={() =>
-            this.props.onLogoutFinishedFunction()
+              //TODO: replace this function with a navigation action from props
+            //this.props.onLogoutFinishedFunction()
+            {}
           }/>
 
         </View>
@@ -128,7 +130,8 @@ class SettingScreen extends Component {
   }
 
   DiscoveryPressed(){
-    this.props.navigator.jumpForward();
+    this.props.navigateForward("Main Navigator");
+;
   }
   DiscoveryCriteriaPressed(){
     this.setState({showDiscoveryCriteria: !this.state.showDiscoveryCriteria});

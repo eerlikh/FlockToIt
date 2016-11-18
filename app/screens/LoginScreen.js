@@ -1,10 +1,13 @@
 'use strict';
 import React, { Component } from 'react';
-import { AppRegistry, Navigator, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, Image, TouchableHighlight, InteractionManager } from 'react-native';
 import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
 import Login from '../components/Login'
 import FBAccessTokenManager from '../utils/FBAccessTokenManager'
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../actions'
+import { connect } from 'react-redux';
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -16,7 +19,7 @@ class LoginScreen extends Component {
     super(props);
   }
 
-  isUserLoggedIn() {
+  autoLogin() {
     AccessToken.getCurrentAccessToken().then(
       (data) => {
         if (data != null) {
@@ -25,12 +28,7 @@ class LoginScreen extends Component {
     });
   }
 
-  componentWillMount() {
-    this.isUserLoggedIn();
-  }
-
   render(){
-    console.log(this.props.navigator)
     return (
       <ViewContainer style={styles.background}>
         <Image style={styles.mainLoginContainer} source={require('../img/CityscapeIntro.jpg')}>
@@ -55,17 +53,16 @@ class LoginScreen extends Component {
     );
   }
 
-  configureScene(route, routeStack){
-     return Navigator.SceneConfigs.FloatFromBottom
+  componentDidMount() {
+    //have to wait for scenes to be rendered or animation will not display properly
+    setTimeout(() => {
+      this.autoLogin();
+    }, 500);
   }
 
   LoginPressed(){
     FBAccessTokenManager.setFacebookData();
-
-    this.props.navigator.push({
-      name: 'subnavigator',
-      type: 'bottom',
-    })
+    this.props.navigateForward("Login Navigator");
   }
 
 }
