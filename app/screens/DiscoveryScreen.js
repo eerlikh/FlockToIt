@@ -129,7 +129,6 @@ class DiscoveryScreen extends Component {
     //   name: "locationdetailscreen",
     //   resultIndex: this.state.resultIndex,
     // })
-  }
   XPressed(){
     console.log('works');
     var newIndex = this.state.resultIndex + 1;

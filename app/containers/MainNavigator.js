@@ -62,6 +62,14 @@ class LoginNavigator extends Component {
 				</View>
 			);
 		}
+
+    if (props.scene.route.key === 'Dashboard') {
+      return (
+        <View style={{flex: 1}}>
+          <DashboardScreen {...this.props} />
+        </View>
+      );
+    }
 	}
 
   _renderHeader(props) {
