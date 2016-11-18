@@ -15,8 +15,8 @@ class SettingScreen extends Component {
   constructor(props){
     super(props);
     this.icons = {     //Step 2
-    'right'    : require('../img/ArrowRight.png'),
-    'down'  : require('../img/ArrowDown.png')
+    'right'    : require('../img/buttons/ArrowRight.png'),
+    'down'  : require('../img/buttons/ArrowDown.png')
     };
     this.state = {
       showProgress: false,
@@ -61,7 +61,7 @@ class SettingScreen extends Component {
         <View style={styles.NavBar}>
           <Text style={styles.navTitle}>Settings</Text>
           <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
-            <Image style={styles.navButtonRight} source={require('../img/ArrowRightWhite.png')} />
+            <Image style={styles.navButtonRight} source={require('../img/buttons/ArrowRightWhite.png')} />
           </TouchableOpacity>
         </View>
         </NavBar>

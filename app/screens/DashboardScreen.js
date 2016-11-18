@@ -27,7 +27,7 @@ class DashboardScreen extends Component {
         <NavBar>
         <View style={styles.NavBar}>
           <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
-            <Image style={styles.navButtonLeft} source={require('../img/ArrowLeftWhite.png')} />
+            <Image style={styles.navButtonLeft} source={require('../img/buttons/ArrowLeftWhite.png')} />
           </TouchableOpacity>
           <Text style={styles.navTitle}>Dashboard</Text>
         </View>
@@ -58,14 +58,14 @@ class DashboardScreen extends Component {
             {renderIf(!this.state.showDashboardScreen)(
             <TouchableOpacity style={styles.highlightContainer} onPress={this.HomePressed.bind(this)}>
               <View style={styles.homeContainer}>
-                <Image style={styles.dashNavImage} source={require('../img/Home.png')} />
+                <Image style={styles.dashNavImage} source={require('../img/buttons/Home.png')} />
               </View>
             </TouchableOpacity>
             )}
             {renderIf(this.state.showDashboardScreen)(
             <TouchableOpacity style={styles.highlightContainer} onPress={this.HomePressed.bind(this)}>
               <View style={styles.selectedHomeContainer}>
-                <Image style={styles.dashNavImage} source={require('../img/Home.png')} />
+                <Image style={styles.dashNavImage} source={require('../img/buttons/Home.png')} />
               </View>
             </TouchableOpacity>
             )}
@@ -74,14 +74,14 @@ class DashboardScreen extends Component {
             {renderIf(!this.state.showAchievementScreen)(
             <TouchableOpacity style={styles.highlightContainer} onPress={this.TrophyPressed.bind(this)}>
               <View style={styles.trophyContainer}>
-                <Image style={styles.dashNavImage} source={require('../img/Trophy.png')} />
+                <Image style={styles.dashNavImage} source={require('../img/buttons/Trophy.png')} />
               </View>
             </TouchableOpacity>
             )}
             {renderIf(this.state.showAchievementScreen)(
             <TouchableOpacity style={styles.highlightContainer} onPress={this.TrophyPressed.bind(this)}>
               <View style={styles.selectedTrophyContainer}>
-                <Image style={styles.dashNavImage} source={require('../img/Trophy.png')} />
+                <Image style={styles.dashNavImage} source={require('../img/buttons/Trophy.png')} />
               </View>
             </TouchableOpacity>
             )}
@@ -90,14 +90,14 @@ class DashboardScreen extends Component {
             {renderIf(!this.state.showGlobalRankingScreen)(
             <TouchableOpacity style={styles.highlightContainer} onPress={this.GlobePressed.bind(this)}>
               <View style={styles.globeContainer}>
-                <Image style={styles.dashNavImage} source={require('../img/Globe.png')} />
+                <Image style={styles.dashNavImage} source={require('../img/buttons/Globe.png')} />
               </View>
             </TouchableOpacity>
             )}
             {renderIf(this.state.showGlobalRankingScreen)(
             <TouchableOpacity style={styles.highlightContainer} onPress={this.GlobePressed.bind(this)}>
               <View style={styles.selectedGlobeContainer}>
-                <Image style={styles.dashNavImage} source={require('../img/Globe.png')} />
+                <Image style={styles.dashNavImage} source={require('../img/buttons/Globe.png')} />
               </View>
             </TouchableOpacity>
             )}

@@ -18,12 +18,12 @@ class DiscoveryCriteriaView extends Component {
       <View style={styles.DiscoveryCriteriaContainer}>
         <Text style={styles.selectActivity}>Select Activity:</Text>
         <View style={styles.discoveryImageContainer}>
-          <Image style={styles.discoveryImage} source={require('../img/notEat.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/notDrink.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/notChill.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/notAdventure.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/notCulture.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/Mystery.png')} />
+          <Image style={styles.discoveryImage} source={require('../img/themes/notEat.png')} />
+          <Image style={styles.discoveryImage} source={require('../img/themes/notDrink.png')} />
+          <Image style={styles.discoveryImage} source={require('../img/themes/notChill.png')} />
+          <Image style={styles.discoveryImage} source={require('../img/themes/notAdventure.png')} />
+          <Image style={styles.discoveryImage} source={require('../img/themes/notCulture.png')} />
+          <Image style={styles.discoveryImage} source={require('../img/themes/Mystery.png')} />
         </View>
         <View style={styles.sliderTitleContainer}>
           <View style={styles.sliderText}>

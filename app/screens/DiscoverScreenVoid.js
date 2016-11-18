@@ -6,7 +6,6 @@ import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import GoogleFetchUtilities from '../utils/GoogleFetchUtilities'
-import LinearGradient from 'react-native-linear-gradient';
 
 class DiscoveryScreen extends Component {
   constructor(props){
@@ -57,53 +56,46 @@ class DiscoveryScreen extends Component {
           <View style={styles.NavBar}>
 
             <TouchableOpacity onPress={this.SettingsPressed.bind(this)}>
-              <Image style={styles.navButtonLeft} source={require('../img/buttons/ArrowLeftWhite.png')} />
+              <Image style={styles.navButtonLeft} source={require('../img/ArrowLeftWhite.png')} />
             </TouchableOpacity>
 
-            <Text style={styles.navTitle}>Flock</Text>
+            <Text style={styles.navTitle}>Flock It</Text>
 
             <TouchableOpacity onPress={this.DashboardPressed.bind(this)}>
-              <Image style={styles.navButtonRight} source={require('../img/buttons/ArrowRightWhite.png')} />
+              <Image style={styles.navButtonRight} source={require('../img/ArrowRightWhite.png')} />
             </TouchableOpacity>
           </View>
         </NavBar>
 
         <View style={styles.discoveryViewContainer}>
-            <View style={styles.discoveryPhotoContainer}>
-              <Image style={styles.venuePhotoMain} source={{uri: this.state.uri0}} />
-              <Image style={styles.venuePhoto} source={{uri: this.state.uri1}} />
-              <Image style={styles.venuePhoto} source={{uri: this.state.uri2}} />
-            </View>
-            <LinearGradient
-            colors={['rgba(0, 0, 0, 0)', 'white']}
-            style={styles.discoveryInfoContainer}
-            start={[0.0, 0.0]} end={[0.0, 1.2]}
-            locations={[0,.4]}>
-            <View style={styles.headerContainer}>
-              <Text style={styles.discoveryHeader}>{this.state.name}</Text>
-            </View>
-            </LinearGradient>
+
+          <View style={styles.discoveryPhotoContainer}>
+            <Image style={styles.venuePhotoMain} source={{uri: this.state.uri0}} />
+            <Image style={styles.venuePhoto} source={{uri: this.state.uri1}} />
+            <Image style={styles.venuePhoto} source={{uri: this.state.uri2}} />
+          </View>
+          <Text style={styles.discoveryHeader}>{this.state.name}</Text>
           <DiscoveryNav>
             <View style={styles.discoveryNav}>
 
               {/*first button*/}
               <TouchableOpacity style={styles.highlightContainer} onPress={this.XPressed.bind(this)}>
                 <View style={styles.xButtonContainer}>
-                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
+                  <Image style={styles.dashNavImage} source={require('../img/buttons/xButton.png')} />
                 </View>
               </TouchableOpacity>
 
               {/*second button*/}
               <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
                 <View style={styles.flockButtonContainer}>
-                  <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/flockButton.png')} />
+                  <Image style={styles.dashNavImage} source={require('../img/buttons/flockButton.png')} />
                 </View>
               </TouchableOpacity>
 
               {/*third button*/}
               <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
                 <View style={styles.likeButtonContainer}>
-                  <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/inspectButton.png')} />
+                  <Image style={styles.dashNavImage} source={require('../img/buttons/likeButton.png')} />
                 </View>
               </TouchableOpacity>
             </View>
@@ -145,9 +137,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 var styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
   NavBar: {
     paddingTop: 25,
     paddingBottom: 25,
@@ -155,12 +144,12 @@ var styles = StyleSheet.create({
   },
   navButtonLeft: {
     marginRight: 40,
-    marginLeft: 15,
+    marginLeft: 20,
     width: 15,
     height: 30,
   },
   navButtonRight: {
-    marginRight: 15,
+    marginRight: 20,
     marginLeft: 40,
     width: 15,
     height: 30,
@@ -175,13 +164,9 @@ var styles = StyleSheet.create({
     textAlign: 'center',
   },
   discoveryViewContainer: {
+    justifyContent: 'center',
     flexDirection: 'column',
     flex: 1,
-  },
-  discoveryInfoContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    flex: .4,
   },
   discoveryPhotoContainer: {
     flexDirection: 'row',
@@ -193,13 +178,13 @@ var styles = StyleSheet.create({
   },
   venuePhotoMain: {
     width: windowWidth * 1,
-    height: windowHeight * .43,
+    height: windowHeight * .4,
     alignItems: 'stretch',
     backgroundColor: 'grey',
   },
   venuePhoto: {
     width: windowWidth * 0.5,
-    height: windowHeight * 0.32,
+    height: windowHeight * 0.25,
     alignItems: 'stretch',
     backgroundColor: 'grey',
   },
@@ -211,13 +196,15 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  headerContainer: {
-    justifyContent: 'center',
-    height: 60,
+  discoveryInfoContainer: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    flex: .35,
+    flexDirection: 'column',
   },
   discoveryHeader: {
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-    paddingLeft: 15,
+    flex: .25,
+    marginLeft: 20,
     fontSize: 26,
     color: 'black',
     fontFamily: 'Helvetica',
@@ -245,8 +232,7 @@ var styles = StyleSheet.create({
   },
   flockButtonContainer: {
     backgroundColor: 'white',
-    paddingTop: 5,
-    paddingBottom: 5,
+    padding: 10,
     borderRadius: 10,
     marginLeft: 5,
     marginRight: 5,
@@ -254,22 +240,15 @@ var styles = StyleSheet.create({
   },
   likeButtonContainer: {
     backgroundColor: 'white',
-    paddingTop: 5,
-    paddingBottom: 5,
+    padding: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
-  discoveryNavImage: {
+  dashNavImage: {
     resizeMode: 'contain',
     alignItems: 'center',
     height: 40,
     width: 40,
-  },
-  discoveryLikeNavImage: {
-    resizeMode: 'contain',
-    alignItems: 'center',
-    height: 50,
-    width: 50,
   },
 });
 

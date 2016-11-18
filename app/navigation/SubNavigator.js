@@ -19,7 +19,7 @@ class SubNavigator extends Component {
       return <DiscoveryScreen navigator={navigator} />
     }
     if(route.name == 'locationdetailscreen') {
-      return <LocationDetailScreen navigator={navigator} />
+      return <LocationDetailScreen navigator={navigator} resultIndex={route.resultIndex} />
     }
     if(route.name == 'settingscreen') {
       return <SettingScreen navigator={navigator} onLogoutFinishedFunction={this.onLogoutFinishedFunction.bind(this)} />

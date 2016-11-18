@@ -16,14 +16,14 @@ const achievements = [
 
 ]
 var image_urls = [
-  require('../img/Hookah.png'),
-  require('../img/Hamburger.png'),
-  require('../img/WhiteCastle.png'),
-  require('../img/Brew.png'),
-  require('../img/Ranger.png'),
-  require('../img/Gem.png'),
-  require('../img/GeneralChow.png'),
-  require('../img/Castle.png'),
+  require('../img/achievements/Hookah.png'),
+  require('../img/achievements/Hamburger.png'),
+  require('../img/achievements/WhiteCastle.png'),
+  require('../img/achievements/Brew.png'),
+  require('../img/achievements/Ranger.png'),
+  require('../img/achievements/Gem.png'),
+  require('../img/achievements/GeneralChow.png'),
+  require('../img/achievements/Castle.png'),
 ];
 
 

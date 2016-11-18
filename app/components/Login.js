@@ -41,7 +41,7 @@ var styles = StyleSheet.create({
     paddingTop: 33,
     paddingBottom: 33,
     marginBottom: 70,
-    borderRadius: 10,
+    borderRadius: 0,
   }
 });
 

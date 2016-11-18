@@ -30,7 +30,7 @@ class AchievementProfileView extends Component {
         </View>
         <View style={styles.profileAchievementContainer}>
           <View style={styles.achievementImageContainer}>
-            <Image style={styles.achievementImage} source={require('../img/Hamburger.png')} />
+            <Image style={styles.achievementImage} source={require('../img/achievements/Hamburger.png')} />
           </View>
           <View style={styles.achievementImageInfo}>
             <Text style={styles.achievementName}>Burger Connoisseur</Text>

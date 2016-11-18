@@ -15,7 +15,6 @@ const locations = [
 
 ]
 var image_urls = [
-  require('../img/sampleFood03.jpg'),
   require('../img/MikesSub.jpg'),
   require('../img/DominosPizza.jpg'),
   require('../img/ThompsonPark.jpg'),
