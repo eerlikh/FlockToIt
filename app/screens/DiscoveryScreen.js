@@ -11,38 +11,10 @@ import LinearGradient from 'react-native-linear-gradient';
 class DiscoveryScreen extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      showProgress: false,
-      resultIndex: 0,
-      uri0: "https://placehold.it/400x400",
-      uri1: "https://placehold.it/400x400",
-      uri2: "https://placehold.it/400x400",
-      uri3: "https://placehold.it/400x400",
-      name: "",
-    }
-
-    //TODO: make this get the parameters from the settings
-    if (this.state.resultIndex === 0) {
-      GoogleFetchUtilities.storeResults(
-        "italian", 5000, 4, this.setImageUris.bind(this));
-    } else {
-      this.setImageUris();
-    };
   }
 
-  setImageUris() {
-    AsyncStorage.multiGet(["result " + this.state.resultIndex + ", image 1",
-                           "result " + this.state.resultIndex + ", image 2",
-                           "result " + this.state.resultIndex + ", image 3",
-                           "result " + this.state.resultIndex + ", image 4"], (err, stores) => {
-      stores.map((result, i, store) => {
-        let val = store[i][1];
-        this.setState({ ["uri" + i]: val });
-      });
-    });
-    AsyncStorage.getItem("result " + this.state.resultIndex + " name", (err, result) => {
-      this.setState({ name: result });
-    });
+  componentWillMount() {
+    this.props.fetchAllData("italian", 5000, 4);
   }
 
   render(){
@@ -68,9 +40,9 @@ class DiscoveryScreen extends Component {
 
         <View style={styles.discoveryViewContainer}>
             <View style={styles.discoveryPhotoContainer}>
-              <Image style={styles.venuePhotoMain} source={{uri: this.state.uri0}} />
-              <Image style={styles.venuePhoto} source={{uri: this.state.uri1}} />
-              <Image style={styles.venuePhoto} source={{uri: this.state.uri2}} />
+              <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
+              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
+              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
             </View>
             <LinearGradient
             colors={['rgba(0, 0, 0, 0)', 'white']}
@@ -78,7 +50,7 @@ class DiscoveryScreen extends Component {
             start={[0.0, 0.0]} end={[0.0, 1.2]}
             locations={[0,.4]}>
             <View style={styles.headerContainer}>
-              <Text style={styles.discoveryHeader}>{this.state.name}</Text>
+              <Text style={styles.discoveryHeader}>{this.props.detailsData.name}</Text>
             </View>
             </LinearGradient>
           <DiscoveryNav>
@@ -122,9 +94,8 @@ class DiscoveryScreen extends Component {
   }
 
   XPressed(){
-    console.log('works');
-    this.props.iterateResultIndex() //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
-    GoogleFetchUtilities.storeDetails(this.state.googleData.currentResultIndex, this.setImageUris.bind(this));
+    this.props.iterateResult() //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
+    // GoogleFetchUtilities.storeDetails(this.props.googleData.currentResultIndex, this.setImageUris.bind(this));
   }
 
 }

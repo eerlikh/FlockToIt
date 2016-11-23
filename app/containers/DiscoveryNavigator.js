@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../actions'
 import LocationDetailScreen from '../screens/LocationDetailScreen'
 import DiscoveryScreen from '../screens/DiscoveryScreen'
 import styles from './styles';
@@ -61,14 +58,4 @@ class DiscoveryNavigator extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ActionCreators, dispatch);
-}
-
-function mapStateToProps(state) {
-  return {
-    navigationState: state.navigationState,
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DiscoveryNavigator);
+module.exports = DiscoveryNavigator;

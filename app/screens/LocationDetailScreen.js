@@ -9,51 +9,6 @@ import ViewContainer from '../components/ViewContainer'
 class LocationDetailScreen extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      showProgress: false,
-      uri0: "https://placehold.it/400x400",
-      uri1: "https://placehold.it/400x400",
-      uri2: "https://placehold.it/400x400",
-      uri3: "https://placehold.it/400x400",
-      name: "",
-      openingTime: "",
-      closingTime: "",
-      rating: "",
-      distance: "",
-    }
-    this.setData();
-    this.setImageUris();
-  }
-  setImageUris() {
-    console.log("multiGet about to be called");
-    AsyncStorage.multiGet(["result " + this.props.googleData.currentResultIndex + ", image 1"], (err, stores) => {
-      stores.map((result, i, store) => {
-        let val = store[i][1];
-        this.setState({ ["uri" + i]: val });
-      });
-      console.log("multiGet called");
-    });
-
-    this.setData();
-  }
-
-  setData() {
-    console.log(this.state);
-    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " name", (err, result) => {
-      this.setState({ name: result });
-    });
-    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " opening time", (err, result) => {
-      this.setState({ openingTime: result });
-    });
-    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " closing time", (err, result) => {
-      this.setState({ closingTime: result });
-    });
-    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " rating", (err, result) => {
-      this.setState({ rating: result });
-    });
-    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " distance", (err, result) => {
-      this.setState({ distance: result });
-    });
   }
 
   render(){
@@ -69,10 +24,10 @@ class LocationDetailScreen extends Component {
         </NavBar>
         <View style={styles.discoveryViewContainer}>
           <View style={styles.detailHeaderContainer}>
-            <Text style={styles.discoveryHeader}>{this.state.name}</Text>
+            <Text style={styles.discoveryHeader}>{this.props.detailsData.name}</Text>
           </View>
           <View style={styles.discoveryPhotoContainer}>
-            <Image style={styles.venuePhoto} source={{uri: this.state.uri0}} />
+            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url1}} />
           </View>
           <View style={styles.locationDetailColumnContainer}>
             <View style={styles.locationDetailRatingContainer}>
@@ -82,13 +37,13 @@ class LocationDetailScreen extends Component {
                 <Image style={styles.locationRatingStars} source={require('../img/icons/Star.png')} />
                 <Image style={styles.locationRatingStars} source={require('../img/icons/Star.png')} />
                 <Image style={styles.locationRatingStars} source={require('../img/icons/Star.png')} />
-                <Text>{this.state.rating}</Text>
+                <Text>{this.props.detailsData.rating}</Text>
               </Text>
               <Text style={styles.locationRating}>Rate This Location</Text>
             </View>
             <View style={styles.locationDetailRowContainer}>
-              <Text>Distance: {this.state.distance} mi</Text>
-              <Text>Hours: {this.state.openingTime} - {this.state.closingTime}</Text>
+              <Text>Distance: {this.props.detailsData.distance} mi</Text>
+              <Text>Hours: {this.props.detailsData.openingTime} - {this.props.detailsData.closingTime}</Text>
             </View>
           </View>
         </View>
