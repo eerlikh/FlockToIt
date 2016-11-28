@@ -2,8 +2,9 @@ import createReducer from '../utils/createReducer'
 import * as types from '../actions/types'
 
 export const googleData = createReducer({
-    currentResultIndex: 0,
-    resultsJson: null,
+    currentDetailsIndices: [0],
+    resultsObjects: [],
+    currentResultsIndex: 0,
     detailsJson: null,
     detailsData: {
       name: "",
@@ -22,10 +23,15 @@ export const googleData = createReducer({
 
   }, {
 
-    [types.SET_RESULTS_JSON](state, action) {
+    [types.SET_RESULTS_OBJECT](state, action) {
+
+      var newResultsObjects = state.resultsObjects.slice();
+
+      newResultsObjects[action.index] = action.resultsObject;
+
       var object = {
         ...state,
-        resultsJson: action.resultsJson,
+        resultsObjects: newResultsObjects,
       }
       return object;
     },
@@ -54,10 +60,45 @@ export const googleData = createReducer({
       return object;
     },
 
-    [types.ITERATE_RESULT_INDEX](state, action) {
+    [types.SET_CURRENT_THEME](state, action) {
+
+      var resultsObjects = new Array(action.theme.length);
+      resultsObjects.fill(null);
+
       var object = {
         ...state,
-        currentResultIndex: state.currentResultIndex + 1,
+        resultsObjects,
+      }
+      return object;
+    },
+
+    [types.ITERATE_RESULT_INDEX](state, action) {
+
+      var currentResultsIndex = null;
+      if (state.currentResultsIndex === state.resultsObjects.length - 1) {
+        currentResultsIndex = 0;
+      } else {
+        currentResultsIndex = state.currentResultsIndex + 1;
+      }
+
+      var newDetailsIndex = null;
+      var currentDetailsIndex = state.currentDetailsIndices[currentResultsIndex];
+      if (!currentDetailsIndex && (currentDetailsIndex != 0)) {
+        newDetailsIndex = 0;
+      } else {
+        newDetailsIndex = currentDetailsIndex + 1;
+      }
+
+      var currentDetailsIndices = [
+        ...state.currentDetailsIndices.slice(0, currentResultsIndex),
+        newDetailsIndex,
+        ...state.currentDetailsIndices.slice(currentResultsIndex + 1)
+      ]
+
+      var object = {
+        ...state,
+        currentDetailsIndices,
+        currentResultsIndex
       }
       return object;
     }

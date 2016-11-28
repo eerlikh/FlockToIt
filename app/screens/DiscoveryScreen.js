@@ -5,7 +5,6 @@ import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
-import GoogleFetchUtilities from '../utils/googleFetchUtilities'
 import LinearGradient from 'react-native-linear-gradient';
 
 class DiscoveryScreen extends Component {
@@ -14,7 +13,7 @@ class DiscoveryScreen extends Component {
   }
 
   componentWillMount() {
-    this.props.fetchAllData("italian", 5000, 4);
+    this.props.fetchAllData();
   }
 
   render(){
@@ -95,7 +94,6 @@ class DiscoveryScreen extends Component {
 
   XPressed(){
     this.props.iterateResult() //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
-    // GoogleFetchUtilities.storeDetails(this.props.googleData.currentResultIndex, this.setImageUris.bind(this));
   }
 
 }

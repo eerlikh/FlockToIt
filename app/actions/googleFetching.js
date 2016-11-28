@@ -1,21 +1,35 @@
 import * as types from './types'
-import utils from '../utils/googleFetchUtilities1';
+import utils from '../utils/googleFetchUtilities';
+import { setCurrentTheme } from './settings';
+import * as themes from '../constants/themes'
 
-export function fetchAllData(name, radius, maxPrice, callback?, pageToken?) {
+export function fetchAllData() {
   return (dispatch, getState) => {
 
-    //TODO reset the currentIndex to 0 here with a new action creator
-
-    //TODO: pass in these variables from somewhere else (or just make sure they aren't just sitting here)
     var apiKey = "AIzaSyAm_J6lNvrsnHrKMJYXILl6SqgRNCYbm9k";
     var latitude = "38.900271";
     var longitude = "-76.989289";
+    var radius = getState().settings.radius;
+    var maxPrice = getState().settings.maxPrice;
 
-    fetch(utils.buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, pageToken))
+    dispatch(setCurrentTheme(themes.TEST_THEME));
+    var searchTerms = getState().settings.currentTheme;
+
+    for (var i = 0; i < searchTerms.length; i++) {
+      dispatch(fetchResults(searchTerms[i], radius, maxPrice, latitude, longitude, apiKey, i))
+    }
+  }
+}
+
+function fetchResults(name, radius, maxPrice, latitude, longitude, apiKey, index) {
+  return (dispatch, getState) => {
+    fetch(utils.buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, index))
     .then((response) => response.json())
     .then((responseJson) => {
-      dispatch(setResultsJson(responseJson));
-      dispatch(fetchDetails(responseJson, 0));
+      dispatch(setResultsObject(responseJson, index));
+      if (index === 0) {
+        dispatch(fetchDetails(responseJson, 0));
+      }
     })
     .catch((error) => {
       console.log("error is " + error);
@@ -45,17 +59,19 @@ export function fetchDetails(responseJson, index) {
 export function iterateResult() {
   return (dispatch, getState) => {
     dispatch(iterateResultIndex());
+    //console.log(getState().googleData.currentDetailsIndices[getState().googleData.currentResultsIndex]);
     dispatch(fetchDetails(
-      getState().googleData.resultsJson,
-      getState().googleData.currentResultIndex));
+      getState().googleData.resultsObjects[getState().googleData.currentResultsIndex],
+      getState().googleData.currentDetailsIndices[getState().googleData.currentResultsIndex]));
   }
 }
 
-function setResultsJson(resultsJson) {
+function setResultsObject(resultsObject, index) {
   var action =
     {
-      type: types.SET_RESULTS_JSON,
-      resultsJson
+      type: types.SET_RESULTS_OBJECT,
+      resultsObject,
+      index
     };
   return action;
 }

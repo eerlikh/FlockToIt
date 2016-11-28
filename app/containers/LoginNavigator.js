@@ -5,7 +5,6 @@ import { ActionCreators } from '../actions'
 import LoginScreen from '../screens/LoginScreen'
 import MainNavigator from './MainNavigator'
 import styles from './styles';
-
 import {
   View,
   NavigationExperimental,

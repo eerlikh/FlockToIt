@@ -1,74 +1,31 @@
-//TODO write utility functions for getting various information from the current details JSON
-//TODO create some latitude and longitude constants for different locations
-
-'use strict'
-
-var React = require("react-native");
-var {
-    AsyncStorage
-} = React;
+//"maxPrice" is an integer from 0 to 4
+//"pageToken" is an optional parameter that must be taken from the last results
 
 module.exports = {
 
-  apiKey: "AIzaSyAm_J6lNvrsnHrKMJYXILl6SqgRNCYbm9k",
-  latitude: "38.900271",
-  longitude: "-76.989289",
-
-  //"maxPrice" is an integer from 0 to 4
-  //"pageToken" is an optional parameter that must be taken from the last results
-  buildNearbyUrl(name, radius, maxPrice, pageToken?){
+  buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, pageToken?){
     var string = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     return string.concat(
       "radius=" + radius +
       "&name=" + name.replace(/\s/g, '+') +
       "&maxprice=" + maxPrice +
-      "&location=" + this.latitude + "," + this.longitude + //TODO: make this actually use geolocation
-      "&key=" + this.apiKey
+      "&location=" + latitude + "," + longitude + //TODO: make this actually use geolocation
+      "&key=" + apiKey
       //TODO: add pageToken once you figure out how that should work
     );
   },
 
-  storeResults(name, radius, maxPrice, callback?, pageToken?) {
-    fetch(this.buildNearbyUrl(name, radius, maxPrice, pageToken))
-    .then((response) => response.json())
-    .then((responseJson) => {
-      AsyncStorage.setItem("current results", JSON.stringify(responseJson), () => {
-        this.storeDetails(0, callback);
-      });
-    })
-    .catch((error) => {
-      console.log("error is " + error);
-    });
-  },
-
-  buildDetailUrl(result, resultIndex) {
-    var jsonResults = JSON.parse(result);
-    var placeId = jsonResults.results[resultIndex].place_id;
+  buildDetailsUrl(resultsJson, resultIndex, apiKey, latitude, longitude) {
+    var placeId = resultsJson.results[resultIndex].place_id;
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
       "placeid=" + placeId +
-      "&key=" + this.apiKey;
-    console.log(url);
+      "&key=" + apiKey;
     return url;
   },
 
-  storeDetails(resultIndex, callback?) {
-    AsyncStorage.getItem("current results", (err, result) => {
-      fetch(this.buildDetailUrl(result, resultIndex))
-      .then((response) => response.json())
-      .then((responseJson) => {
-        //console.log(responseJson);
-        this.storeImageURLs(resultIndex, responseJson, 600, callback);
-        this.storeData(resultIndex, responseJson);
-      })
-      .catch((error) => {
-        console.log("error is " + error);
-      });
-    }).catch((error) => {
-      console.log("error is " + error);
-    });
-  },
+  extractDetailsData(json, apiKey, latitude, longitude, resultIndex) {
+    var name = json.result.name;
 
-  storeData(resultIndex, json) {
     var d = new Date();
     var currentDay = d.getDay();
 
@@ -83,15 +40,18 @@ module.exports = {
     var lat1 = json.result.geometry.location.lat;
     var lon1 = json.result.geometry.location.lng;
 
-    var distance = "" + Math.round(this.distance(lat1, lon1, this.latitude, this.longitude, 'M') * 100) / 100;
+    var distance = "" + Math.round(this.distance(lat1, lon1, latitude, longitude, 'M') * 100) / 100;
 
-    AsyncStorage.multiSet([["result " + resultIndex + " opening time", openingTime],
-                           ["result " + resultIndex + " closing time", closingTime],
-                           ["result " + resultIndex + " rating", rating],
-                           ["result " + resultIndex + " distance", distance]]
-                           ).catch((error) => {
-                             console.log("error is " + error);
-                           });
+    var object = {
+      name,
+      currentDay,
+      openingTime,
+      closingTime,
+      rating,
+      distance,
+    };
+
+    return object
   },
 
   distance(lat1, lon1, lat2, lon2, unit) {
@@ -124,54 +84,53 @@ module.exports = {
   },
 
   //TODO: find out a way to handle the case when there are no photos in a result
-  storeImageURLs(resultIndex, json, maxHeight, callback?) {
+  extractImageURLs(resultIndex, json, maxHeight, apiKey, callback?) {
     var photoReference = json.result.photos[0].photo_reference;
     var url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
+      "&key=" + apiKey;
     photoReference = json.result.photos[1].photo_reference;
     var url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
+      "&key=" + apiKey;
     photoReference = json.result.photos[2].photo_reference;
     var url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
+      "&key=" + apiKey;
     photoReference = json.result.photos[3].photo_reference;
     var url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
       "photoreference=" + photoReference +
       "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
-    var name = json.result.name;
+      "&key=" + apiKey;
 
-    AsyncStorage.multiSet([["result " + resultIndex + ", image 1", url1],
-                           ["result " + resultIndex + ", image 2", url2],
-                           ["result " + resultIndex + ", image 3", url3],
-                           ["result " + resultIndex + ", image 4", url4],
-                           ["result " + resultIndex + " name", name]],
-                           callback).catch((error) => {
-                             console.log("error is " + error);
-                           });
+    var object = {
+      url1,
+      url2,
+      url3,
+      url4
+    }
+
+    return object;
   },
 
   //TODO write this function and then use it to set the latitude and longitude
-  setCurrentLocation() {
-    // the following code is copy pasted from a different part of project and will
-    // not work as written:
-
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     var latitude = JSON.stringify(position.coords.latitude);
-    //     this.latitude = latitude;
-    //     var longitude = JSON.stringify(position.coords.longitude);
-    //     this.longitude = longitude;
-    //   },
-    //   (error) => alert(JSON.stringify(error)),
-    //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    // );
-  }
+  // setCurrentLocation() {
+  //   the following code is copy pasted from a different part of project and will
+  //   not work as written:
+  //
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       var latitude = JSON.stringify(position.coords.latitude);
+  //       this.latitude = latitude;
+  //       var longitude = JSON.stringify(position.coords.longitude);
+  //       this.longitude = longitude;
+  //     },
+  //     (error) => alert(JSON.stringify(error)),
+  //     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+  //   );
+  // }
 
 }
