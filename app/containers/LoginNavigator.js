@@ -65,7 +65,6 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     navigationState: state.navigationState,
-    // googleData: state.googleData,
     detailsData: state.googleData.detailsData,
     imageUrls: state.googleData.imageUrls,
   }

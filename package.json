@@ -16,5 +16,8 @@
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.1.0"
+  },
+  "devDependencies": {
+    "remote-redux-devtools": "^0.5.4"
   }
 }

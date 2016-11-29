@@ -1,5 +1,4 @@
-import * as types from './types';
-import * as themes from '../constants/themes';
+import * as types from './types'
 
 export function setCurrentTheme(theme) {
   var action =
