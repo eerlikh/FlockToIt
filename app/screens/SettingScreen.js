@@ -76,7 +76,7 @@ class SettingScreen extends Component {
               </View>
             </TouchableOpacity>
             {renderIf(this.state.showDiscoveryCriteria)(
-              <DiscoveryCriteriaView style={styles.DiscoveryCriteriaView} />
+              <DiscoveryCriteriaView {...this.props} style={styles.DiscoveryCriteriaView} />
             )}
           </View>
 

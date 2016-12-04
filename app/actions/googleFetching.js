@@ -6,12 +6,16 @@ import {constants} from '../constants'
 export function fetchAllData() {
   return (dispatch, getState) => {
 
+    dispatch(resetIndices());
+
     var radius = getState().settings.radius;
     var maxPrice = getState().settings.maxPrice;
 
-    console.log(constants);
-    dispatch(setCurrentTheme(constants.TEST_THEME));
-    var searchTerms = getState().settings.currentTheme;
+    if (getState().settings.theme === null) {
+      //TODO: make this get the current theme from some default or pre-set value somewhere (change from TEST_THEME)
+      dispatch(setCurrentTheme(constants.TEST_THEME));
+    }
+    var searchTerms = getState().settings.theme;
 
     for (var i = 0; i < searchTerms.length; i++) {
       dispatch(fetchResults(searchTerms[i], radius, maxPrice,
@@ -25,9 +29,10 @@ function fetchResults(name, radius, maxPrice, latitude, longitude, apiKey, index
     fetch(utils.buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, index))
     .then((response) => response.json())
     .then((responseJson) => {
-      dispatch(setResultsObject(responseJson, index));
+      //console.log(utils.extractResultsData(responseJson));
+      dispatch(setResultsObject(utils.extractResultsData(responseJson), index));
       if (index === 0) {
-        dispatch(fetchDetails(responseJson, 0));
+        dispatch(fetchDetails(0, 0));
       }
     })
     .catch((error) => {
@@ -36,15 +41,16 @@ function fetchResults(name, radius, maxPrice, latitude, longitude, apiKey, index
   }
 }
 
-export function fetchDetails(responseJson, index) {
+export function fetchDetails(resultsIndex, detailsIndex) {
   return (dispatch, getState) => {
-    fetch(utils.buildDetailsUrl(responseJson, index, constants.API_KEY, constants.LATITUDE, constants.LONGITUDE))
+    var placeId = getState().googleData.resultsObjects[resultsIndex].placeIds[detailsIndex];
+    fetch(utils.buildDetailsUrl(placeId, constants.API_KEY, constants.LATITUDE, constants.LONGITUDE))
     .then((response) => response.json())
     .then((responseJson) => {
       dispatch(setDetailsJson(responseJson));
       dispatch(setDetailsData(utils.extractDetailsData(
-        responseJson, constants.LATITUDE, constants.LONGITUDE, constants.API_KEY, index)));
-      dispatch(setImageUrls(utils.extractImageURLs(index, responseJson, 600, constants.API_KEY)));
+        responseJson, constants.LATITUDE, constants.LONGITUDE, detailsIndex)));
+      dispatch(setImageUrls(utils.extractImageURLs(detailsIndex, responseJson, 600, constants.API_KEY)));
     })
     .catch((error) => {
       console.log("error is " + error);
@@ -55,9 +61,8 @@ export function fetchDetails(responseJson, index) {
 export function iterateResult() {
   return (dispatch, getState) => {
     dispatch(iterateResultIndex());
-    //console.log(getState().googleData.currentDetailsIndices[getState().googleData.currentResultsIndex]);
     dispatch(fetchDetails(
-      getState().googleData.resultsObjects[getState().googleData.currentResultsIndex],
+      getState().googleData.currentResultsIndex,
       getState().googleData.currentDetailsIndices[getState().googleData.currentResultsIndex]));
   }
 }
@@ -103,6 +108,14 @@ function iterateResultIndex() {
   var action =
     {
       type: types.ITERATE_RESULT_INDEX,
+    };
+  return action;
+}
+
+export function resetIndices() {
+  var action =
+    {
+      type: types.RESET_INDICES,
     };
   return action;
 }

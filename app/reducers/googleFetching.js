@@ -60,7 +60,7 @@ export const googleData = createReducer({
       return object;
     },
 
-    [types.SET_CURRENT_THEME](state, action) {
+    [types.SET_THEME](state, action) {
 
       var resultsObjects = new Array(action.theme.length);
       resultsObjects.fill(null);
@@ -101,5 +101,15 @@ export const googleData = createReducer({
         currentResultsIndex
       }
       return object;
-    }
+    },
+
+    [types.RESET_INDICES](state, action) {
+
+      var object = {
+        ...state,
+        currentDetailsIndices: [0],
+        currentResultsIndex: 0,
+      }
+      return object;
+    },
 });

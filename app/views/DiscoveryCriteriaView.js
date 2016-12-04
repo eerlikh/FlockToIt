@@ -1,6 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import {constants} from '../constants'
 var Slider = require('react-native-slider');
 
 class DiscoveryCriteriaView extends Component {
@@ -18,39 +19,86 @@ class DiscoveryCriteriaView extends Component {
       <View style={styles.DiscoveryCriteriaContainer}>
         <Text style={styles.selectActivity}>Select Activity:</Text>
         <View style={styles.discoveryImageContainer}>
-          <Image style={styles.discoveryImage} source={require('../img/themes/notEat.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/themes/notDrink.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/themes/notChill.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/themes/notAdventure.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/themes/notCulture.png')} />
-          <Image style={styles.discoveryImage} source={require('../img/themes/Mystery.png')} />
+          <TouchableOpacity onPress={this.EatPressed.bind(this)}>
+            <Image style={styles.discoveryImage} source={require('../img/themes/notEat.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.DrinkPressed.bind(this)}>
+            <Image style={styles.discoveryImage} source={require('../img/themes/notDrink.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.ChillPressed.bind(this)}>
+            <Image style={styles.discoveryImage} source={require('../img/themes/notChill.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.AdventurePressed.bind(this)}>
+            <Image style={styles.discoveryImage} source={require('../img/themes/notAdventure.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.CulturePressed.bind(this)}>
+            <Image style={styles.discoveryImage} source={require('../img/themes/notCulture.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.MysteryPressed.bind(this)}>
+            <Image style={styles.discoveryImage} source={require('../img/themes/Mystery.png')} />
+          </TouchableOpacity>
         </View>
         <View style={styles.sliderTitleContainer}>
           <View style={styles.sliderText}>
-            <Text>Search Radius: {this.state.distance.toFixed(0)} miles </Text>
+            <Text>Search Radius: {this.state.distance.toFixed(0)} meters </Text>
           </View>
           <View style={styles.sliderContainer}>
             <Slider
               minimumValue={0}
-              maximumValue={100}
+              maximumValue={50000}
               value={this.state.distance}
               onValueChange={(distance) => this.setState({distance})} />
           </View>
         </View>
         <View style={styles.sliderTitleContainer}>
           <View style={styles.sliderText}>
-            <Text>Price Range: {this.state.price.toFixed(0)} dollars </Text>
+            <Text>Price Range: {this.state.price.toFixed(0)} dollar signs </Text>
           </View>
           <View style={styles.sliderContainer}>
             <Slider
               minimumValue={0}
-              maximumValue={100}
+              maximumValue={4}
               value={this.state.price}
               onValueChange={(price) => this.setState({price})} />
           </View>
         </View>
+        <View>
+          <TouchableOpacity onPress={this.SavePressed.bind(this)}>
+            <Text>Save</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
+  }
+
+  EatPressed(){
+    this.props.setCurrentTheme(constants.EAT_THEME);
+  }
+
+  DrinkPressed(){
+    this.props.setCurrentTheme(constants.DRINK_THEME);
+  }
+
+  ChillPressed(){
+    this.props.setCurrentTheme(constants.CHILL_THEME);
+  }
+
+  AdventurePressed(){
+    this.props.setCurrentTheme(constants.ADVENTURE_THEME);
+  }
+
+  CulturePressed(){
+    this.props.setCurrentTheme(constants.CULTURE_THEME);
+  }
+
+  MysteryPressed(){
+    this.props.setCurrentTheme(constants.MYSTERY_THEME);
+  }
+
+  SavePressed(){
+    this.props.setRadius(this.state.distance.toFixed(0));
+    this.props.setPrice(this.state.price.toFixed(0));
+    this.props.fetchAllData();
   }
 }
 

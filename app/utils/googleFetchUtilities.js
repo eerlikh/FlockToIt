@@ -15,15 +15,36 @@ module.exports = {
     );
   },
 
-  buildDetailsUrl(resultsJson, resultIndex, apiKey, latitude, longitude) {
-    var placeId = resultsJson.results[resultIndex].place_id;
+  buildDetailsUrl(placeId, apiKey, latitude, longitude) {
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
       "placeid=" + placeId +
       "&key=" + apiKey;
     return url;
   },
 
-  extractDetailsData(json, apiKey, latitude, longitude, resultIndex) {
+  extractResultsData(json) {
+    var nextPageToken = json.next_page_token;
+
+    var placeIds = new Array(json.results.length);
+    for (var i = 0; i < placeIds.length; i++) {
+      placeIds[i] = json.results[i].place_id;
+    }
+
+    var names = new Array(json.results.length);
+    for (var i = 0; i < names.length; i++) {
+      names[i] = json.results[i].name;
+    }
+
+    var object = {
+      nextPageToken,
+      placeIds,
+      names
+    }
+
+    return object;
+  },
+
+  extractDetailsData(json, latitude, longitude, resultIndex) {
     var name = json.result.name;
 
     var d = new Date();
