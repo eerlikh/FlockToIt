@@ -4,11 +4,12 @@
 module.exports = {
 
   buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, pageToken?){
+    //https://maps.googleapis.com/maps/api/place/textsearch/json?radius=50000&query=paintball&location=38.900271,-76.989289&key=AIzaSyAm_J6lNvrsnHrKMJYXILl6SqgRNCYbm9k&maxprice=4
     var string = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     return string.concat(
       "radius=" + radius +
-      "&name=" + name.replace(/\s/g, '+') +
-      "&maxprice=" + maxPrice +
+      "&name=" + name +
+      //"&maxprice=" + maxPrice +
       "&location=" + latitude + "," + longitude + //TODO: make this actually use geolocation
       "&key=" + apiKey
       //TODO: add pageToken once you figure out how that should work
@@ -47,14 +48,16 @@ module.exports = {
   extractDetailsData(json, latitude, longitude, resultIndex) {
     var name = json.result.name;
 
-    var d = new Date();
-    var currentDay = d.getDay();
-
-    var openingTime = json.result.opening_hours.periods[currentDay].open.time + "";
-    openingTime = this.convertTime(openingTime);
-
-    var closingTime = json.result.opening_hours.periods[currentDay].close.time + "";
-    closingTime = this.convertTime(closingTime);
+    //TODO: figure out way to handle lack of hours data
+    // var d = new Date();
+    // var currentDay = d.getDay();
+    //
+    //
+    // var openingTime = json.result.opening_hours.periods[currentDay].open.time + "";
+    // openingTime = this.convertTime(openingTime);
+    //
+    // var closingTime = json.result.opening_hours.periods[currentDay].close.time + "";
+    // closingTime = this.convertTime(closingTime);
 
     var rating = "" + json.result.rating;
 
@@ -65,9 +68,10 @@ module.exports = {
 
     var object = {
       name,
-      currentDay,
-      openingTime,
-      closingTime,
+      //TODO: figure out way to handle lack of hours data
+      // currentDay,
+      //openingTime,
+      //closingTime,
       rating,
       distance,
     };
@@ -106,26 +110,42 @@ module.exports = {
 
   //TODO: find out a way to handle the case when there are no photos in a result
   extractImageURLs(resultIndex, json, maxHeight, apiKey, callback?) {
-    var photoReference = json.result.photos[0].photo_reference;
-    var url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + apiKey;
-    photoReference = json.result.photos[1].photo_reference;
-    var url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + apiKey;
-    photoReference = json.result.photos[2].photo_reference;
-    var url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + apiKey;
-    photoReference = json.result.photos[3].photo_reference;
-    var url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + apiKey;
+    var url1 = "https://placehold.it/400x400";
+    var url2 = "https://placehold.it/400x400";
+    var url3 = "https://placehold.it/400x400";
+    var url4 = "https://placehold.it/400x400";
+
+    if (json.result.photos) {
+
+      if (json.result.photos[0]) {
+        var photoReference = json.result.photos[0].photo_reference;
+        url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+      if (json.result.photos[1]) {
+        var photoReference = json.result.photos[1].photo_reference;
+        url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+      if (json.result.photos[2]) {
+        var photoReference = json.result.photos[2].photo_reference;
+        url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+      if (json.result.photos[3]) {
+        var photoReference = json.result.photos[3].photo_reference;
+        url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+    }
 
     var object = {
       url1,

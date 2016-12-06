@@ -13,7 +13,7 @@ export function fetchAllData() {
 
     if (getState().settings.theme === null) {
       //TODO: make this get the current theme from some default or pre-set value somewhere (change from TEST_THEME)
-      dispatch(setCurrentTheme(constants.TEST_THEME));
+      dispatch(setCurrentTheme(constants.ADVENTURE_THEME));
     }
     var searchTerms = getState().settings.theme;
 
@@ -24,12 +24,22 @@ export function fetchAllData() {
   }
 }
 
+export function iterateResult() {
+  return (dispatch, getState) => {
+    dispatch(iterateResultIndex());
+    dispatch(fetchDetails(
+      getState().googleData.currentResultsIndex,
+      getState().googleData.currentDetailsIndices[getState().googleData.currentResultsIndex]));
+  }
+}
+
 function fetchResults(name, radius, maxPrice, latitude, longitude, apiKey, index) {
   return (dispatch, getState) => {
     fetch(utils.buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, index))
     .then((response) => response.json())
     .then((responseJson) => {
-      //console.log(utils.extractResultsData(responseJson));
+      console.log(name + ":");
+      console.log(responseJson);
       dispatch(setResultsObject(utils.extractResultsData(responseJson), index));
       if (index === 0) {
         dispatch(fetchDetails(0, 0));
@@ -41,7 +51,7 @@ function fetchResults(name, radius, maxPrice, latitude, longitude, apiKey, index
   }
 }
 
-export function fetchDetails(resultsIndex, detailsIndex) {
+function fetchDetails(resultsIndex, detailsIndex) {
   return (dispatch, getState) => {
     var placeId = getState().googleData.resultsObjects[resultsIndex].placeIds[detailsIndex];
     fetch(utils.buildDetailsUrl(placeId, constants.API_KEY, constants.LATITUDE, constants.LONGITUDE))
@@ -55,15 +65,6 @@ export function fetchDetails(resultsIndex, detailsIndex) {
     .catch((error) => {
       console.log("error is " + error);
     });
-  }
-}
-
-export function iterateResult() {
-  return (dispatch, getState) => {
-    dispatch(iterateResultIndex());
-    dispatch(fetchDetails(
-      getState().googleData.currentResultsIndex,
-      getState().googleData.currentDetailsIndices[getState().googleData.currentResultsIndex]));
   }
 }
 
@@ -112,7 +113,7 @@ function iterateResultIndex() {
   return action;
 }
 
-export function resetIndices() {
+function resetIndices() {
   var action =
     {
       type: types.RESET_INDICES,

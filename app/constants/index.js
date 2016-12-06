@@ -1,7 +1,7 @@
 import * as variousConstants from './themes'
-import * as themesConstants from './various'
+import * as themeConstants from './various'
 
 export const constants = Object.assign({},
   variousConstants,
-  themesConstants,
+  themeConstants,
 );
