@@ -18,7 +18,7 @@ export default function configureStore(initialState) {
   return createStore(reducer, initialState, enhancer);
 }
 
-// TODO: enable hot reloading with following code:
+// enable hot reloading with following code:
 
 // export default function configureStore () {
 //   const store = createStore(rootReducer)

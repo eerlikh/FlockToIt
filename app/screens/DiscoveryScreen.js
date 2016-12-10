@@ -1,6 +1,7 @@
 'use strict';
 import React, { Component } from 'react';
 import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import {constants} from '../constants'
 
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
@@ -83,17 +84,17 @@ class DiscoveryScreen extends Component {
   }
 
   SettingsPressed(){
-    this.props.navigateBack("Main Navigator");
+    this.props.navigateBack(constants.MAIN_NAVIGATOR);
   }
   DashboardPressed(){
-    this.props.navigateForward("Main Navigator");
+    this.props.navigateForward(constants.MAIN_NAVIGATOR);
   }
   LikePressed(){
-    this.props.push("Discovery Navigator", { key: 'Details' } );
+    this.props.push(constants.DISCOVERY_NAVIGATOR, { key: 'Details' } );
   }
 
   XPressed(){
-    this.props.iterateResult() //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
+    this.props.iterateResult()
   }
 
 }

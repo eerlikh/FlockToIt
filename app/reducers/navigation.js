@@ -2,6 +2,13 @@ import ReactNative from 'react-native';
 const { NavigationExperimental, StatusBar} = ReactNative;
 import createReducer from '../utils/createReducer'
 import * as types from '../actions/types'
+import { constants } from '../constants'
+
+const {
+  LOGIN_NAVIGATOR,
+  MAIN_NAVIGATOR,
+  DISCOVERY_NAVIGATOR
+} = constants
 
 const {
   CardStack: NavigationCardStack,
@@ -32,92 +39,79 @@ export const navigationState = createReducer({
     }
   }, {
 
-    //TODO: refactor these 2 functions so that there aren't two large sections of nearly identical code in each one
     [types.NAVIGATION_FORWARD](state, action) {
-      if (action.navigatorType === "Login Navigator") {
-        var object = {
+      if (action.navigatorType === LOGIN_NAVIGATOR) {
+        return {
           ...state,
           loginNavigationState: NavigationStateUtils.forward(state.loginNavigationState),
         }
-        return object;
-      } else if (action.navigatorType === "Main Navigator") {
-        var object = {
+      } else if (action.navigatorType === MAIN_NAVIGATOR) {
+        return {
           ...state,
           mainNavigationState: NavigationStateUtils.forward(state.mainNavigationState),
         }
-        return object;
-      } else if (action.navigatorType === "Discovery Navigator") {
-        var object = {
+      } else if (action.navigatorType === DISCOVERY_NAVIGATOR) {
+        return {
           ...state,
           discoveryNavigationState: NavigationStateUtils.forward(state.discoveryNavigationState),
         }
-        return object;
       }
     },
 
     [types.NAVIGATION_BACK](state, action) {
-      if (action.navigatorType === "Login Navigator") {
-        var object = {
+      if (action.navigatorType === LOGIN_NAVIGATOR) {
+        return {
           ...state,
           loginNavigationState: NavigationStateUtils.back(state.loginNavigationState),
-        };
-        return object;
-      } else if (action.navigatorType === "Main Navigator") {
-        var object = {
+        }
+      } else if (action.navigatorType === MAIN_NAVIGATOR) {
+        return {
           ...state,
           mainNavigationState: NavigationStateUtils.back(state.mainNavigationState),
         }
-        return object;
-      } else if (action.navigatorType === "Discovery Navigator") {
-        var object = {
+      } else if (action.navigatorType === DISCOVERY_NAVIGATOR) {
+        return {
           ...state,
           discoveryNavigationState: NavigationStateUtils.forward(state.discoveryNavigationState),
         }
-        return object;
       }
     },
 
     [types.PUSH](state, action) {
-      if (action.navigatorType === "Login Navigator") {
-        var object = {
+      if (action.navigatorType === LOGIN_NAVIGATOR) {
+        return {
           ...state,
           loginNavigationState: NavigationStateUtils.push(state.loginNavigationState, action.route),
-        };
-        return object;
-      } else if (action.navigatorType === "Main Navigator") {
-        var object = {
+        }
+      } else if (action.navigatorType === MAIN_NAVIGATOR) {
+        return {
           ...state,
           mainNavigationState: NavigationStateUtils.push(state.mainNavigationState, action.route),
         }
-        return object;
-      } else if (action.navigatorType === "Discovery Navigator") {
-        var object = {
+      } else if (action.navigatorType === DISCOVERY_NAVIGATOR) {
+        return {
           ...state,
           discoveryNavigationState: NavigationStateUtils.push(state.discoveryNavigationState, action.route),
         }
-        return object;
       }
     },
 
     [types.POP](state, action) {
-      if (action.navigatorType === "Login Navigator") {
-        var object = {
+      if (action.navigatorType === LOGIN_NAVIGATOR) {
+        return {
           ...state,
           loginNavigationState: NavigationStateUtils.pop(state.loginNavigationState),
-        };
-        return object;
-      } else if (action.navigatorType === "Main Navigator") {
-        var object = {
+        }
+      } else if (action.navigatorType === MAIN_NAVIGATOR) {
+        return {
           ...state,
           mainNavigationState: NavigationStateUtils.pop(state.mainNavigationState),
         }
-        return object;
-      } else if (action.navigatorType === "Discovery Navigator") {
-        var object = {
+      } else if (action.navigatorType === DISCOVERY_NAVIGATOR) {
+        return {
           ...state,
           discoveryNavigationState: NavigationStateUtils.pop(state.discoveryNavigationState),
         }
-        return object;
       }
     },
 });

@@ -3,32 +3,44 @@ import * as types from '../actions/types'
 
 export const settings = createReducer({
     theme: null,
-    radius: 50000,
+    radius: 25000,
     maxPrice: 4
   }, {
 
     [types.SET_THEME](state, action) {
-      var object = {
+      return {
         ...state,
         theme: action.theme,
       }
-      return object;
     },
 
     [types.SET_RADIUS](state, action) {
-      var object = {
+      return {
         ...state,
         radius: action.radius,
       }
-      return object;
     },
 
     [types.SET_PRICE](state, action) {
-      var object = {
+      return {
         ...state,
         maxPrice: action.price,
       }
-      return object;
+    },
+
+    [types.SET_LOCATION](state, action) {
+      return {
+        ...state,
+        latitude: action.latitude,
+        longitude: action.longitude,
+      }
+    },
+
+    [types.SHUFFLE_CURRENT_THEME](state, action) {
+      return {
+        ...state,
+        theme: action.theme,
+      }
     },
 
 });

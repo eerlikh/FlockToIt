@@ -5,6 +5,7 @@ import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
+import {constants} from '../constants'
 
 class LocationDetailScreen extends Component {
   constructor(props){
@@ -43,7 +44,7 @@ class LocationDetailScreen extends Component {
             </View>
             <View style={styles.locationDetailRowContainer}>
               <Text>Distance: {this.props.detailsData.distance} mi</Text>
-              <Text>Hours: {this.props.detailsData.openingTime} - {this.props.detailsData.closingTime}</Text>
+              <Text>{this.props.detailsData.hours}</Text>
             </View>
           </View>
         </View>
@@ -77,11 +78,11 @@ class LocationDetailScreen extends Component {
   }
 
   LikePressed(){
-    this.props.pop("Discovery Navigator");
+    this.props.pop(constants.DISCOVERY_NAVIGATOR);
   }
 
   XPressed(){
-    this.props.pop("Discovery Navigator");
+    this.props.pop(constants.DISCOVERY_NAVIGATOR);
   }
 }
 

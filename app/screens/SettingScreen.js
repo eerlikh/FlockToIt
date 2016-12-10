@@ -10,6 +10,7 @@ import HelpSupportView from '../views/HelpSupportView'
 import LegalPrivacyView from '../views/LegalPrivacyView'
 import renderIf from '../components/renderIf'
 import Login from '../components/Login'
+import {constants} from '../constants'
 
 class SettingScreen extends Component {
   constructor(props){
@@ -130,9 +131,10 @@ class SettingScreen extends Component {
   }
 
   DiscoveryPressed(){
-    this.props.navigateForward("Main Navigator");
-;
+    this.props.navigateForward(constants.MAIN_NAVIGATOR);
   }
+
+  //TODO: consider putting these functions into redux
   DiscoveryCriteriaPressed(){
     this.setState({showDiscoveryCriteria: !this.state.showDiscoveryCriteria});
     this.setState({showSuggestAchievement: false});

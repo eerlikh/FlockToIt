@@ -1,16 +1,17 @@
 import createReducer from '../utils/createReducer'
 import * as types from '../actions/types'
+import {constants} from '../constants'
 
 export const googleData = createReducer({
     currentDetailsIndices: [0],
     resultsObjects: [],
     currentResultsIndex: 0,
+    nextTermInThemeIndex: constants.NO_OF_TERMS_TO_SEARCH_AT_ONCE,
     detailsJson: null,
     detailsData: {
       name: "",
       currentDay: "",
-      openingTime: "",
-      closingTime: "",
+      hours: "",
       rating: "",
       distance: "",
     },
@@ -29,47 +30,42 @@ export const googleData = createReducer({
 
       newResultsObjects[action.index] = action.resultsObject;
 
-      var object = {
+      return {
         ...state,
         resultsObjects: newResultsObjects,
       }
-      return object;
     },
 
     [types.SET_DETAILS_JSON](state, action) {
-      var object = {
+      return {
         ...state,
         detailsJson: action.detailsJson,
       }
-      return object;
     },
 
     [types.SET_DETAILS_DATA](state, action) {
-      var object = {
+      return {
         ...state,
         detailsData: action.detailsData,
       }
-      return object;
     },
 
     [types.SET_IMAGE_URLS](state, action) {
-      var object = {
+      return {
         ...state,
         imageUrls: action.imageUrls,
       }
-      return object;
     },
 
     [types.SET_THEME](state, action) {
 
-      var resultsObjects = new Array(action.theme.length);
+      var resultsObjects = new Array(constants.NO_OF_TERMS_TO_SEARCH_AT_ONCE);
       resultsObjects.fill(null);
 
-      var object = {
+      return {
         ...state,
         resultsObjects,
       }
-      return object;
     },
 
     [types.ITERATE_RESULT_INDEX](state, action) {
@@ -95,21 +91,41 @@ export const googleData = createReducer({
         ...state.currentDetailsIndices.slice(currentResultsIndex + 1)
       ]
 
-      var object = {
+      return {
         ...state,
         currentDetailsIndices,
         currentResultsIndex
       }
-      return object;
     },
 
-    [types.RESET_INDICES](state, action) {
+    [types.RESET_ALL_INDICES](state, action) {
 
-      var object = {
+      return {
         ...state,
         currentDetailsIndices: [0],
         currentResultsIndex: 0,
       }
-      return object;
     },
+
+    [types.RESET_CURRENT_INDICES](state, action) {
+
+      var currentDetailsIndices = [
+        ...state.currentDetailsIndices.slice(0, state.currentResultsIndex),
+        0,
+        ...state.currentDetailsIndices.slice(state.currentResultsIndex + 1)
+      ]
+
+      return {
+        ...state,
+        currentDetailsIndices //TODO: rename "currentDetailsIndices to something better"
+      }
+    },
+
+    [types.ITERATE_NEXT_TERM_IN_THEME_INDEX](state, action) {
+      return {
+        ...state,
+        nextTermInThemeIndex: state.nextTermInThemeIndex + 1,
+      }
+    },
+
 });

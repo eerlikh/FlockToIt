@@ -10,6 +10,7 @@ import MatchedLocationsView from '../views/MatchedLocationsView'
 import GlobalRankView from '../views/GlobalRankView'
 import DashNavBar from '../components/DashNavBar'
 import renderIf from '../components/renderIf'
+import {constants} from '../constants'
 
 class DashboardScreen extends Component {
   constructor(props){
@@ -108,7 +109,7 @@ class DashboardScreen extends Component {
   }
 
   DiscoveryPressed(){
-    this.props.navigateBack("Main Navigator");
+    this.props.navigateBack(constants.MAIN_NAVIGATOR);
 ;
   }
 

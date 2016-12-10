@@ -8,6 +8,7 @@ import FBAccessTokenManager from '../utils/FBAccessTokenManager'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
+import {constants} from '../constants'
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -62,7 +63,7 @@ class LoginScreen extends Component {
 
   LoginPressed(){
     FBAccessTokenManager.setFacebookData();
-    this.props.navigateForward("Login Navigator");
+    this.props.navigateForward(constants.LOGIN_NAVIGATOR);
   }
 
 }
