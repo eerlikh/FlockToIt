@@ -5,7 +5,6 @@ import { ActionCreators } from '../actions'
 import LoginScreen from '../screens/LoginScreen'
 import MainNavigator from './MainNavigator'
 import styles from './styles';
-
 import {
   View,
   NavigationExperimental,
@@ -66,6 +65,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     navigationState: state.navigationState,
+    detailsData: state.googleData.detailsData,
+    imageUrls: state.googleData.imageUrls,
   }
 }
 

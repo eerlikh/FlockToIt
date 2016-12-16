@@ -8,6 +8,7 @@ import FBAccessTokenManager from '../utils/FBAccessTokenManager'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
+import {constants} from '../constants'
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -54,15 +55,15 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
-    //have to wait for scenes to be rendered or animation will not display properly
+    //have to wait for scenes to be rendered in advance or animation will not display properly
     setTimeout(() => {
       this.autoLogin();
-    }, 100);
+    }, 300);
   }
 
   LoginPressed(){
     FBAccessTokenManager.setFacebookData();
-    this.props.navigateForward("Login Navigator");
+    this.props.navigateForward(constants.LOGIN_NAVIGATOR);
   }
 
 }

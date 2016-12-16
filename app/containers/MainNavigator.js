@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../actions'
 import SettingScreen from '../screens/SettingScreen'
 import DiscoveryNavigator from '../containers/DiscoveryNavigator'
 import DashboardScreen from '../screens/DashboardScreen'
@@ -15,7 +12,7 @@ import {
 
 const { CardStack: NavigationCardStack } = NavigationExperimental;
 
-class LoginNavigator extends Component {
+class MainNavigator extends Component {
   constructor(props) {
     super(props)
 
@@ -69,15 +66,4 @@ class LoginNavigator extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ActionCreators, dispatch);
-}
-
-function mapStateToProps(state) {
-  return {
-    navigationState: state.navigationState,
-    googleData: state.googleData
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginNavigator);
+module.exports = MainNavigator;

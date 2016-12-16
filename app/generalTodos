@@ -1,0 +1,1 @@
+//TODO: throughout the app, instead of hiding nested function calls inside of other function definitions, surface all of the calls in the first function by using promises and/or callbacks

@@ -1,102 +1,72 @@
-//TODO write utility functions for getting various information from the current details JSON
-//TODO create some latitude and longitude constants for different locations
-
-'use strict'
-
-var React = require("react-native");
-var {
-    AsyncStorage
-} = React;
-
 module.exports = {
 
-  apiKey: "AIzaSyAm_J6lNvrsnHrKMJYXILl6SqgRNCYbm9k",
-  latitude: "38.900271",
-  longitude: "-76.989289",
-
-  //"maxPrice" is an integer from 0 to 4
-  //"pageToken" is an optional parameter that must be taken from the last results
-  buildNearbyUrl(name, radius, maxPrice, pageToken?){
+  buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, pageToken?){
     var string = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     return string.concat(
+      (pageToken ? ("pagetoken=" + pageToken + "&") : "") +
       "radius=" + radius +
-      "&name=" + name.replace(/\s/g, '+') +
-      "&maxprice=" + maxPrice +
-      "&location=" + this.latitude + "," + this.longitude + //TODO: make this actually use geolocation
-      "&key=" + this.apiKey
-      //TODO: add pageToken once you figure out how that should work
+      "&name=" + name +
+      //"&maxprice=" + maxPrice + //TODO: handle missing price data (searching for it will omit results so dont do it)
+      "&location=" + latitude + "," + longitude +
+      "&key=" + apiKey
     );
   },
 
-  storeResults(name, radius, maxPrice, callback?, pageToken?) {
-    fetch(this.buildNearbyUrl(name, radius, maxPrice, pageToken))
-    .then((response) => response.json())
-    .then((responseJson) => {
-      AsyncStorage.setItem("current results", JSON.stringify(responseJson), () => {
-        this.storeDetails(0, callback);
-      });
-    })
-    .catch((error) => {
-      console.log("error is " + error);
-    });
-  },
-
-  buildDetailUrl(result, resultIndex) {
-    var jsonResults = JSON.parse(result);
-    var placeId = jsonResults.results[resultIndex].place_id;
+  buildDetailsUrl(placeId, apiKey, latitude, longitude) {
     var url = "https://maps.googleapis.com/maps/api/place/details/json?" +
       "placeid=" + placeId +
-      "&key=" + this.apiKey;
+      "&key=" + apiKey;
     return url;
   },
 
-  storeDetails(resultIndex, callback?) {
-    AsyncStorage.getItem("current results", (err, result) => {
-      fetch(this.buildDetailUrl(result, resultIndex))
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        this.storeImageURLs(resultIndex, responseJson, 600, callback);
-        this.storeData(resultIndex, responseJson);
-      })
-      .catch((error) => {
-        console.log("error is " + error);
-      });
-    }).catch((error) => {
-      console.log("error is " + error);
-    });
+  extractResultsData(json) {
+    var nextPageToken = json.next_page_token;
+
+    var placeIds = new Array(json.results.length);
+    for (var i = 0; i < placeIds.length; i++) {
+      placeIds[i] = json.results[i].place_id;
+    }
+
+    var names = new Array(json.results.length);
+    for (var i = 0; i < names.length; i++) {
+      names[i] = json.results[i].name;
+    }
+
+    return {
+      nextPageToken,
+      placeIds,
+      names
+    }
   },
 
-  storeData(resultIndex, json) {
+  extractDetailsData(json, latitude, longitude, resultIndex) {
+    var name = json.result.name;
+
     var d = new Date();
     var currentDay = d.getDay();
 
-    var openingTime = json.result.opening_hours.periods[currentDay].open.time + "";
-    openingTime = this.convertTime(openingTime);
-    console.log(openingTime);
+    var hours = "hours not listed";
+    if (json.result.opening_hours) {
+      hours = json.result.opening_hours.weekday_text[currentDay];
+    }
 
-    var closingTime = json.result.opening_hours.periods[currentDay].close.time + "";
-    closingTime = this.convertTime(closingTime);
-    console.log(closingTime);
-
-    var rating = "" + json.result.rating;
-    console.log(rating);
+    var rating = "no rating"
+    if (json.result.rating) {
+      rating = "" + json.result.rating;
+    }
 
     var lat1 = json.result.geometry.location.lat;
-    console.log(lat1);
     var lon1 = json.result.geometry.location.lng;
-    console.log(lon1);
 
-    var distance = "" + Math.round(this.distance(lat1, lon1, this.latitude, this.longitude, 'M') * 100) / 100;
-    console.log(distance);
+    var distance = "" + Math.round(this.distance(lat1, lon1, latitude, longitude, 'M') * 100) / 100;
 
-    AsyncStorage.multiSet([["result " + resultIndex + " opening time", openingTime],
-                           ["result " + resultIndex + " closing time", closingTime],
-                           ["result " + resultIndex + " rating", rating],
-                           ["result " + resultIndex + " distance", distance]]
-                           ).catch((error) => {
-                             console.log("error is " + error);
-                           });
+    return {
+      name,
+      currentDay,
+      hours,
+      rating,
+      distance,
+    }
   },
 
   distance(lat1, lon1, lat2, lon2, unit) {
@@ -113,70 +83,50 @@ module.exports = {
   	return dist
   },
 
-  convertTime(input) {
+  extractImageURLs(resultIndex, json, maxHeight, apiKey, callback?) {
+    var url1 = "https://placehold.it/400x400";
+    var url2 = "https://placehold.it/400x400";
+    var url3 = "https://placehold.it/400x400";
+    var url4 = "https://placehold.it/400x400";
 
-    var time = input.charAt(0) + input.charAt(1) + ":" + input.charAt(2) + input.charAt(3) +  ":00"; // your input
-    time = time.split(':'); // convert to array
+    if (json.result.photos) {
 
-    var hours = Number(time[0]);
-    var minutes = Number(time[1]);
+      if (json.result.photos[0]) {
+        var photoReference = json.result.photos[0].photo_reference;
+        url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+      if (json.result.photos[1]) {
+        var photoReference = json.result.photos[1].photo_reference;
+        url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+      if (json.result.photos[2]) {
+        var photoReference = json.result.photos[2].photo_reference;
+        url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+      if (json.result.photos[3]) {
+        var photoReference = json.result.photos[3].photo_reference;
+        url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
+    }
 
-    var timeValue = "" + ((hours >12) ? hours - 12 : hours);  // get hours
-    timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
-    timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
-
-    return timeValue;
+    return {
+      url1,
+      url2,
+      url3,
+      url4
+    }
   },
-
-  //TODO: find out a way to handle the case when there are no photos in a result
-  storeImageURLs(resultIndex, json, maxHeight, callback?) {
-    var photoReference = json.result.photos[0].photo_reference;
-    var url1 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
-    photoReference = json.result.photos[1].photo_reference;
-    var url2 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
-    photoReference = json.result.photos[2].photo_reference;
-    var url3 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
-    photoReference = json.result.photos[3].photo_reference;
-    var url4 = "https://maps.googleapis.com/maps/api/place/photo?" +
-      "photoreference=" + photoReference +
-      "&maxheight=" + maxHeight +
-      "&key=" + this.apiKey;
-    var name = json.result.name;
-
-    AsyncStorage.multiSet([["result " + resultIndex + ", image 1", url1],
-                           ["result " + resultIndex + ", image 2", url2],
-                           ["result " + resultIndex + ", image 3", url3],
-                           ["result " + resultIndex + ", image 4", url4],
-                           ["result " + resultIndex + " name", name]],
-                           callback).catch((error) => {
-                             console.log("error is " + error);
-                           });
-  },
-
-  //TODO write this function and then use it to set the latitude and longitude
-  setCurrentLocation() {
-    // the following code is copy pasted from a different part of project and will
-    // not work as written:
-
-    // navigator.geolocation.getCurrentPosition(
-    //   (position) => {
-    //     var latitude = JSON.stringify(position.coords.latitude);
-    //     this.latitude = latitude;
-    //     var longitude = JSON.stringify(position.coords.longitude);
-    //     this.longitude = longitude;
-    //   },
-    //   (error) => alert(JSON.stringify(error)),
-    //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    // );
-  }
 
 }
