@@ -5,17 +5,12 @@ import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
-import GoogleFetchUtilities from '../utils/GoogleFetchUtilities'
-
-var Geolocation = require('Geolocation');
-
 
 class LocationDetailScreen extends Component {
   constructor(props){
     super(props);
     this.state = {
       showProgress: false,
-      resultIndex: this.props.resultIndex,
       uri0: "https://placehold.it/400x400",
       uri1: "https://placehold.it/400x400",
       uri2: "https://placehold.it/400x400",
@@ -30,30 +25,33 @@ class LocationDetailScreen extends Component {
     this.setImageUris();
   }
   setImageUris() {
-    AsyncStorage.multiGet(["result " + this.state.resultIndex + ", image 1"], (err, stores) => {
+    console.log("multiGet about to be called");
+    AsyncStorage.multiGet(["result " + this.props.googleData.currentResultIndex + ", image 1"], (err, stores) => {
       stores.map((result, i, store) => {
         let val = store[i][1];
         this.setState({ ["uri" + i]: val });
       });
+      console.log("multiGet called");
     });
 
     this.setData();
   }
 
   setData() {
-    AsyncStorage.getItem("result " + this.state.resultIndex + " name", (err, result) => {
+    console.log(this.state);
+    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " name", (err, result) => {
       this.setState({ name: result });
     });
-    AsyncStorage.getItem("result " + this.state.resultIndex + " opening time", (err, result) => {
+    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " opening time", (err, result) => {
       this.setState({ openingTime: result });
     });
-    AsyncStorage.getItem("result " + this.state.resultIndex + " closing time", (err, result) => {
+    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " closing time", (err, result) => {
       this.setState({ closingTime: result });
     });
-    AsyncStorage.getItem("result " + this.state.resultIndex + " rating", (err, result) => {
+    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " rating", (err, result) => {
       this.setState({ rating: result });
     });
-    AsyncStorage.getItem("result " + this.state.resultIndex + " distance", (err, result) => {
+    AsyncStorage.getItem("result " + this.props.googleData.currentResultIndex + " distance", (err, result) => {
       this.setState({ distance: result });
     });
   }
@@ -74,7 +72,6 @@ class LocationDetailScreen extends Component {
             <Text style={styles.discoveryHeader}>{this.state.name}</Text>
           </View>
           <View style={styles.discoveryPhotoContainer}>
-            {/*<Image style={styles.venuePhoto} source={require('../img/sampleFood01.jpg')} /> */}
             <Image style={styles.venuePhoto} source={{uri: this.state.uri0}} />
           </View>
           <View style={styles.locationDetailColumnContainer}>
@@ -94,12 +91,6 @@ class LocationDetailScreen extends Component {
               <Text>Hours: {this.state.openingTime} - {this.state.closingTime}</Text>
             </View>
           </View>
-        <View>
-          <Text>{this.state.name}</Text>
-          <Text>{this.state.openingTime}</Text>
-          <Text>{this.state.closingTime}</Text>
-          <Text>{this.state.rating}</Text>
-          <Text>{this.state.distance}</Text>
         </View>
         <DiscoveryNav>
           <View style={styles.discoveryNav}>
@@ -129,18 +120,13 @@ class LocationDetailScreen extends Component {
       </ViewContainer>
     );
   }
+
   LikePressed(){
-      this.props.navigator.push({
-        name: "discoveryscreen",
-        resultIndex: this.state.resultIndex,
-      })
-    }
+    this.props.pop("Discovery Navigator");
+  }
+
   XPressed(){
-    console.log('works');
-    var newIndex = this.state.resultIndex + 1;
-    //TODO: probably add a check here to see if the new index is greater than 19 and then handle that case
-    this.setState({ resultIndex: newIndex });
-    GoogleFetchUtilities.storeDetails(newIndex, this.setImageUris.bind(this));
+    this.props.pop("Discovery Navigator");
   }
 }
 

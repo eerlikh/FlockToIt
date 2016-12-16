@@ -20,8 +20,14 @@ export const navigationState = createReducer({
       index: 1,
       routes: [
         { key: 'Settings' },
-        { key: 'Discovery' }, //TODO: Turn the discovery screen and location details screen into a single screen
+        { key: 'Discovery Navigator' }, //TODO: Turn the discovery screen and location details screen into a single screen
         { key: 'Dashboard' },
+      ],
+    },
+    discoveryNavigationState: {
+      index: 0,
+      routes: [
+        { key: 'Discovery' },
       ],
     }
   }, {
@@ -40,6 +46,12 @@ export const navigationState = createReducer({
           mainNavigationState: NavigationStateUtils.forward(state.mainNavigationState),
         }
         return object;
+      } else if (action.navigatorType === "Discovery Navigator") {
+        var object = {
+          ...state,
+          discoveryNavigationState: NavigationStateUtils.forward(state.discoveryNavigationState),
+        }
+        return object;
       }
     },
 
@@ -54,6 +66,56 @@ export const navigationState = createReducer({
         var object = {
           ...state,
           mainNavigationState: NavigationStateUtils.back(state.mainNavigationState),
+        }
+        return object;
+      } else if (action.navigatorType === "Discovery Navigator") {
+        var object = {
+          ...state,
+          discoveryNavigationState: NavigationStateUtils.back(state.discoveryNavigationState),
+        }
+        return object;
+      }
+    },
+
+    [types.PUSH](state, action) {
+      if (action.navigatorType === "Login Navigator") {
+        var object = {
+          ...state,
+          loginNavigationState: NavigationStateUtils.push(state.loginNavigationState, action.route),
+        };
+        return object;
+      } else if (action.navigatorType === "Main Navigator") {
+        var object = {
+          ...state,
+          mainNavigationState: NavigationStateUtils.push(state.mainNavigationState, action.route),
+        }
+        return object;
+      } else if (action.navigatorType === "Discovery Navigator") {
+        var object = {
+          ...state,
+          discoveryNavigationState: NavigationStateUtils.push(state.discoveryNavigationState, action.route),
+        }
+        return object;
+      }
+    },
+
+    [types.POP](state, action) {
+      if (action.navigatorType === "Login Navigator") {
+        var object = {
+          ...state,
+          loginNavigationState: NavigationStateUtils.pop(state.loginNavigationState),
+        };
+        return object;
+      } else if (action.navigatorType === "Main Navigator") {
+        var object = {
+          ...state,
+          mainNavigationState: NavigationStateUtils.pop(state.mainNavigationState),
+        }
+        return object;
+      } else if (action.navigatorType === "Discovery Navigator") {
+        var object = {
+          ...state,
+          discoveryNavigationState: NavigationStateUtils.pop(state.discoveryNavigationState),
         }
         return object;
       }

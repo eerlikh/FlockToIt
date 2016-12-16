@@ -73,16 +73,22 @@ module.exports = {
 
     var openingTime = json.result.opening_hours.periods[currentDay].open.time + "";
     openingTime = this.convertTime(openingTime);
+    console.log(openingTime);
 
     var closingTime = json.result.opening_hours.periods[currentDay].close.time + "";
     closingTime = this.convertTime(closingTime);
+    console.log(closingTime);
 
     var rating = "" + json.result.rating;
+    console.log(rating);
 
     var lat1 = json.result.geometry.location.lat;
+    console.log(lat1);
     var lon1 = json.result.geometry.location.lng;
+    console.log(lon1);
 
     var distance = "" + Math.round(this.distance(lat1, lon1, this.latitude, this.longitude, 'M') * 100) / 100;
+    console.log(distance);
 
     AsyncStorage.multiSet([["result " + resultIndex + " opening time", openingTime],
                            ["result " + resultIndex + " closing time", closingTime],
