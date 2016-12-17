@@ -72,7 +72,7 @@ export const navigationState = createReducer({
       } else if (action.navigatorType === DISCOVERY_NAVIGATOR) {
         return {
           ...state,
-          discoveryNavigationState: NavigationStateUtils.forward(state.discoveryNavigationState),
+          discoveryNavigationState: NavigationStateUtils.back(state.discoveryNavigationState),
         }
       }
     },
