@@ -72,27 +72,27 @@ class DiscoveryCriteriaView extends Component {
   }
 
   EatPressed(){
-    this.props.setCurrentTheme(constants.EAT_THEME);
+    this.props.setTheme(constants.EAT_THEME);
   }
 
   DrinkPressed(){
-    this.props.setCurrentTheme(constants.DRINK_THEME);
+    this.props.setTheme(constants.DRINK_THEME);
   }
 
   ChillPressed(){
-    this.props.setCurrentTheme(constants.CHILL_THEME);
+    this.props.setTheme(constants.CHILL_THEME);
   }
 
   AdventurePressed(){
-    this.props.setCurrentTheme(constants.ADVENTURE_THEME);
+    this.props.setTheme(constants.ADVENTURE_THEME);
   }
 
   CulturePressed(){
-    this.props.setCurrentTheme(constants.CULTURE_THEME);
+    this.props.setTheme(constants.CULTURE_THEME);
   }
 
   MysteryPressed(){
-    this.props.setCurrentTheme(constants.MYSTERY_THEME);
+    this.props.setTheme(constants.MYSTERY_THEME);
   }
 
   SavePressed(){

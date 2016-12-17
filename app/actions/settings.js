@@ -1,10 +1,11 @@
 import * as types from './types'
 import { fetchAllData, fetchAllResults } from './googleFetching';
 
-export function setCurrentTheme(theme) { //TODO: rename this function to something better
+export function setTheme(theme) {
   return (dispatch, getState) => {
     var isInitialTheme = getState().settings.theme === null;
-    dispatch(setTheme(theme));
+
+    dispatch({ type: types.SET_THEME, theme });
     dispatch(shuffleCurrentTheme());
 
     if (!isInitialTheme) {
@@ -15,16 +16,18 @@ export function setCurrentTheme(theme) { //TODO: rename this function to somethi
 
 export function setCurrentLocation() {
   return (dispatch, getState) => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        var latitude = JSON.stringify(position.coords.latitude);
-        var longitude = JSON.stringify(position.coords.longitude);
-        dispatch(setLocation(latitude, longitude));
-        dispatch(fetchAllResults());
-      },
-      (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+    return new Promise(function(resolve, reject) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var latitude = JSON.stringify(position.coords.latitude);
+          var longitude = JSON.stringify(position.coords.longitude);
+          dispatch(setLocation(latitude, longitude));
+          resolve();
+        },
+        (error) => alert(JSON.stringify(error)),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+    });
   }
 }
 
@@ -35,9 +38,7 @@ function shuffleCurrentTheme() {
 
     while (counter > 0) {
         let index = Math.floor(Math.random() * counter);
-
         counter--;
-
         let temp = theme[counter];
         theme[counter] = theme[index];
         theme[index] = temp;
@@ -49,13 +50,6 @@ function shuffleCurrentTheme() {
         theme,
       }
     );
-  }
-}
-
-function setTheme(theme) {
-  return {
-    type: types.SET_THEME,
-    theme
   }
 }
 

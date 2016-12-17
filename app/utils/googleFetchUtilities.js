@@ -1,14 +1,15 @@
 module.exports = {
 
-  buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, pageToken?){
+  // buildNearbyUrl(name, radius, maxPrice, latitude, longitude, apiKey, pageToken?){
+  buildNearbyUrl(fetchOptions){
     var string = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     return string.concat(
-      (pageToken ? ("pagetoken=" + pageToken + "&") : "") +
-      "radius=" + radius +
-      "&name=" + name +
+      (fetchOptions.nextPageToken ? ("pagetoken=" + fetchOptions.nextPageToken + "&") : "") +
+      "radius=" + fetchOptions.radius +
+      "&name=" + fetchOptions.searchTerm +
       //"&maxprice=" + maxPrice + //TODO: handle missing price data (searching for it will omit results so dont do it)
-      "&location=" + latitude + "," + longitude +
-      "&key=" + apiKey
+      "&location=" + fetchOptions.latitude + "," + fetchOptions.longitude +
+      "&key=" + fetchOptions.apiKey
     );
   },
 
