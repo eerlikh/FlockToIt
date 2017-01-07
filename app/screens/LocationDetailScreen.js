@@ -1,15 +1,29 @@
 'use strict';
 import React, { Component } from 'react';
-import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { AsyncStorage, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import {constants} from '../constants'
+import { NavigationStyles } from '@exponent/ex-navigation';
+
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../actions'
+import { connect } from 'react-redux';
 
 class LocationDetailScreen extends Component {
   constructor(props){
     super(props);
+  }
+
+  static route = {
+    navigationBar: {
+      visible: false,
+    },
+    styles: {
+    ...NavigationStyles.Fade,
+    },
   }
 
   render(){
@@ -18,11 +32,6 @@ class LocationDetailScreen extends Component {
         <StatusBar
           barStyle="light-content"
         />
-        <NavBar>
-          <View style={styles.NavBar}>
-            <Text style={styles.navTitle}>Details</Text>
-          </View>
-        </NavBar>
         <View style={styles.discoveryViewContainer}>
           <View style={styles.detailHeaderContainer}>
             <Text style={styles.discoveryHeader}>{this.props.detailsData.name}</Text>
@@ -52,7 +61,7 @@ class LocationDetailScreen extends Component {
           <View style={styles.discoveryNav}>
 
             {/*first button*/}
-            <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
+            <TouchableOpacity style={styles.highlightContainer} onPress={this.XPressed.bind(this)}>
               <View style={styles.xButtonContainer}>
                 <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
               </View>
@@ -78,11 +87,10 @@ class LocationDetailScreen extends Component {
   }
 
   LikePressed(){
-    this.props.pop(constants.DISCOVERY_NAVIGATOR);
   }
 
   XPressed(){
-    this.props.pop(constants.DISCOVERY_NAVIGATOR);
+    this.props.pop(this.props.navigation.currentNavigatorUID);
   }
 }
 
@@ -202,4 +210,16 @@ const windowHeight = Dimensions.get('window').height;
     },
 });
 
-module.exports = LocationDetailScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    navigation: state.navigation,
+    detailsData: state.googleData.detailsData,
+    imageUrls: state.googleData.imageUrls,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LocationDetailScreen);

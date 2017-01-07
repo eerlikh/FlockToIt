@@ -1,3 +1,4 @@
+import { createNavigationEnabledStore } from '@exponent/ex-navigation';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
@@ -8,6 +9,11 @@ const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__
 
 const composeEnhancers = composeWithDevTools({ realtime: true });
 
+const createStoreWithNavigation = createNavigationEnabledStore({
+  createStore,
+  navigationStateKey: 'navigation',
+});
+
 export default function configureStore(initialState) {
   const enhancer = composeEnhancers(
     applyMiddleware(
@@ -15,7 +21,8 @@ export default function configureStore(initialState) {
       loggerMiddleware,
     ),
   );
-  return createStore(reducer, initialState, enhancer);
+  return createStoreWithNavigation(reducer, initialState, enhancer);
+  // return createStore(reducer, initialState, enhancer);
 }
 
 // enable hot reloading with following code:

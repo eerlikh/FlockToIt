@@ -1,9 +1,3 @@
-//navigation
-export const NAVIGATION_FORWARD = 'NAVIGATION_FORWARD';
-export const NAVIGATION_BACK = 'NAVIGATION_BACK';
-export const PUSH = 'PUSH';
-export const POP = 'POP';
-
 //google fetching
 export const ITERATE_RESULT_AND_DETAILS_INDICES = 'ITERATE_RESULT_AND_DETAILS_INDICES';
 export const SET_RESULTS_OBJECT = 'SET_RESULTS_OBJECT';
@@ -23,3 +17,6 @@ export const SET_PRICE = 'SET_PRICE';
 export const SET_LOCATION = 'SET_LOCATION';
 export const SHUFFLE_CURRENT_THEME = 'SHUFFLE_CURRENT_THEME';
 export const ITERATE_THEME_INDEX = 'ITERATE_THEME_INDEX';
+
+//hacks
+export const RESET_STACK = 'RESET_STACK';
