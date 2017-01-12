@@ -87,6 +87,7 @@ class LocationDetailScreen extends Component {
   }
 
   LikePressed(){
+    this.props.addFavorite();
   }
 
   XPressed(){

@@ -13,7 +13,7 @@ import {
  } from '@exponent/ex-navigation';
 
 // uncomment the following code if you dont want to set an initial state:
-const Store = configureStore({});
+const Store = configureStore();
 
 // uncomment the following code to set an inital state:
 // const store = configureStore(getInitialState());
