@@ -11,3 +11,7 @@ export function addFavorite() {
     });
   }
 }
+
+export function deleteAllFavorites() {
+  return {type: types.DELETE_ALL_FAVORITES};
+}
