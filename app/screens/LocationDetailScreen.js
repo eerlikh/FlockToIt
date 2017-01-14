@@ -87,10 +87,13 @@ class LocationDetailScreen extends Component {
   }
 
   LikePressed(){
-    Alert.alert('Favorite Added!',
-            //alertMessage,
-    );
-    this.props.addFavorite();
+    try {
+      this.props.addFavorite();
+    } catch (error) {
+      Alert.alert('Favorite Already Added');
+      return;
+    }
+    Alert.alert('Favorite Added!');
   }
 
   XPressed(){

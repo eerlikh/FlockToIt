@@ -1,6 +1,6 @@
 'use strict'
 import React, { Component } from 'react';
-import { Image, ListView, StyleSheet, Text, View } from 'react-native'
+import { Image, ListView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
@@ -33,17 +33,19 @@ class MatchedLocationsView extends Component {
 
   renderLocationRow(location) {
     return(
-      <View style={styles.locationRow}>
-        <Image style={styles.locationImage} source={{uri: location.imageUrl}} />
-        <View styles={styles.locationColumn}>
-          <Text style={styles.locationName}> {location.name}</Text>
-          <Text style={styles.locationDistance}> {'placeholder'} mi.</Text>
+      <TouchableOpacity>
+        <View style={styles.locationRow}>
+          <Image style={styles.locationImage} source={{uri: location.imageUrl}} />
+          <View styles={styles.locationColumn}>
+            <Text style={styles.locationName}> {location.name}</Text>
+            <Text style={styles.locationDistance}> {'placeholder'} mi.</Text>
+          </View>
+          <View styles={styles.locationColumn}>
+            <Text style={styles.locationRating}> {'placeholder'} out of 10</Text>
+            <Text style={styles.locationVisited}> {'placeholder'} visits</Text>
+          </View>
         </View>
-        <View styles={styles.locationColumn}>
-          <Text style={styles.locationRating}> {'placeholder'} out of 10</Text>
-          <Text style={styles.locationVisited}> {'placeholder'} visits</Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 

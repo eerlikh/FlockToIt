@@ -25,7 +25,7 @@ export const userData = createReducer({
         ...state,
         favorites: []
       }
-      
+
     },
   }
 );
