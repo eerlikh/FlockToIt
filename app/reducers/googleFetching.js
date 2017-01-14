@@ -124,7 +124,7 @@ export const googleData = createReducer({
       }
     },
 
-    //TODO: make this remove more than one result object at a time if necessary
+    //TODO: handle case where it removes multiple result objects in a row
     [types.REMOVE_RESULTS_OBJECT](state, action) {
 
       var resultsObjects = [

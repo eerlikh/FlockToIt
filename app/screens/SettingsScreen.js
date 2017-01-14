@@ -1,8 +1,8 @@
+//TODO: make the sliders for price and radius respond to the redux state
+
 'use strict';
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, Navigator } from 'react-native';
-
-import NavBar from '../components/NavBar'
+import { AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, StatusBar} from 'react-native';
 import ViewContainer from '../components/ViewContainer'
 import DiscoveryCriteriaView from '../views/DiscoveryCriteriaView'
 import SuggestAchievementView from '../views/SuggestAchievementView'
@@ -11,13 +11,19 @@ import LegalPrivacyView from '../views/LegalPrivacyView'
 import renderIf from '../components/renderIf'
 import Login from '../components/Login'
 import {constants} from '../constants'
+import { NavigationStyles } from '@exponent/ex-navigation';
+import NavButton from '../components/NavButton'
+import { Router } from '../containers/Router';
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../actions'
+import { connect } from 'react-redux';
 
-class SettingScreen extends Component {
+class SettingsScreen extends Component {
   constructor(props){
     super(props);
-    this.icons = {     //Step 2
-    'right'    : require('../img/buttons/ArrowRight.png'),
-    'down'  : require('../img/buttons/ArrowDown.png')
+    this.icons = {
+    'right': require('../img/buttons/ArrowRight.png'),
+    'down': require('../img/buttons/ArrowDown.png')
     };
     this.state = {
       showProgress: false,
@@ -30,50 +36,43 @@ class SettingScreen extends Component {
     }
   }
 
+  componentWillMount(){
+    this.fixNavigationStack();
+  }
+
+  fixNavigationStack(){
+    this.props.resetStack();//TODO: change name to "attemptResetStack" or something more descriptive
+
+    if (this.props.hacks.stackIsReset === 0) {
+      this.props.immediatelyResetStack(this.props.navigation.currentNavigatorUID,
+        [Router.getRoute('settings'), Router.getRoute('discovery')], 1);
+    }
+  }
+
+  static route = {
+    navigationBar: {
+      title: 'Settings',
+      renderRight: (route, props) =>
+        <NavButton destination={"discovery"} direction={"right"} navigatorLevel={"current"}/>,
+    },
+  }
+
   render(){
-    let criteria = this.icons['right'];
-
-    if(this.state.showDiscoveryCriteria){
-        criteria = this.icons['down'];
-    }
-
-    let suggest = this.icons['right'];
-
-    if(this.state.showSuggestAchievement){
-        suggest = this.icons['down'];
-    }
-
-    let help = this.icons['right'];
-
-    if(this.state.showHelpSupport){
-        help = this.icons['down'];
-    }
-
-    let legal = this.icons['right'];
-
-    if(this.state.showLegalPrivacy){
-        legal = this.icons['down'];
-    }
 
     return (
 
       <ViewContainer>
-        <NavBar>
-        <View style={styles.NavBar}>
-          <Text style={styles.navTitle}>Settings</Text>
-          <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
-            <Image style={styles.navButtonRight} source={require('../img/buttons/ArrowRightWhite.png')} />
-          </TouchableOpacity>
-        </View>
-        </NavBar>
-
+        <StatusBar
+          barStyle="light-content"
+        />
         <View style={styles.mainSettingsContainer}>
 
           <View style={styles.settingOptionColumn}>
             <TouchableOpacity onPress={()=>this.DiscoveryCriteriaPressed()}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Discovery Criterias</Text>
-                <Image style={ this.state.showDiscoveryCriteria ? styles.optionButtonDown : styles.optionButtonRight } source={criteria} />
+                <Image style={ this.state.showDiscoveryCriteria ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.showDiscoveryCriteria ? this.icons['down'] : this.icons['right'] } />
               </View>
             </TouchableOpacity>
             {renderIf(this.state.showDiscoveryCriteria)(
@@ -85,7 +84,8 @@ class SettingScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Suggest Achievement </Text>
-                <Image style={ this.state.showSuggestAchievement ? styles.optionButtonDown : styles.optionButtonRight } source={suggest} />
+                <Image style={ this.state.showSuggestAchievement ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.showSuggestAchievement ? this.icons['down'] : this.icons['right'] } />
               </View>
 
               {renderIf(this.state.showSuggestAchievement)(
@@ -98,7 +98,8 @@ class SettingScreen extends Component {
             <TouchableOpacity onPress={()=>this.HelpSupportPressed()}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Help & Support </Text>
-                <Image style={ this.state.showHelpSupport ? styles.optionButtonDown : styles.optionButtonRight } source={help} />
+                <Image style={ this.state.showHelpSupport ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.showHelpSupport ? this.icons['down'] : this.icons['right'] } />
               </View>
             </TouchableOpacity>
               {renderIf(this.state.showHelpSupport)(
@@ -110,7 +111,8 @@ class SettingScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}> Legal & Privacy </Text>
-                <Image style={ this.state.showLegalPrivacy ? styles.optionButtonDown : styles.optionButtonRight } source={legal} />
+                <Image style={ this.state.showLegalPrivacy ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.showLegalPrivacy ? this.icons['down'] : this.icons['right'] } />
               </View>
 
             {renderIf(this.state.showLegalPrivacy)(
@@ -120,9 +122,8 @@ class SettingScreen extends Component {
           </TouchableOpacity>
 
           <Login onLogoutFinishedFunction={() =>
-              //TODO: replace this function with a navigation action from props
-            //this.props.onLogoutFinishedFunction()
-            {}
+            { //TODO: insert a navigation action creator from props
+}
           }/>
 
         </View>
@@ -130,11 +131,6 @@ class SettingScreen extends Component {
     );
   }
 
-  DiscoveryPressed(){
-    this.props.navigateForward(constants.MAIN_NAVIGATOR);
-  }
-
-  //TODO: consider putting these functions into redux
   DiscoveryCriteriaPressed(){
     this.setState({showDiscoveryCriteria: !this.state.showDiscoveryCriteria});
     this.setState({showSuggestAchievement: false});
@@ -218,4 +214,15 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = SettingScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    navigation: state.navigation,
+    hacks: state.hacks,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen);

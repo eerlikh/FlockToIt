@@ -3,7 +3,7 @@ import * as types from '../actions/types'
 
 export const settings = createReducer({
     theme: null,
-    radius: 500,
+    radius: 5000,
     maxPrice: 4
   }, {
 

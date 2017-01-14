@@ -1,16 +1,17 @@
 'use strict';
 import React, { Component } from 'react';
-import { Navigator, AppRegistry, StyleSheet, Text, View, TabBarIOS, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
+import { AppRegistry, StyleSheet, Text, View, TabBarIOS, Image, TouchableHighlight, TouchableOpacity } from 'react-native';
 
-import NavBar from '../components/NavBar'
 import ViewContainer from '../components/ViewContainer'
 import AchievementProfileView from '../views/AchievementProfileView'
 import AchievementListView from '../views/AchievementListView'
 import MatchedLocationsView from '../views/MatchedLocationsView'
 import GlobalRankView from '../views/GlobalRankView'
+import NavButton from '../components/NavButton'
 import DashNavBar from '../components/DashNavBar'
 import renderIf from '../components/renderIf'
 import {constants} from '../constants'
+import { NavigationStyles } from '@exponent/ex-navigation';
 
 class DashboardScreen extends Component {
   constructor(props){
@@ -22,17 +23,17 @@ class DashboardScreen extends Component {
     }
   }
 
+  static route = {
+    navigationBar: {
+      title: 'Dashboard',
+      renderLeft: (route, props) =>
+        <NavButton direction={"left"} navigatorLevel={"current"}/>,
+    },
+  }
+
   render(){
     return (
       <ViewContainer>
-        <NavBar>
-        <View style={styles.NavBar}>
-          <TouchableOpacity onPress={this.DiscoveryPressed.bind(this)}>
-            <Image style={styles.navButtonLeft} source={require('../img/buttons/ArrowLeftWhite.png')} />
-          </TouchableOpacity>
-          <Text style={styles.navTitle}>Dashboard</Text>
-        </View>
-        </NavBar>
 
         {/*dashboard screen*/}
         {renderIf(this.state.showDashboardScreen || this.state.showAchievementScreen)(
@@ -108,11 +109,6 @@ class DashboardScreen extends Component {
     );
   }
 
-  DiscoveryPressed(){
-    this.props.navigateBack(constants.MAIN_NAVIGATOR);
-;
-  }
-
   HomePressed(){
     this.setState({showDashboardScreen: true});
     this.setState({showAchievementScreen: false});
@@ -131,6 +127,7 @@ class DashboardScreen extends Component {
 }
 
 var styles = StyleSheet.create({
+  //TODO: delete the NavBar styles in every file it is used
   NavBar: {
     paddingTop: 25,
     paddingBottom: 25,

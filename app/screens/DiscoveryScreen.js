@@ -1,20 +1,31 @@
 'use strict';
 import React, { Component } from 'react';
-import { AsyncStorage, Dimensions, Image, Navigator, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import {constants} from '../constants'
 
-import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
+import NavButton from '../components/NavButton'
 import LinearGradient from 'react-native-linear-gradient';
+import { NavigationStyles } from '@exponent/ex-navigation';
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../actions'
+import { connect } from 'react-redux';
+import { Router } from '../containers/Router';
 
 class DiscoveryScreen extends Component {
   constructor(props){
     super(props);
   }
 
-  componentWillMount() {
-    this.props.fetchAllData();
+  static route = {
+    navigationBar: {
+      title: 'Flock',
+      renderRight: (route, props) =>
+        <NavButton destination={"dashboard"} direction={"right"} navigatorLevel={"current"}/>,
+      renderLeft: (route, props) =>
+        <NavButton direction={"left"} navigatorLevel={"current"}/>,
+    },
   }
 
   render(){
@@ -23,20 +34,6 @@ class DiscoveryScreen extends Component {
       <StatusBar
         barStyle="light-content"
       />
-        <NavBar>
-          <View style={styles.NavBar}>
-
-            <TouchableOpacity onPress={this.SettingsPressed.bind(this)}>
-              <Image style={styles.navButtonLeft} source={require('../img/buttons/ArrowLeftWhite.png')} />
-            </TouchableOpacity>
-
-            <Text style={styles.navTitle}>Flock</Text>
-
-            <TouchableOpacity onPress={this.DashboardPressed.bind(this)}>
-              <Image style={styles.navButtonRight} source={require('../img/buttons/ArrowRightWhite.png')} />
-            </TouchableOpacity>
-          </View>
-        </NavBar>
 
         <View style={styles.discoveryViewContainer}>
             <View style={styles.discoveryPhotoContainer}>
@@ -83,18 +80,11 @@ class DiscoveryScreen extends Component {
     );
   }
 
-  SettingsPressed(){
-    this.props.navigateBack(constants.MAIN_NAVIGATOR);
-  }
-  DashboardPressed(){
-    this.props.navigateForward(constants.MAIN_NAVIGATOR);
-  }
   LikePressed(){
-    this.props.push(constants.DISCOVERY_NAVIGATOR, { key: 'Details' } );
+    this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('locationDetail'));
   }
 
   XPressed(){
-
     this.props.iterateResult()
   }
 }
@@ -230,4 +220,17 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = DiscoveryScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    // navigationState: state.navigationState,
+    navigation: state.navigation,
+    detailsData: state.googleData.detailsData,
+    imageUrls: state.googleData.imageUrls,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoveryScreen);

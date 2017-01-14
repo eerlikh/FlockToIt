@@ -6,9 +6,9 @@ import { Image, ListView, StyleSheet, Text, View } from 'react-native'
 const locations = [
   {id:1, name: "Brunswick Bagels", distance: 2, rating: 8, visited: 11, },
   {id:2, name: "Jersey Mike's", distance: 3, rating: 7, visited: 8 },
-  {id:3, name: "Dominos", distance: 5, rating: 6, visited: 4},
+  {id:3, name: "Dominos", distance: 5, rating: 6, visited: 4 },
   {id:4, name: "Thompson Park", distance: 9, rating: 8, visited: 5 },
-  {id:5, name: "Harold's Deli", distance: 7, rating: 9, visited: 4},
+  {id:5, name: "Harold's Deli", distance: 7, rating: 9, visited: 4 },
   {id:6, name: "Delaware and Raritan Canal State Park", distance: 9, rating: 8, visited: 5 },
   {id:7, name: "Brunswick Zone Carolier Bowl", distance: 11, rating:7, visited: 3 },
   {id:8, name: "Chipotle Mexican Grill", distance: 9, rating: 8, visited: 5 },

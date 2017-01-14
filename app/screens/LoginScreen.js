@@ -1,14 +1,14 @@
 'use strict';
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, View, Image, TouchableHighlight, InteractionManager } from 'react-native';
-import NavBar from '../components/NavBar'
+import { AppRegistry, StyleSheet, Text, View, Image, TouchableHighlight } from 'react-native';
 import ViewContainer from '../components/ViewContainer'
 import Login from '../components/Login'
 import FBAccessTokenManager from '../utils/FBAccessTokenManager'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
-import {constants} from '../constants'
+import { constants } from '../constants'
+import { Router } from '../containers/Router';
 
 const FBSDK = require('react-native-fbsdk');
 const {
@@ -55,15 +55,16 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
-    //have to wait for scenes to be rendered in advance or animation will not display properly
+    //causes a wierd blink if you don't wait here
     setTimeout(() => {
       this.autoLogin();
-    }, 300);
+    }, 100);
   }
 
   LoginPressed(){
     FBAccessTokenManager.setFacebookData();
-    this.props.navigateForward(constants.LOGIN_NAVIGATOR);
+    this.props.fetchAllData();
+    this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('MainNavigator'));
   }
 
 }
@@ -123,4 +124,14 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = LoginScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    navigation: state.navigation,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

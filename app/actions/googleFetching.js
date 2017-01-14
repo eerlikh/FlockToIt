@@ -1,25 +1,29 @@
+//TODO: handle case where there are no results for the first search term displayed (nothing is displayed)
+
 import * as types from './types'
 import utils from '../utils/googleFetchUtilities';
-import { setTheme, setCurrentLocation, promiseTest } from './settings';
+import { setTheme, setCurrentLocation } from './settings';
 import {constants} from '../constants'
 
 export function fetchAllData() {
   return (dispatch, getState) => {
 
     dispatch({type: types.RESET_RESULTS_INDEX_AND_CURRENT_DETAILS_INDEX});
+
+    var initialThemeUnset = getState().settings.theme === null;
+    if (initialThemeUnset) {
+      dispatch(setTheme(constants.INITIAL_THEME));
+    }
+    var searchTerms = getState().settings.theme;
+
     dispatch(setCurrentLocation())
     .then(() => {
-      var isInitialTheme = getState().settings.theme === null;
-      if (isInitialTheme) {
-        dispatch(setTheme(constants.INITIAL_THEME));
-      }
-
       var fetchOptions = dispatch(buildFetchOptions());
-      var searchTerms = getState().settings.theme;
       for (var i = 0; i < constants.NO_OF_TERMS_TO_SEARCH_AT_ONCE; i++) {
-        dispatch(fetchResults({...fetchOptions, searchTerm: searchTerms[i], index: i})).then((fetchOptions) => {
+        dispatch(fetchResults({...fetchOptions, searchTerm: searchTerms[i], index: i, message: "fetching initial results"}))
+        .then((fetchOptions) => {
           if (fetchOptions.index === 0) {
-            dispatch(fetchDetails(0, 0, fetchOptions.latitude, fetchOptions.longitude, "fetching first details"));
+            dispatch(fetchDetails(0, 0, fetchOptions.latitude, fetchOptions.longitude));
           }
         });
       }
@@ -30,7 +34,7 @@ export function fetchAllData() {
 export function iterateResult() {
   return (dispatch, getState) => {
 
-    //handle if there are no more results at all
+    //handle case where there are no more results for all search terms
     if (getState().googleData.resultsObjects.length === 0) {
       dispatch({ type: types.RAN_OUT_OF_RESULTS });
     } else {
@@ -42,7 +46,7 @@ export function iterateResult() {
       var nextPageToken = getState().googleData.resultsObjects[resultsIndex].nextPageToken;
       var nextSearchTerm = getState().settings.theme[getState().googleData.nextTermInThemeIndex];
 
-      //check if only the current list of results is finished and handle various sub-cases
+      //checks if there is a least 1 more page of results and handles the different cases
       if (currentDetailsIndex >= resultObjectLength) {
         if (nextPageToken) {
           dispatch(fetchNewPage(resultsIndex, nextPageToken));
@@ -68,11 +72,12 @@ function fetchNewPage(resultsIndex, nextPageToken) {
       searchTerm: getState().settings.theme[resultsIndex],
       index: resultsIndex,
       nextPageToken,
+      message: "fetching results for new page",
     }
 
     dispatch(fetchResults(fetchOptions)).then((fetchOptions) => {
       dispatch(fetchDetails(fetchOptions.index, 0, fetchOptions.latitude,
-        fetchOptions.longitude, "fetching details for new page"));
+        fetchOptions.longitude));
     });
   }
 }
@@ -80,16 +85,18 @@ function fetchNewPage(resultsIndex, nextPageToken) {
 function fetchWithNewTerm(resultsIndex) {
   return (dispatch, getState) => {
     dispatch({type: types.RESET_CURRENT_DETAILS_INDEX});
+    var nextSearchTerm = getState().settings.theme[getState().googleData.nextTermInThemeIndex];
 
     var fetchOptions = {
       ...dispatch(buildFetchOptions()),
-      searchTerm,
+      searchTerm: nextSearchTerm,
       index: resultsIndex,
+      message: "fetching results for new term",
     }
 
     dispatch(fetchResults(fetchOptions)).then((fetchOptions) => {
       dispatch(fetchDetails(fetchOptions.index, 0, fetchOptions.latitude,
-        fetchOptions.longitude, "fetching details with new term"));
+        fetchOptions.longitude));
     });
     dispatch({type: types.ITERATE_THEME_INDEX});
   }
@@ -99,7 +106,7 @@ function removeResultsObject(resultsIndex) {
   return (dispatch, getState) => {
     dispatch({ type: types.REMOVE_RESULTS_OBJECT, resultsIndex });
 
-    //handle if there are no more results objects
+    //handle case where there are no more results objects
     if (getState().googleData.resultsObjects.length === 0) {
       dispatch({ type: types.RAN_OUT_OF_RESULTS });
     } else {
@@ -123,7 +130,7 @@ function fetchResults(fetchOptions) {
       .then((responseJson) => {
         console.log(fetchOptions.searchTerm + ":");
         console.log(responseJson);
-        dispatch(setResultsObject(utils.extractResultsData(responseJson), fetchOptions.index));
+        dispatch(setResultsObject(utils.extractResultsData(responseJson), fetchOptions.index, fetchOptions.message));
         resolve(fetchOptions);
       })
       .catch((error) => {
@@ -133,15 +140,15 @@ function fetchResults(fetchOptions) {
   }
 }
 
-function fetchDetails(resultsIndex, currentDetailsIndex, latitude, longitude, message) {
+function fetchDetails(resultsIndex, currentDetailsIndex, latitude, longitude) {
   return (dispatch, getState) => {
     var placeId = getState().googleData.resultsObjects[resultsIndex].placeIds[currentDetailsIndex];
     fetch(utils.buildDetailsUrl(placeId, constants.API_KEY, latitude, longitude))
     .then((response) => response.json())
     .then((responseJson) => {
-      dispatch(setDetailsJson(responseJson, message));
+      dispatch(setDetailsJson(responseJson));
       dispatch(setDetailsData(utils.extractDetailsData(
-        responseJson, latitude, longitude, currentDetailsIndex), message));
+        responseJson, latitude, longitude, currentDetailsIndex)));
       dispatch(setImageUrls(utils.extractImageURLs(currentDetailsIndex, responseJson, 600, constants.API_KEY)));
     })
     .catch((error) => {
@@ -169,20 +176,19 @@ function buildFetchOptions() {
   }
 }
 
-function setResultsObject(resultsObject, index) {
+function setResultsObject(resultsObject, index, message) {
   return {
     type: types.SET_RESULTS_OBJECT,
     resultsObject,
-    index
+    index,
+    message
   }
 }
 
-//TODO: it doesn't make any sense to put a message parameter here, move it to setResultsObject
-function setDetailsJson(detailsObject, message) {
+function setDetailsJson(detailsObject) {
   return {
     type: types.SET_DETAILS_OBJECT,
     detailsObject,
-    message
   }
 }
 
