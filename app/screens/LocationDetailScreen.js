@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import { AsyncStorage, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { AsyncStorage, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View, Alert } from 'react-native';
 
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
@@ -87,6 +87,13 @@ class LocationDetailScreen extends Component {
   }
 
   LikePressed(){
+    try {
+      this.props.addFavorite();
+    } catch (error) {
+      Alert.alert('Favorite Already Added');
+      return;
+    }
+    Alert.alert('Favorite Added!');
   }
 
   XPressed(){

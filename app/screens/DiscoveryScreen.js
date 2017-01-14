@@ -61,7 +61,7 @@ class DiscoveryScreen extends Component {
               </TouchableOpacity>
 
               {/*second button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
+              <TouchableOpacity style={styles.highlightContainer} onPress={this.FlockPressed.bind(this)}>
                 <View style={styles.flockButtonContainer}>
                   <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/flockButton.png')} />
                 </View>
@@ -87,6 +87,11 @@ class DiscoveryScreen extends Component {
   XPressed(){
     this.props.iterateResult()
   }
+
+  FlockPressed(){
+    this.props.deleteAllFavorites()
+  }
+
 }
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

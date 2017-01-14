@@ -20,3 +20,7 @@ export const ITERATE_THEME_INDEX = 'ITERATE_THEME_INDEX';
 
 //hacks
 export const RESET_STACK = 'RESET_STACK';
+
+//user data
+export const ADD_FAVORITE = 'ADD_FAVORITE';
+export const DELETE_ALL_FAVORITES = 'DELETE_ALL_FAVORITES';

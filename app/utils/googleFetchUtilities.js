@@ -61,12 +61,15 @@ module.exports = {
 
     var distance = "" + Math.round(this.distance(lat1, lon1, latitude, longitude, 'M') * 100) / 100;
 
+    var placeId = json.result.place_id;
+
     return {
       name,
       currentDay,
       hours,
       rating,
       distance,
+      placeId,
     }
   },
 

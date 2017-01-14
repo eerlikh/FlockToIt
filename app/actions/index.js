@@ -1,12 +1,14 @@
-import * as GoogleActions from './googleFetching'
-import * as SettingsActions from './settings'
-import * as MiscActions from './hacks'
+import * as googleDataActions from './googleFetching'
+import * as settingsActions from './settings'
+import * as hacksActions from './hacks'
+import * as userDataActions from './userData'
 import { NavigationActions } from '@exponent/ex-navigation'
 
 export const ActionCreators = Object.assign({},
-  GoogleActions,
-  SettingsActions,
-  MiscActions,
+  googleDataActions,
+  settingsActions,
+  hacksActions,
+  userDataActions,
   {push: NavigationActions.push},
   {pop: NavigationActions.pop},
   {immediatelyResetStack: NavigationActions.immediatelyResetStack},
