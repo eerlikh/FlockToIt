@@ -31,6 +31,7 @@ class SettingsScreen extends Component {
       showSuggestAchievement: false,
       showHelpSupport: false,
       showLegalPrivacy: false,
+      showLogOut: false,
       criteriaArrow: false,
       suggestArrow: false,
     }
@@ -110,7 +111,7 @@ class SettingsScreen extends Component {
           <TouchableOpacity onPress={()=>this.LegalPrivacyPressed()}>
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
-                <Text style={styles.optionText}> Legal & Privacy </Text>
+                <Text style={styles.optionText}>Legal & Privacy </Text>
                 <Image style={ this.state.showLegalPrivacy ? styles.optionButtonDown : styles.optionButtonRight }
                   source={ this.state.showLegalPrivacy ? this.icons['down'] : this.icons['right'] } />
               </View>
@@ -121,36 +122,58 @@ class SettingsScreen extends Component {
             </View>
           </TouchableOpacity>
 
-          <Login onLogoutFinishedFunction={() =>
-            { //TODO: insert a navigation action creator from props
-}
-          }/>
+          <TouchableOpacity onPress={()=>this.LogOutPressed()}>
+            <View style={styles.settingOptionColumn}>
+              <View style={styles.settingOptionRow}>
+                <Text style={styles.optionText}>LogOut</Text>
+                <Image style={ this.state.showLogOut ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.showLogOut ? this.icons['down'] : this.icons['right'] } />
+              </View>
 
+            {renderIf(this.state.showLogOut)(
+              <Login style={styles.logOutView} onLogoutFinishedFunction={() =>
+                { //TODO: insert a navigation action creator from props
+                }
+              }/>
+            )}
+            </View>
+          </TouchableOpacity>
         </View>
       </ViewContainer>
     );
   }
 
   DiscoveryCriteriaPressed(){
-    this.setState({showDiscoveryCriteria: !this.state.showDiscoveryCriteria});
+    this.setState({showDiscoveryCriteria: true});
     this.setState({showSuggestAchievement: false});
     this.setState({showHelpSupport: false});
     this.setState({showLegalPrivacy: false});
+    this.setState({showLogOut: false});
   }
   SuggestAchievementPressed(){
-    this.setState({showSuggestAchievement: !this.state.showSuggestAchievement});
+    this.setState({showSuggestAchievement: true});
     this.setState({showDiscoveryCriteria: false});
     this.setState({showHelpSupport: false});
     this.setState({showLegalPrivacy: false});
+    this.setState({showLogOut: false});
   }
   HelpSupportPressed(){
-    this.setState({showHelpSupport: !this.state.showHelpSupport});
+    this.setState({showHelpSupport: true});
     this.setState({showSuggestAchievement: false});
     this.setState({showDiscoveryCriteria: false});
     this.setState({showLegalPrivacy: false});
+    this.setState({showLogOut: false});
   }
   LegalPrivacyPressed(){
-    this.setState({showLegalPrivacy: !this.state.showLegalPrivacy});
+    this.setState({showLegalPrivacy: true});
+    this.setState({showHelpSupport: false});
+    this.setState({showSuggestAchievement: false});
+    this.setState({showDiscoveryCriteria: false});
+    this.setState({showLogOut: false});
+  }
+  LogOutPressed(){
+    this.setState({showLogOut: true});
+    this.setState({showLegalPrivacy: false});
     this.setState({showHelpSupport: false});
     this.setState({showSuggestAchievement: false});
     this.setState({showDiscoveryCriteria: false});
@@ -185,16 +208,18 @@ var styles = StyleSheet.create({
     borderColor: 'black',
     borderBottomWidth: 1,
     alignSelf: 'stretch',
-    flexDirection: 'column',
   },
   settingOptionRow: {
-    padding: 24,
+    padding: 10,
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  showLogOut: {
+
+  },
   optionText: {
-    fontSize: 16,
+    fontSize: 20,
     flex: 1,
   },
   optionButtonRight: {
@@ -222,6 +247,7 @@ function mapStateToProps(state) {
   return {
     navigation: state.navigation,
     hacks: state.hacks,
+    themeName: state.settings.themeName
   }
 }
 

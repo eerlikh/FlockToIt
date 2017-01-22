@@ -1,12 +1,11 @@
 'use strict';
 import React, { Component } from 'react';
-import { Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import {constants} from '../constants'
 
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import NavButton from '../components/NavButton'
-import LinearGradient from 'react-native-linear-gradient';
 import { NavigationStyles } from '@exponent/ex-navigation';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
@@ -36,60 +35,67 @@ class DiscoveryScreen extends Component {
       />
 
         <View style={styles.discoveryViewContainer}>
-            <View style={styles.discoveryPhotoContainer}>
-              <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
-              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
-              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
-            </View>
-            <LinearGradient
-            colors={['rgba(0, 0, 0, 0)', 'white']}
-            style={styles.discoveryInfoContainer}
-            start={[0.0, 0.0]} end={[0.0, 1.2]}
-            locations={[0,.4]}>
-            <View style={styles.headerContainer}>
-              <Text style={styles.discoveryHeader}>{this.props.detailsData.name}</Text>
-            </View>
-            </LinearGradient>
-          <DiscoveryNav>
-            <View style={styles.discoveryNav}>
+          <View style={styles.discoveryPhotoContainer}>
+            <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
+            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
+            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
+          </View>
 
-              {/*first button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.XPressed.bind(this)}>
-                <View style={styles.xButtonContainer}>
-                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
-                </View>
-              </TouchableOpacity>
+          <DiscoveryNav style={styles.discoveryNavContainer}>
+              <View style={styles.titleContainer}>
+                <TouchableOpacity style={styles.titleButton} onPress={this.infoPressed.bind(this)}>
+                  <Image style={styles.infoIcon} source={require('../img/info.png')} />
+                  <Text style={styles.locationTitle}>{this.props.detailsData.name}</Text>
+                </TouchableOpacity>
+              </View>
 
-              {/*second button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.FlockPressed.bind(this)}>
-                <View style={styles.flockButtonContainer}>
-                  <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/flockButton.png')} />
-                </View>
-              </TouchableOpacity>
+              <View style={styles.navContainer}>
+                {/*first button*/}
+                <TouchableOpacity style={styles.highlightContainer} onPress={this.xPressed.bind(this)}>
+                  <View style={styles.xButtonContainer}>
+                    <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
+                  </View>
+                </TouchableOpacity>
 
-              {/*third button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
-                <View style={styles.likeButtonContainer}>
-                  <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/inspectButton.png')} />
-                </View>
-              </TouchableOpacity>
-            </View>
+                {/*second button*/}
+                <TouchableOpacity style={styles.highlightContainer} onPress={this.flockPressed.bind(this)}>
+                  <View style={styles.flockButtonContainer}>
+                    <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/flockButton.png')} />
+                  </View>
+                </TouchableOpacity>
+
+                {/*third button*/}
+                <TouchableOpacity style={styles.highlightContainer} onPress={this.likePressed.bind(this)}>
+                  <View style={styles.likeButtonContainer}>
+                    <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/likeButton.png')} />
+                  </View>
+                </TouchableOpacity>
+              </View>
           </DiscoveryNav>
         </View>
       </ViewContainer>
     );
   }
 
-  LikePressed(){
-    this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('locationDetail'));
+  likePressed(){
+    try {
+      this.props.addFavorite();
+    } catch (error) {
+      Alert.alert('Favorite Already Added');
+      return;
+    }
+    Alert.alert('Favorite Added!');
   }
 
-  XPressed(){
+  xPressed(){
     this.props.iterateResult()
   }
 
-  FlockPressed(){
+  flockPressed(){
     this.props.deleteAllFavorites()
+  }
+  infoPressed(){
+    this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('locationDetail'));
   }
 
 }
@@ -97,9 +103,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 var styles = StyleSheet.create({
-  gradient: {
-    flex: 1,
-  },
   NavBar: {
     paddingTop: 25,
     paddingBottom: 25,
@@ -130,14 +133,9 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
   },
-  discoveryInfoContainer: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    flex: .4,
-  },
   discoveryPhotoContainer: {
     flexDirection: 'row',
-    flex: 1.4,
+    flex: 10,
     flexWrap: 'wrap',
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -145,32 +143,55 @@ var styles = StyleSheet.create({
   },
   venuePhotoMain: {
     width: windowWidth * 1,
-    height: windowHeight * .43,
+    height: windowHeight * .40,
     alignItems: 'stretch',
     backgroundColor: 'grey',
   },
   venuePhoto: {
     width: windowWidth * 0.5,
-    height: windowHeight * 0.32,
+    height: windowHeight * 0.30,
     alignItems: 'stretch',
     backgroundColor: 'grey',
   },
-  discoveryNameContainer: {
-    marginTop: 20,
-    paddingLeft: 15,
-    paddingRight: 15,
-    flex: .25,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
+  discoveryNavContainer: {
+    flex: 3.1,
   },
-  headerContainer: {
+  titleContainer: {
+    backgroundColor: 'lightgrey',
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingBottom: 3,
+    flexDirection: 'column',
     justifyContent: 'center',
-    height: 60,
+    alignItems: 'center',
+    flex: 1,
   },
-  discoveryHeader: {
+  titleButton: {
+    borderRadius: 5,
+    padding: 5,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    flexWrap: 'wrap',
+    shadowOffset:{
+    width: 3,
+    height: 3,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+  },
+  infoIcon: {
+    marginLeft: 10,
+    height: 50,
+    width: 50,
+    flex: 1.79,
+  },
+  locationTitle: {
+    flex: 10,
     backgroundColor: 'rgba(0, 0, 0, 0)',
     paddingLeft: 15,
-    fontSize: 26,
+    fontSize: 20,
     color: 'black',
     fontFamily: 'Helvetica',
   },
@@ -180,9 +201,11 @@ var styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  discoveryNav: {
+  navContainer: {
     flexDirection: 'row',
-    padding: 5,
+    paddingLeft: 6,
+    paddingRight: 6,
+    paddingBottom: 8,
     backgroundColor: 'lightgrey',
     justifyContent: 'space-between',
   },
@@ -191,25 +214,46 @@ var styles = StyleSheet.create({
   },
   xButtonContainer: {
     backgroundColor: 'white',
-    padding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginRight: 4,
     borderRadius: 10,
     alignItems: 'center',
+    shadowOffset:{
+    width: 3,
+    height: 3,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
   },
   flockButtonContainer: {
     backgroundColor: 'white',
     paddingTop: 5,
     paddingBottom: 5,
     borderRadius: 10,
-    marginLeft: 5,
-    marginRight: 5,
+    marginLeft: 2,
+    marginRight: 2,
     alignItems: 'center',
+    shadowOffset:{
+    width: 3,
+    height: 3,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
   },
   likeButtonContainer: {
     backgroundColor: 'white',
+    marginLeft: 4,
     paddingTop: 5,
     paddingBottom: 5,
     borderRadius: 10,
     alignItems: 'center',
+    shadowOffset:{
+    width: 3,
+    height: 3,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
   },
   discoveryNavImage: {
     resizeMode: 'contain',

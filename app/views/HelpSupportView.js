@@ -48,7 +48,6 @@ var styles = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25,
     marginTop: 15,
-    flex: 2,
   },
   fbLoginButton: {
     paddingLeft: 45,

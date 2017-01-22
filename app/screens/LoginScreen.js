@@ -34,19 +34,18 @@ class LoginScreen extends Component {
       <ViewContainer style={styles.background}>
         <Image style={styles.mainLoginContainer} source={require('../img/CityscapeIntro.jpg')}>
           <View style={styles.logoContainer}>
+            <Image style={styles.logo} source={require('../img/seagulls.png')} />
             <Text style={styles.welcomeMsg}>
-              Welcome Traveler
+              Flock
             </Text>
-            <Image style={styles.logo} source={require('../img/logo.png')} />
+          </View>
 
-            <View style={styles.loginButtonContainer}>
-
-              <TouchableHighlight onPress={this.LoginPressed.bind(this)} style={styles.googleLoginButton}>
-                <Text style={styles.loginMsg}> Google Login </Text>
-              </TouchableHighlight>
-
+          <View style={styles.loginButtonContainer}>
+            <TouchableHighlight style={styles.googleLoginButton} onPress={this.LoginPressed.bind(this)}>
+              <Text style={styles.loginMsg}>Google Login</Text>
+            </TouchableHighlight>
+            <View style={styles.fbLoginButton}>
               <Login onLoginFinishedFunction={this.LoginPressed.bind(this)}/>
-
             </View>
           </View>
         </Image>
@@ -81,46 +80,54 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flex: 1,
   },
   welcomeMsg: {
-    marginTop: 30,
-    marginBottom: 30,
-    fontSize: 32,
+    marginLeft: 20,
+    fontFamily: 'Arial Rounded MT Bold',
+    fontSize: 45,
     color: 'white',
     backgroundColor: 'rgba(0, 0, 0, 0)',
   },
-  fbLoginButton: {
-    paddingLeft: 50,
-    paddingRight: 50,
-    padding: 20,
-    backgroundColor: '#3b5998',
-    marginBottom: 70,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+  loginButtonContainer: {
+    marginBottom: 100,
   },
   googleLoginButton: {
+    shadowOffset:{
+    width: 7,
+    height: 7,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.7,
     paddingLeft: 50,
     paddingRight: 50,
-    padding: 20,
+    padding: 10,
     backgroundColor: '#df4a32',
     marginBottom: 20,
-    borderRadius: 10,
+    borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  fbLoginButton: {
+    shadowOffset:{
+    width: 7,
+    height: 7,
+    },
+    shadowColor: 'black',
+    shadowOpacity: 0.7,
+  },
   loginMsg: {
-    fontSize: 20,
+    fontSize: 15,
     fontFamily: 'Arial',
     color: 'white',
   },
   logo: {
     alignItems: 'center',
-    height: 125,
-    width: 100,
+    height: 70,
+    width: 80,
   }
 });
 
