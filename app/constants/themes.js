@@ -1,4 +1,4 @@
-export const TEST_THEME_1 = ["italian", "mexican"];
+export const TEST_THEME_1 = ["hookah", "coffee"];
 export const TEST_THEME_2 = ["karts"];
 
 export const CHILL_THEME = ["hookah", "coffee", "billiards", "cafe", "pool", "zoo", "beach", "park"];
@@ -8,4 +8,4 @@ export const CULTURE_THEME = ["museum", "art", "gallery", "theatercompany", "his
 export const EAT_THEME = ["resturant", "cafe", "gastropub", "market", "icecream", "foodtruck"];
 export const MYSTERY_THEME = ["circus", "musicvenue", "burlesque", "strip", "karts"];
 
-export const INITIAL_THEME = CHILL_THEME;
+export const INITIAL_THEME = TEST_THEME_1;

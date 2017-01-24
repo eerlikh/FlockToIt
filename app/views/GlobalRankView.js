@@ -8,9 +8,9 @@ const users = [
   {id:2, name: "Bob Billy", score: 10},
   {id:3, name: "Santana Diego", score: 1},
   {id:4, name: "Thompson Merlin", score: 6},
-  {id:5, name: "Harold Davis", score: 3},
+  {id:5, name: "Tyrone Williams", score: 3},
   {id:6, name: "Raritan Junior", score: 9},
-  {id:7, name: "Caroline Anderson", score: 19},
+  {id:7, name: "Gerrardo Kolodnystien", score: 19},
   {id:8, name: "Haly Edison", score: 14},
 
 ]
@@ -54,7 +54,6 @@ class GlobalRankView extends Component {
     )
   }
 }
-
 
 var styles = StyleSheet.create({
 

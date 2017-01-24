@@ -20,7 +20,7 @@ module.exports = {
     return url;
   },
 
-  extractResultsData(json) {
+  extractResultsData(json, searchTerm) {
     var nextPageToken = json.next_page_token;
 
     var placeIds = new Array(json.results.length);
@@ -34,6 +34,7 @@ module.exports = {
     }
 
     return {
+      searchTerm,
       nextPageToken,
       placeIds,
       names

@@ -130,7 +130,8 @@ function fetchResults(fetchOptions) {
       .then((responseJson) => {
         console.log(fetchOptions.searchTerm + ":");
         console.log(responseJson);
-        dispatch(setResultsObject(utils.extractResultsData(responseJson), fetchOptions.index, fetchOptions.message));
+        dispatch(setResultsObject(utils.extractResultsData(responseJson, fetchOptions.searchTerm),
+         fetchOptions.index, fetchOptions.message));
         resolve(fetchOptions);
       })
       .catch((error) => {
@@ -193,9 +194,33 @@ function setDetailsJson(detailsObject) {
 }
 
 function setDetailsData(detailsData) {
-  return {
-    type: types.SET_DETAILS_DATA,
-    detailsData,
+  return (dispatch, getState) => {
+    var relatedAchievements = dispatch(findRelatedAchievements());
+    detailsData.relatedAchievements = relatedAchievements;
+
+    dispatch({
+      type: types.SET_DETAILS_DATA,
+      detailsData,
+    });
+  }
+}
+
+function findRelatedAchievements() {
+  return (dispatch, getState) => {
+    var searchTerm =
+      getState().googleData.resultsObjects[getState().googleData.resultsIndex].searchTerm;
+    var achievements = getState().userData.achievements;
+    var relatedAchievements = [];
+
+    for (var i = 0; i < achievements.length; i++) {
+      for (var x = 0; x < achievements[i].searchTermStrings.length; x++) {
+        if (searchTerm === achievements[i].searchTermStrings[x]) {
+          relatedAchievements.push(achievements[i].name);
+        }
+      }
+    }
+
+    return relatedAchievements;
   }
 }
 

@@ -1,6 +1,7 @@
 'use strict'
 import React, { Component } from 'react';
 import { Image, ListView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Router } from '../containers/Router';
 
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
@@ -9,13 +10,12 @@ import { connect } from 'react-redux';
 class MatchedLocationsView extends Component {
   constructor(props){
     super(props)
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    this.state = {
-      matchedLocationsDataSource: ds.cloneWithRows(this.props.favorites) //locations variable used here
-    }
   }
 
   render() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var matchedLocationsDataSource = ds.cloneWithRows(this.props.favorites);
+
     return (
       <View style={styles.matchedLocationsContainer}>
         <View style={styles.matchedLocationsHeader}>
@@ -23,7 +23,7 @@ class MatchedLocationsView extends Component {
           <Text style={styles.headerText}>Check-in</Text>
         </View>
         <ListView
-          dataSource={this.state.matchedLocationsDataSource}
+          dataSource={matchedLocationsDataSource}
           renderRow={(location) => { return this.renderLocationRow(location) }}
         >
         </ListView>
@@ -33,7 +33,11 @@ class MatchedLocationsView extends Component {
 
   renderLocationRow(location) {
     return(
-      <TouchableOpacity>
+      // <TouchableOpacity onPress={()=>this.props.deleteFavorite(location)}>
+      <TouchableOpacity onPress={ () => {
+          this.props.updateSelectedFavorite(location);
+          this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('favoriteDetail'));
+        }}>
         <View style={styles.locationRow}>
           <Image style={styles.locationImage} source={{uri: location.imageUrl}} />
           <View styles={styles.locationColumn}>
@@ -41,8 +45,8 @@ class MatchedLocationsView extends Component {
             <Text style={styles.locationDistance}> {'placeholder'} mi.</Text>
           </View>
           <View styles={styles.locationColumn}>
-            <Text style={styles.locationRating}> {'placeholder'} out of 10</Text>
-            <Text style={styles.locationVisited}> {'placeholder'} visits</Text>
+            <Text style={styles.locationRating}> {location.rating} out of 5</Text>
+            <Text style={styles.locationVisited}> {location.checkIns} visits</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -90,7 +94,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    // navigation: state.navigation,
+    navigation: state.navigation,
     // detailsData: state.googleData.detailsData,
     // imageUrls: state.googleData.imageUrls,
     favorites: state.userData.favorites,

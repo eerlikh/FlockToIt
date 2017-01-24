@@ -1,18 +1,27 @@
 'use strict';
 import React, { Component } from 'react';
-import { AsyncStorage, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View, Alert } from 'react-native';
+import {
+  AsyncStorage,
+  Dimensions,
+  Image,
+  StyleSheet,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert
+} from 'react-native';
 
-import NavBar from '../components/NavBar'
-import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import {constants} from '../constants'
 import { NavigationStyles } from '@exponent/ex-navigation';
+import { Router } from '../containers/Router';
 
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 
-class LocationDetailScreen extends Component {
+class FavoriteDetailScreen extends Component {
   constructor(props){
     super(props);
   }
@@ -34,10 +43,10 @@ class LocationDetailScreen extends Component {
         />
         <View style={styles.discoveryViewContainer}>
           <View style={styles.detailHeaderContainer}>
-            <Text style={styles.discoveryHeader}>{this.props.detailsData.name}</Text>
+            <Text style={styles.discoveryHeader}>{this.props.selectedFavorite.name}</Text>
           </View>
           <View style={styles.discoveryPhotoContainer}>
-            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url1}} />
+            <Image style={styles.venuePhoto} source={{uri: this.props.selectedFavorite.imageUrl}} />
           </View>
           <View style={styles.locationDetailColumnContainer}>
             <View style={styles.locationDetailRatingContainer}>
@@ -47,41 +56,28 @@ class LocationDetailScreen extends Component {
                 <Image style={styles.locationRatingStars} source={require('../img/icons/Star.png')} />
                 <Image style={styles.locationRatingStars} source={require('../img/icons/Star.png')} />
                 <Image style={styles.locationRatingStars} source={require('../img/icons/Star.png')} />
-                <Text>{this.props.detailsData.rating}</Text>
+                <Text>{this.props.selectedFavorite.rating}</Text>
               </Text>
               <Text style={styles.locationRating}>Rate This Location</Text>
             </View>
             <View style={styles.locationDetailRowContainer}>
-              <Text>Distance: {this.props.detailsData.distance} mi</Text>
-              <Text>{this.props.detailsData.hours}</Text>
+              <Text>Distance: "placeholder" mi</Text>
+              <Text>{"placeholder"}</Text>
             </View>
           </View>
+          <TouchableOpacity onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
+            <Text>Check In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            this.props.deleteFavorite(this.props.selectedFavorite);
+            this.props.pop(this.props.navigation.currentNavigatorUID);
+          }}>
+            <Text>Delete This Favorite</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
+            <Text>Navigate Back</Text>
+          </TouchableOpacity>
         </View>
-        <DiscoveryNav>
-          <View style={styles.discoveryNav}>
-
-            {/*first button*/}
-            <TouchableOpacity style={styles.highlightContainer} onPress={this.XPressed.bind(this)}>
-              <View style={styles.xButtonContainer}>
-                <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
-              </View>
-            </TouchableOpacity>
-
-            {/*second button*/}
-            <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
-              <View style={styles.flockButtonContainer}>
-                <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/flockButton.png')} />
-              </View>
-            </TouchableOpacity>
-
-            {/*third button*/}
-            <TouchableOpacity style={styles.highlightContainer} onPress={this.LikePressed.bind(this)}>
-              <View style={styles.likeButtonContainer}>
-                <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/likeButton.png')} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </DiscoveryNav>
       </ViewContainer>
     );
   }
@@ -93,7 +89,7 @@ class LocationDetailScreen extends Component {
       Alert.alert('Favorite Already Added');
       return;
     }
-    // Alert.alert('Favorite Added!'); //TODO: add this back at some point
+    // Alert.alert('Favorite Added!'); //TODO: add this functionality back at some point
   }
 
   XPressed(){
@@ -105,11 +101,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
   var styles = StyleSheet.create({
-    NavBar: {
-      paddingTop: 25,
-      paddingBottom: 25,
-      flexDirection:'row',
-    },
     navTitle: {
       marginTop: -2,
       color: 'white',
@@ -224,9 +215,8 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
   return {
     navigation: state.navigation,
-    detailsData: state.googleData.detailsData,
-    imageUrls: state.googleData.imageUrls,
+    selectedFavorite: state.userData.selectedFavorite,
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LocationDetailScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteDetailScreen);

@@ -1,3 +1,5 @@
+//TODO: Figure out a way to cache images from URLs because its making the app slow as fuck to load images
+
 'use strict';
 import React, { Component } from 'react';
 import { Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
@@ -44,7 +46,7 @@ class DiscoveryScreen extends Component {
             <LinearGradient
             colors={['rgba(0, 0, 0, 0)', 'white']}
             style={styles.discoveryInfoContainer}
-            start={[0.0, 0.0]} end={[0.0, 1.2]}
+            start={{x: 0.0, y: 0.0}} end={{x: 0.0, y: 1.2}}
             locations={[0,.4]}>
             <View style={styles.headerContainer}>
               <Text style={styles.discoveryHeader}>{this.props.detailsData.name}</Text>

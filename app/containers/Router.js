@@ -5,6 +5,7 @@ import DiscoveryScreen from '../screens/DiscoveryScreen';
 import DashboardScreen from '../screens/DashboardScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LocationDetailScreen from '../screens/LocationDetailScreen';
+import FavoriteDetailScreen from '../screens/FavoriteDetailScreen';
 
 import { StackNavigation } from '@exponent/ex-navigation';
 import { NavigationStyles } from '@exponent/ex-navigation';
@@ -15,6 +16,7 @@ export const Router = createRouter(() => ({
   dashboard: () => DashboardScreen,
   settings: () => SettingsScreen,
   locationDetail: () => LocationDetailScreen,
+  favoriteDetail: () => FavoriteDetailScreen,
   MainNavigator: () => MainNavigator,
 }));
 

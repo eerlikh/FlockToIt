@@ -71,6 +71,8 @@ class DiscoveryCriteriaView extends Component {
     )
   }
 
+  //TODO: make it so that the theme is changed only upon navigating off of this screen to protect against button spamming
+
   EatPressed(){
     this.props.setTheme(constants.EAT_THEME);
   }
@@ -108,7 +110,6 @@ var styles = StyleSheet.create({
     paddingRight: 25,
     paddingLeft: 25,
     paddingBottom: 10,
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
@@ -117,7 +118,6 @@ var styles = StyleSheet.create({
     marginTop: 15,
   },
   discoveryImageContainer: {
-    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -137,7 +137,6 @@ var styles = StyleSheet.create({
   },
   sliderContainer: {
     flexWrap: 'wrap',
-    flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
   },
