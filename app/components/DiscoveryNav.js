@@ -14,7 +14,7 @@ class DiscoveryNav extends Component {
 
 var styles = StyleSheet.create({
   DashNavBar: {
-    backgroundColor: 'grey',
+    backgroundColor: '#b3b3b3',
   }
 })
 

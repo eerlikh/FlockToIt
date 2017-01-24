@@ -43,13 +43,11 @@ const windowHeight = Dimensions.get('window').height;
 
 var styles = StyleSheet.create({
   helpSupportContainer: {
-    flex: 2,
   },
   subjectContainer: {
     marginTop: -10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
   },
   subjectTitle: {
     justifyContent: 'center',

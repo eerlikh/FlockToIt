@@ -1,11 +1,11 @@
 import * as types from './types'
 import { fetchAllData, fetchAllResults } from './googleFetching';
 
-export function setTheme(theme) {
+export function setTheme(theme, themeName) {
   return (dispatch, getState) => {
     var isInitialTheme = getState().settings.theme === null;
 
-    dispatch({ type: types.SET_THEME, theme });
+    dispatch({ type: types.SET_THEME, theme, themeName});
     dispatch(shuffleCurrentTheme());
 
     if (!isInitialTheme) {

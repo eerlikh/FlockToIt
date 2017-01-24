@@ -38,9 +38,8 @@ class Login extends Component {
 
 var styles = StyleSheet.create({
   fbLoginButton: {
-    paddingTop: 33,
-    paddingBottom: 33,
-    marginBottom: 70,
+    paddingTop: 20,
+    paddingBottom: 20,
     borderRadius: 0,
   }
 });

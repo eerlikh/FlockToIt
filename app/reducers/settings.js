@@ -2,6 +2,7 @@ import createReducer from '../utils/createReducer'
 import * as types from '../actions/types'
 
 export const settings = createReducer({
+    themeName: "chill",
     theme: null,
     radius: 5000,
     maxPrice: 4
@@ -10,6 +11,7 @@ export const settings = createReducer({
     [types.SET_THEME](state, action) {
       return {
         ...state,
+        themeName: action.themeName,
         theme: action.theme,
       }
     },
