@@ -1,4 +1,4 @@
-export const TEST_THEME_1 = ["italian", "mexican"];
+export const TEST_THEME_1 = ["hookah", "coffee"];
 export const TEST_THEME_2 = ["karts"];
 
 export const CHILL_THEME = ["hookah", "coffee", "billiards", "cafe", "pool", "zoo", "beach", "park"];

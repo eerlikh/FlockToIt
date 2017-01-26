@@ -72,6 +72,8 @@ class DiscoveryCriteriaView extends Component {
     )
   }
 
+  //TODO: make it so that the theme is changed only upon navigating off of this screen to protect against button spamming
+
   EatPressed(){
     this.props.setTheme(constants.EAT_THEME, "eat");
     this.setState({selectEat: true});
