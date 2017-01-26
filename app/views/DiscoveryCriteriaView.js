@@ -139,7 +139,7 @@ const windowHeight = Dimensions.get('window').height;
 var styles = StyleSheet.create({
   DiscoveryCriteriaContainer: {
     paddingBottom: 15,
-    backgroundColor: '#E6E6FA',
+    backgroundColor: 'ivory',
   },
   selectActivity: {
     fontSize: 16,

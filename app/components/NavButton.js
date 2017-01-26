@@ -13,9 +13,28 @@ class NavButton extends Component {
   }
 
   componentWillMount(){
+    switch (this.props.destination) {
+      case "dashboard":
+        this.setState({ buttonImage: require('../img/buttons/favoritesIcon.png') });
+        this.setState({ buttonStyle: styles.navButtonFavorites });
+        break;
+      case "settings":
+        this.setState({ buttonImage: require('../img/buttons/settingsIcon.png') });
+        this.setState({ buttonStyle: styles.navButtonSettings });
+        break;
+      case "discovery":
+        this.setState({ buttonImage: require('../img/buttons/ArrowRightWhite.png') });
+        this.setState({ buttonStyle: styles.navButtonRight });
+        break;
+      case "discoveryLeft":
+        this.setState({ buttonImage: require('../img/buttons/ArrowLeftWhite.png') });
+        this.setState({ buttonStyle: styles.navButtonLeft });
+        break;
+    }
+
     if (this.props.direction === "right") {
-      this.setState({ buttonStyle: styles.navButtonRight });
-      this.setState({ buttonImage: require('../img/buttons/ArrowRightWhite.png') });
+      // this.setState({ buttonStyle: styles.navButtonFavorites });
+      // this.setState({ buttonImage: require('../img/buttons/favoritesIcon.png') });
       if (this.props.navigatorLevel === "current") {
         this.setState({ onPress: () => {this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute(this.props.destination))} });
       } else if (this.props.navigatorLevel === "parent") {
@@ -23,8 +42,8 @@ class NavButton extends Component {
         this.setState({ onPress: () => {this.props.push(parentNavigatorUID, Router.getRoute(this.props.destination))} });
       }
     } else if (this.props.direction === "left") {
-      this.setState({ buttonStyle: styles.navButtonLeft });
-      this.setState({ buttonImage: require('../img/buttons/ArrowLeftWhite.png') });
+      // this.setState({ buttonStyle: styles.navButtonSettings });
+      // this.setState({ buttonImage: require('../img/buttons/settingsIcon.png') });
       if (this.props.navigatorLevel === "current") {
         this.setState({ onPress: () => {this.props.pop(this.props.navigation.currentNavigatorUID)} });
       } else if (this.props.navigatorLevel === "parent") {
@@ -46,15 +65,31 @@ class NavButton extends Component {
 }
 
 var styles = StyleSheet.create({
+  navButtonFavorites: {
+    marginRight: 15,
+    marginLeft: 40,
+    marginTop: 5,
+    width: 34,
+    height: 28,
+  },
+  navButtonSettings: {
+    marginLeft: 15,
+    marginRight: 40,
+    marginTop: 5,
+    width: 40,
+    height: 34,
+  },
   navButtonRight: {
     marginRight: 15,
     marginLeft: 40,
+    marginTop: 5,
     width: 15,
     height: 30,
   },
   navButtonLeft: {
-    marginRight: 40,
     marginLeft: 15,
+    marginRight: 40,
+    marginTop: 5,
     width: 15,
     height: 30,
   },

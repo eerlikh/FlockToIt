@@ -210,7 +210,8 @@ var styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   settingOptionRow: {
-    padding: 10,
+    backgroundColor: 'whitesmoke',
+    padding: 12,
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',

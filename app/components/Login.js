@@ -28,7 +28,7 @@ class Login extends Component {
             }
           }
         }
-        loginBehaviorIOS={'web'}
+        loginBehaviorIOS={'browser'}
         onLogoutFinished={() => this.props.onLogoutFinishedFunction()}
         />
       </View>
