@@ -1,5 +1,4 @@
 //TODO: make the sliders for price and radius respond to the redux state
-
 'use strict';
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, StatusBar} from 'react-native';
@@ -64,8 +63,7 @@ class SettingsScreen extends Component {
 
       <ViewContainer>
         <StatusBar
-          barStyle="light-content"
-        />
+          barStyle="light-content" />
         <View style={styles.mainSettingsContainer}>
 
           <View style={styles.settingOptionColumn}>

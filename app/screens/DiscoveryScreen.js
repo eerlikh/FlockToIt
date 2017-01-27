@@ -1,10 +1,8 @@
 //TODO: Figure out a way to cache images from URLs because its making the app slow as fuck to load images
-
 'use strict';
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import {constants} from '../constants'
-
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import NavButton from '../components/NavButton'
@@ -18,7 +16,6 @@ class DiscoveryScreen extends Component {
   constructor(props){
     super(props);
   }
-
   static route = {
     navigationBar: {
       title: 'Flock',
@@ -28,14 +25,10 @@ class DiscoveryScreen extends Component {
         <NavButton destination={"settings"} direction={"left"} navigatorLevel={"current"}/>,
     },
   }
-
   render(){
     return (
       <ViewContainer>
-      <StatusBar
-        barStyle="light-content"
-      />
-
+      <StatusBar barStyle="light-content"/>
         <View style={styles.discoveryViewContainer}>
           <View style={styles.discoveryPhotoContainer}>
             <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
@@ -74,6 +67,7 @@ class DiscoveryScreen extends Component {
                 </TouchableOpacity>
               </View>
           </DiscoveryNav>
+
         </View>
       </ViewContainer>
     );

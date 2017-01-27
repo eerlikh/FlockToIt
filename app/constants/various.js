@@ -1,5 +1,5 @@
 //development
-export const API_KEY = "AIzaSyAm_J6lNvrsnHrKMJYXILl6SqgRNCYbm9k";
+export const API_KEY = "AIzaSyCcKq_C0pCs5P1N1HtjKRvG6Ublw53w4h0";
 export const LATITUDE = "38.900271";
 export const LONGITUDE = "-76.989289";
 
