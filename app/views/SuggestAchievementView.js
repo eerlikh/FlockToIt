@@ -1,6 +1,6 @@
 'use strict'
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import renderIf from '../components/renderIf'
 
 class SuggestAchievementView extends Component {
@@ -17,10 +17,10 @@ class SuggestAchievementView extends Component {
   render() {
     return (
       <View style={styles.suggestAchievementContainer}>
-        <View style={styles.subjectContainer}>
-          <Text style={styles.subjectTitle}>Name:</Text>
+        <View style={styles.nameContainer}>
+          <Text style={styles.nameTitle}>Name:</Text>
           <TextInput
-            style={styles.subjectInput}
+            style={styles.nameInput}
                  onChangeText={(subject) => this.setState({subject})}
                  value={this.state.subject}
                />
@@ -36,8 +36,8 @@ class SuggestAchievementView extends Component {
           />
         </View>
 
-        <TouchableOpacity onPress={this.SendPressed.bind(this)} style={styles.fbLoginButton}>
-          <Text style={styles.loginMsg}>Send</Text>
+        <TouchableOpacity onPress={this.SendPressed.bind(this)} style={styles.sendButton}>
+          <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
 
       </View>
@@ -50,16 +50,57 @@ class SuggestAchievementView extends Component {
   }
 }
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 var styles = StyleSheet.create({
-  NavBar: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "stretch"
-  },
   suggestAchievementContainer: {
     paddingLeft: 25,
     paddingRight: 25,
+    marginTop: 15,
+  },
+  nameContainer: {
+    marginTop: -10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  nameTitle: {
+    justifyContent: 'center',
+    paddingTop: 4,
+  },
+  nameInput: {
+    height: 30,
+    width: windowWidth * .7,
+    borderColor: 'gray',
+    borderWidth: 1,
+    alignSelf: 'stretch',
+  },
+  bodyContainer: {
+    marginTop: 15,
+    marginBottom: 10,
+    flexDirection: 'column',
+  },
+  bodyTitle: {
+    marginBottom: 10,
+  },
+  bodyInput: {
+    padding: 5,
+    height: 162,
+    borderWidth: 1,
+  },
+  sendButton: {
+    paddingLeft: 45,
+    paddingRight: 45,
+    padding: 20,
+    backgroundColor: '#01939A',
+    marginBottom: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    fontFamily: 'Arial',
+    color: 'white',
   }
 })
 

@@ -27,8 +27,8 @@ class HelpSupportView extends Component {
         {renderIf(this.state.showThankYouMsg)(
           <ThankYouMsg style={styles.DiscoveryCriteriaView} />
         )}
-        <TouchableOpacity onPress={this.SendPressed.bind(this)} style={styles.fbLoginButton}>
-          <Text style={styles.loginMsg}>Send</Text>
+        <TouchableOpacity style={styles.sendButton} onPress={this.SendPressed.bind(this)}>
+          <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
 
       </View>
@@ -49,7 +49,7 @@ var styles = StyleSheet.create({
     paddingRight: 25,
     marginTop: 15,
   },
-  fbLoginButton: {
+  sendButton: {
     paddingLeft: 45,
     paddingRight: 45,
     padding: 20,
@@ -58,11 +58,11 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  loginMsg: {
+  buttonText: {
     fontSize: 20,
     fontFamily: 'Arial',
     color: 'white',
-  },
+  }
 })
 
 module.exports = HelpSupportView

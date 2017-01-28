@@ -1,10 +1,8 @@
 //TODO: Figure out a way to cache images from URLs because its making the app slow as fuck to load images
-
 'use strict';
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
 import {constants} from '../constants'
-
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import NavButton from '../components/NavButton'
@@ -23,23 +21,22 @@ class DiscoveryScreen extends Component {
       isCaching: false,
     }
   }
-
   static route = {
     navigationBar: {
       title: 'Flock',
       renderRight: (route, props) =>
         <NavButton destination={"dashboard"} direction={"right"} navigatorLevel={"current"}/>,
       renderLeft: (route, props) =>
-        <NavButton direction={"left"} navigatorLevel={"current"}/>,
+        <NavButton destination={"settings"} direction={"left"} navigatorLevel={"current"}/>,
     },
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
-      // this.setState({
-      //   isCaching: true,
-      //   url1: imageUrl,
-      // })
+      this.setState({
+        isCaching: true,
+        // url1: imageUrl,
+      })
       Image.prefetch(nextProps.imageUrls.url1).then(() => {
         Image.prefetch(nextProps.imageUrls.url2);
       }).then(() => {
@@ -54,11 +51,7 @@ class DiscoveryScreen extends Component {
 
     return (
       <ViewContainer>
-      <StatusBar
-        barStyle="light-content"
-      />
-
-
+      <StatusBar barStyle="light-content"/>
         <View style={styles.discoveryViewContainer}>
           {renderIf(!this.state.isCaching)(
             <View style={styles.discoveryPhotoContainer}>
@@ -94,18 +87,19 @@ class DiscoveryScreen extends Component {
                 {/*second button*/}
                 <TouchableOpacity style={styles.highlightContainer} onPress={this.flockPressed.bind(this)}>
                   <View style={styles.flockButtonContainer}>
-                    <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/flockButton.png')} />
+                    <Image style={styles.discoveryNavImage} source={require('../img/buttons/flockButton.png')} />
                   </View>
                 </TouchableOpacity>
 
                 {/*third button*/}
                 <TouchableOpacity style={styles.highlightContainer} onPress={this.likePressed.bind(this)}>
                   <View style={styles.likeButtonContainer}>
-                    <Image style={styles.discoveryLikeNavImage} source={require('../img/buttons/likeButton.png')} />
+                    <Image style={styles.discoveryNavImage} source={require('../img/buttons/likeButton.png')} />
                   </View>
                 </TouchableOpacity>
               </View>
           </DiscoveryNav>
+
         </View>
       </ViewContainer>
     );
@@ -188,12 +182,12 @@ var styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
   discoveryNavContainer: {
-    flex: 3.1,
+    flex: 3.2,
   },
   titleContainer: {
     backgroundColor: 'lightgrey',
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingLeft: 6,
+    paddingRight: 6,
     paddingBottom: 3,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -216,9 +210,8 @@ var styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   infoIcon: {
+    height: windowHeight * .075,
     marginLeft: 10,
-    height: 50,
-    width: 50,
     flex: 1.79,
   },
   locationTitle: {
@@ -248,8 +241,8 @@ var styles = StyleSheet.create({
   },
   xButtonContainer: {
     backgroundColor: 'white',
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 5,
+    paddingBottom: 5,
     marginRight: 4,
     borderRadius: 10,
     alignItems: 'center',
@@ -261,7 +254,7 @@ var styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   flockButtonContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#01939A',
     paddingTop: 5,
     paddingBottom: 5,
     borderRadius: 10,
@@ -292,14 +285,8 @@ var styles = StyleSheet.create({
   discoveryNavImage: {
     resizeMode: 'contain',
     alignItems: 'center',
-    height: 40,
-    width: 40,
-  },
-  discoveryLikeNavImage: {
-    resizeMode: 'contain',
-    alignItems: 'center',
-    height: 50,
-    width: 50,
+    width: windowWidth * .135,
+    height: windowHeight * .075,
   },
 });
 

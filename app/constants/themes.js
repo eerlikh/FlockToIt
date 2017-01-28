@@ -8,4 +8,4 @@ export const CULTURE_THEME = ["museum", "art", "gallery", "theatercompany", "his
 export const EAT_THEME = ["resturant", "cafe", "gastropub", "market", "icecream", "foodtruck"];
 export const MYSTERY_THEME = ["circus", "musicvenue", "burlesque", "strip", "karts"];
 
-export const INITIAL_THEME = TEST_THEME_1;
+export const INITIAL_THEME = ADVENTURE_THEME;
