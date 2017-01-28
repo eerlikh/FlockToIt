@@ -25,6 +25,7 @@ class MainNavigator extends Component {
   static route = {
     styles: {
     ...NavigationStyles.SlideVertical,
+    gestures: null,
     },
   }
 

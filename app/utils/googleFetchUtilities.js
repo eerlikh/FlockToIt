@@ -23,14 +23,30 @@ module.exports = {
   extractResultsData(json, searchTerm) {
     var nextPageToken = json.next_page_token;
 
+    // var placeIds = new Array(json.results.length);
+    // for (var i = 0; i < placeIds.length; i++) {
+    //   placeIds[i] = json.results[i].place_id;
+    // }
+    //
+    // var names = new Array(json.results.length);
+    // for (var i = 0; i < names.length; i++) {
+    //   names[i] = json.results[i].name;
+    // }
+
     var placeIds = new Array(json.results.length);
-    for (var i = 0; i < placeIds.length; i++) {
-      placeIds[i] = json.results[i].place_id;
+    for (i = 0, x = 0; i < placeIds.length; i++) {
+      if (json.results[i].photos) {
+        placeIds[x] = json.results[i].place_id;
+        x++;
+      }
     }
 
     var names = new Array(json.results.length);
-    for (var i = 0; i < names.length; i++) {
-      names[i] = json.results[i].name;
+    for (i = 0, x = 0; i < names.length; i++) {
+      if (json.results[i].photos) {
+        names[x] = json.results[i].name;
+        x++;
+      }
     }
 
     return {

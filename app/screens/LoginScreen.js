@@ -54,7 +54,7 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
-    //causes a wierd blink if you don't wait here
+    //causes a wierd blink if you don't pause thread here
     setTimeout(() => {
       this.autoLogin();
     }, 100);

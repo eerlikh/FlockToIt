@@ -13,10 +13,15 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 import { Router } from '../containers/Router';
+import renderIf from '../components/renderIf'
 
 class DiscoveryScreen extends Component {
   constructor(props){
     super(props);
+
+    this.state = {
+      isCaching: false,
+    }
   }
 
   static route = {
@@ -29,19 +34,46 @@ class DiscoveryScreen extends Component {
     },
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
+      // this.setState({
+      //   isCaching: true,
+      //   url1: imageUrl,
+      // })
+      Image.prefetch(nextProps.imageUrls.url1).then(() => {
+        Image.prefetch(nextProps.imageUrls.url2);
+      }).then(() => {
+        Image.prefetch(nextProps.imageUrls.url3);
+      }).then(() => {
+        this.setState({isCaching: false})
+      });
+    }
+  }
+
   render(){
+
     return (
       <ViewContainer>
       <StatusBar
         barStyle="light-content"
       />
 
+
         <View style={styles.discoveryViewContainer}>
-          <View style={styles.discoveryPhotoContainer}>
-            <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
-            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
-            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
-          </View>
+          {renderIf(!this.state.isCaching)(
+            <View style={styles.discoveryPhotoContainer}>
+              <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
+              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
+              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
+            </View>
+          )}
+          {renderIf(this.state.isCaching)(
+            <View style={styles.discoveryPhotoContainer}>
+              <Image style={styles.venuePhotoMain} source={require('../img/placeholder.png')} />
+              <Image style={styles.venuePhoto} source={require('../img/placeholder.png')} />
+              <Image style={styles.venuePhoto} source={require('../img/placeholder.png')} />
+            </View>
+          )}
 
           <DiscoveryNav style={styles.discoveryNavContainer}>
               <View style={styles.titleContainer}>

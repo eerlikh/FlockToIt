@@ -16,10 +16,10 @@ export const googleData = createReducer({
       distance: "",
     },
     imageUrls: {
-      url1: "https://placehold.it/400x400",
-      url2: "https://placehold.it/400x400",
-      url3: "https://placehold.it/400x400",
-      url4: "https://placehold.it/400x400",
+      url1: "http://i.imgur.com/lJdVn5N.png",
+      url2: "http://i.imgur.com/lJdVn5N.png",
+      url3: "http://i.imgur.com/lJdVn5N.png",
+      url4: "http://i.imgur.com/lJdVn5N.png",
     }
 
   }, {
