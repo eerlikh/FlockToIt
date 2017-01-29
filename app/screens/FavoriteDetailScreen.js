@@ -4,6 +4,7 @@ import { AsyncStorage, Dimensions, Image, ScrollView, StyleSheet, StatusBar, Tex
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
+import renderIf from '../components/renderIf'
 import { constants } from '../constants'
 import { NavigationStyles } from '@exponent/ex-navigation';
 import { bindActionCreators } from 'redux'
@@ -60,12 +61,47 @@ class FavoriteDetailScreen extends Component {
           </View>
           <ScrollView style={styles.locationDetailScrollView}>
             <View style={styles.locationDetailAchievementsRow}>
-              <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
-              <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
+              {renderIf(this.achievementIsRelated("Renaissance Master"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/eiffel-tower.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Elite Brew Master"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Dripping in Culture"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/tah-mahal.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Great Outdoors"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/outdoors.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Teddy Roosevelt"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/rushmore.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Aquaman"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/sea-bottom.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Master of Mist"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+              )}
             </View>
             <View style={styles.locationDetailThemesRow}>
-              <Image style={styles.themesImage} source={require('../img/themes/notCulture.png')} />
-              <Image style={styles.themesImage} source={require('../img/themes/notAdventure.png')} />
+              {renderIf(this.themeIsRelated("culture"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notCulture.png')} />
+              )}
+              {renderIf(this.themeIsRelated("adventure"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notAdventure.png')} />
+              )}
+              {renderIf(this.themeIsRelated("chill"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notChill.png')} />
+              )}
+              {renderIf(this.themeIsRelated("drink"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notDrink.png')} />
+              )}
+              {renderIf(this.themeIsRelated("eat"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notEat.png')} />
+              )}
+              {renderIf(this.themeIsRelated("mystery"))(
+                <Image style={styles.themesImage} source={require('../img/themes/Mystery.png')} />
+              )}
             </View>
 
             <TouchableOpacity onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
@@ -80,11 +116,7 @@ class FavoriteDetailScreen extends Component {
             <TouchableOpacity onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
               <Text>Navigate Back</Text>
             </TouchableOpacity>
-
           </ScrollView>
-
-
-
         </View>
         <DiscoveryNav style={styles.discoveryNavContainer}>
             <View style={styles.titleContainer}>
@@ -120,6 +152,28 @@ class FavoriteDetailScreen extends Component {
       </ViewContainer>
     );
   }
+
+  //TODO: refactor this trash:
+  themeIsRelated(theme) {
+    for (var i = 0; i < this.props.selectedFavorite.relatedThemes.length; i++) {
+      if (theme === this.props.selectedFavorite.relatedThemes[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  achievementIsRelated(achievement) {
+    for (var i = 0; i < this.props.selectedFavorite.relatedAchievements.length; i++) {
+      if (achievement === this.props.selectedFavorite.relatedAchievements[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   likePressed(){
     try {
       this.props.addFavorite();

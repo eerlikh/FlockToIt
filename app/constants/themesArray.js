@@ -3,27 +3,27 @@
 export const themesArray = [
   {
     name: "chill",
-    searchTerms: ["hookah", "coffee", "billiards", "cafe", "pool", "zoo", "beach", "park"],
+    searchTerms: ["hookah", "coffee", "billiards", "cafe", "zoo", "park", "dessert", "lakes", "beaches", "arcade", "gelato", "creperies", "dayspa"],
   },
   {
     name: "drink",
-    searchTerms: ["bar", "coffee", "tea", "winery", "brewery", "icecream", "lounge"],
+    searchTerms: ["bar", "coffee", "tea", "winery", "brewery", "icecream", "lounge", "distillery", "beergarden", "speakeasy"],
   },
   {
     name: "adventure",
-    searchTerms: ["karts", "lake", "paintball", "campground", "park", "horseback", "racing", "rafting"],
+    searchTerms: ["karts", "lakes", "paintball", "campground", "park", "horseback", "racing", "rafting", "archeryrange", "shootingrange", "skydivingcenter"],
   },
   {
     name: "culture",
-    searchTerms: ["museum", "art", "gallery", "theatercompany", "historiclandmark", "zoo", "opera", "ballet"],
+    searchTerms: ["museum", "art", "gallery", "theatercompany", "historiclandmark", "zoo", "opera", "performingartstheater", "jazzclub"],
   },
   {
     name: "eat",
-    searchTerms: ["resturant", "cafe", "gastropub", "market", "icecream", "foodtruck"],
+    searchTerms: ["cafe", "gastropub", "icecream", "foodtruck", "sushi", "chinese", "indian", "tapas", "steakhouse", "whitecastle"],
   },
   {
     name: "mystery",
-    searchTerms: ["circus", "musicvenue", "burlesque", "strip", "karts"],
+    searchTerms: ["circus", "musicvenue", "burlesque", "karts", "shootingrange", "adultentertainment", "bathhouse"],
   },
 
 ]

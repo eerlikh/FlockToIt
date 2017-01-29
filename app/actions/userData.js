@@ -24,6 +24,7 @@ export function addFavorite() {
         checkIns: 0,
         rating: getState().googleData.detailsData.rating,
         relatedAchievements: getState().googleData.detailsData.relatedAchievements,
+        relatedThemes: getState().googleData.detailsData.relatedThemes,
       },
     });
   }
