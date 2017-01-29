@@ -34,8 +34,7 @@ class AchievementProfileView extends Component {
         </View>
         <View style={styles.profileAchievementContainer}>
           <View style={styles.achievementImageContainer}>
-            //ED!!!: change the below picture to: '../img/achievements/Hamburger.png' (the styling gets fucked up when i do it)
-            <Image style={styles.achievementImage} source={require('../img/achievements/Hamburger.png')} />
+            <Image style={styles.achievementImage} source={require('../img/achievements/eiffel-tower.png')} />
           </View>
           <View style={styles.achievementImageInfo}>
             <Text style={styles.achievementName}>{this.props.achievements[0].name}</Text>
@@ -77,7 +76,12 @@ var styles = StyleSheet.create({
     marginTop: 20,
   },
   achievementImageContainer: {
-
+    height: 50,
+    width: 50,
+  },
+  achievementImage: {
+    height: 50,
+    width: 50,
   },
   achievementImageInfo: {
     flex: 1,
