@@ -66,7 +66,23 @@ class LocationDetailScreen extends Component {
               <Image style={styles.themesImage} source={require('../img/themes/notCulture.png')} />
               <Image style={styles.themesImage} source={require('../img/themes/notAdventure.png')} />
             </View>
+
+            <TouchableOpacity onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
+              <Text>Check In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              this.props.deleteFavorite(this.props.selectedFavorite);
+              this.props.pop(this.props.navigation.currentNavigatorUID);
+            }}>
+              <Text>Delete This Favorite</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
+              <Text>Navigate Back</Text>
+            </TouchableOpacity>
+            
           </ScrollView>
+
+
 
         </View>
         <DiscoveryNav style={styles.discoveryNavContainer}>
