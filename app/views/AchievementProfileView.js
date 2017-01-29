@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import { Image, StyleSheet, Text, View, AsyncStorage } from 'react-native'
 import ProgressBar from '../components/ProgressBar'
 
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../actions'
+import { connect } from 'react-redux';
+
 const FBSDK = require('react-native-fbsdk');
 const {
   AccessToken,
@@ -30,11 +34,12 @@ class AchievementProfileView extends Component {
         </View>
         <View style={styles.profileAchievementContainer}>
           <View style={styles.achievementImageContainer}>
+            //ED!!!: change the below picture to: '../img/achievements/Hamburger.png' (the styling gets fucked up when i do it)
             <Image style={styles.achievementImage} source={require('../img/achievements/Hamburger.png')} />
           </View>
           <View style={styles.achievementImageInfo}>
-            <Text style={styles.achievementName}>Burger Connoisseur</Text>
-            <Text style={styles.achievmentDescriptionText}>The user has eaten at 100 unique burger establishments.
+            <Text style={styles.achievementName}>{this.props.achievements[0].name}</Text>
+            <Text style={styles.achievmentDescriptionText}>{this.props.achievements[0].description}
             </Text>
           </View>
         </View>
@@ -96,4 +101,14 @@ var styles = StyleSheet.create({
 
 })
 
-module.exports = AchievementProfileView
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    achievements: state.userData.achievements,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AchievementProfileView);
