@@ -9,4 +9,4 @@ export const MAIN_NAVIGATOR = "MAIN_NAVIGATOR"
 export const DISCOVERY_NAVIGATOR = "DISCOVERY_NAVIGATOR"
 
 //fetching
-export const NO_OF_TERMS_TO_SEARCH_AT_ONCE = 2;
+export const NO_OF_TERMS_TO_SEARCH_AT_ONCE = 5;

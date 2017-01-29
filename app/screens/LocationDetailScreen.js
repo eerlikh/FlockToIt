@@ -4,6 +4,7 @@ import { AsyncStorage, Dimensions, Image, ScrollView, StyleSheet, StatusBar, Tex
 import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
+import renderIf from '../components/renderIf'
 import { constants } from '../constants'
 import { NavigationStyles } from '@exponent/ex-navigation';
 import { bindActionCreators } from 'redux'
@@ -33,7 +34,7 @@ class LocationDetailScreen extends Component {
           <View style={styles.locationDetailColumnContainer}>
             <View style={styles.locationDetailRatingContainer}>
               <View style={styles.locationRatingStarsContainer}>
-                <Text style={styles.goldColor}>Average Rating: {this.props.detailsData.rating}</Text>
+                <Text style={styles.goldColor}>Average Rating: {this.props.detailsData.rating} out of 5</Text>
                 {
                   /*
                   <Text style={styles.goldColor}>
@@ -63,8 +64,24 @@ class LocationDetailScreen extends Component {
               <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
             </View>
             <View style={styles.locationDetailThemesRow}>
-              <Image style={styles.themesImage} source={require('../img/themes/notCulture.png')} />
-              <Image style={styles.themesImage} source={require('../img/themes/notAdventure.png')} />
+              {renderIf(this.themeIsRelated("culture"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notCulture.png')} />
+              )}
+              {renderIf(this.themeIsRelated("adventure"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notAdventure.png')} />
+              )}
+              {renderIf(this.themeIsRelated("chill"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notChill.png')} />
+              )}
+              {renderIf(this.themeIsRelated("drink"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notDrink.png')} />
+              )}
+              {renderIf(this.themeIsRelated("eat"))(
+                <Image style={styles.themesImage} source={require('../img/themes/notEat.png')} />
+              )}
+              {renderIf(this.themeIsRelated("mystery"))(
+                <Image style={styles.themesImage} source={require('../img/themes/Mystery.png')} />
+              )}
             </View>
           </ScrollView>
 
@@ -103,6 +120,28 @@ class LocationDetailScreen extends Component {
       </ViewContainer>
     );
   }
+
+  //TODO: refactor this trash:
+  themeIsRelated(theme) {
+    for (var i = 0; i < this.props.detailsData.relatedThemes.length; i++) {
+      if (theme === this.props.detailsData.relatedThemes[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  achievementIsRelated(achievement) {
+    for (var i = 0; i < this.props.detailsData.relatedThemes.length; i++) {
+      if (theme === this.props.detailsData.relatedThemes[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   likePressed(){
     try {
       this.props.addFavorite();

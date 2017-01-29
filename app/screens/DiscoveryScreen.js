@@ -35,7 +35,9 @@ class DiscoveryScreen extends Component {
     if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
       this.setState({
         isCaching: true,
-        // url1: imageUrl,
+        url1: this.props.imageUrls.url1,
+        url2: this.props.imageUrls.url2,
+        url3: this.props.imageUrls.url3,
       })
       Image.prefetch(nextProps.imageUrls.url1).then(() => {
         Image.prefetch(nextProps.imageUrls.url2);

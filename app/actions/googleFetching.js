@@ -4,6 +4,7 @@ import * as types from './types'
 import utils from '../utils/googleFetchUtilities';
 import { setTheme, setCurrentLocation } from './settings';
 import {constants} from '../constants'
+import {themesArray} from '../constants/themesArray'
 
 export function fetchAllData() {
   return (dispatch, getState) => {
@@ -195,8 +196,8 @@ function setDetailsJson(detailsObject) {
 
 function setDetailsData(detailsData) {
   return (dispatch, getState) => {
-    var relatedAchievements = dispatch(findRelatedAchievements());
-    detailsData.relatedAchievements = relatedAchievements;
+    detailsData.relatedAchievements = dispatch(findRelatedAchievements());
+    detailsData.relatedThemes = dispatch(findRelatedThemes());
 
     dispatch({
       type: types.SET_DETAILS_DATA,
@@ -221,6 +222,25 @@ function findRelatedAchievements() {
     }
 
     return relatedAchievements;
+  }
+}
+
+function findRelatedThemes() {
+  return (dispatch, getState) => {
+    var searchTerm =
+      getState().googleData.resultsObjects[getState().googleData.resultsIndex].searchTerm;
+
+    var relatedThemes = [];
+
+    for (var i = 0; i < themesArray.length; i++) {
+      for (var x = 0; x < themesArray[i].searchTerms.length; x++) {
+        if (searchTerm === themesArray[i].searchTerms[x]) {
+          relatedThemes.push(themesArray[i].name);
+        }
+      }
+    }
+
+    return relatedThemes;
   }
 }
 

@@ -33,21 +33,21 @@ module.exports = {
     //   names[i] = json.results[i].name;
     // }
 
-    var placeIds = new Array(json.results.length);
-    for (i = 0, x = 0; i < placeIds.length; i++) {
+    //this is all temporary for the demo:
+    var placeIds = new Array();
+    for (var i = 0; i < json.results.length; i++) {
       if (json.results[i].photos) {
-        placeIds[x] = json.results[i].place_id;
-        x++;
+        placeIds.push(json.results[i].place_id);
       }
     }
 
-    var names = new Array(json.results.length);
-    for (i = 0, x = 0; i < names.length; i++) {
+    var names = new Array();
+    for (var i = 0; i < json.results.length; i++) {
       if (json.results[i].photos) {
-        names[x] = json.results[i].name;
-        x++;
+        names.push(json.results[i].name);
       }
     }
+    //temp code ends here
 
     return {
       searchTerm,
