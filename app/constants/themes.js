@@ -1,7 +1,7 @@
 export const TEST_THEME_1 = ["bar", "lake", "museum", "beaches", "lake"];
 export const TEST_THEME_2 = ["karts"];
 
-export const CHILL_THEME = ["hookah", "coffee", "billiards", "cafe", "zoo", "beach", "park", "dessert", "lakes", "beaches", "arcade", "gelato", "creperies", "dayspa"];
+export const CHILL_THEME = ["hookah", "coffee", "billiards", "cafe", "zoo", "park", "dessert", "lakes", "beaches", "arcade", "gelato", "creperies", "dayspa"];
 export const DRINK_THEME = ["bar", "coffee", "tea", "winery", "brewery", "icecream", "lounge", "distillery", "beergarden", "speakeasy"];
 export const ADVENTURE_THEME = ["karts", "lakes", "paintball", "campground", "park", "horseback", "racing", "rafting", "archeryrange", "shootingrange", "skydivingcenter"];
 export const CULTURE_THEME = ["museum", "art", "gallery", "theatercompany", "historiclandmark", "zoo", "opera", "performingartstheater", "jazzclub"];
