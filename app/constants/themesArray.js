@@ -3,7 +3,7 @@
 export const themesArray = [
   {
     name: "chill",
-    searchTerms: ["hookah", "coffee", "billiards", "cafe", "pool", "zoo", "beach", "park"],
+    searchTerms: ["hookah", "coffee", "billiards", "cafe", "pool", "zoo", "beaches", "park"],
   },
   {
     name: "drink",

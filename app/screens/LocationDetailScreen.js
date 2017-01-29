@@ -28,6 +28,8 @@ class LocationDetailScreen extends Component {
       <ViewContainer>
         <StatusBar  style={styles.statusBar} barStyle="light-content" />
         <View style={styles.discoveryViewContainer}>
+          <ScrollView style={styles.locationDetailScrollView}>
+
           <View style={styles.discoveryPhotoContainer}>
             <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url1}} />
           </View>
@@ -58,7 +60,6 @@ class LocationDetailScreen extends Component {
               <Text>{this.props.detailsData.hours}</Text>
             </View>
           </View>
-          <ScrollView style={styles.locationDetailScrollView}>
             <View style={styles.locationDetailAchievementsRow}>
               {renderIf(this.achievementIsRelated("Renaissance Master"))(
                 <Image style={styles.themesImage} source={require("../img/achievements/eiffel-tower.png")} />
@@ -243,6 +244,7 @@ var styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   locationDetailAchievementsRow: {
+    marginTop: 10,
     marginLeft: 15,
     flex: 1,
     flexDirection: 'row',
@@ -259,7 +261,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
   },
   themesImage: {
-    borderRadius: 5,
+    borderRadius: 30,
     margin: 5,
     height: 60,
     width: 60,

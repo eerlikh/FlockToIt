@@ -52,7 +52,18 @@ export default function achievements() {
       name: "Great Outdoors",
       url: "../img/achievements/outdoors.png",
       description: "Visit 30 parks and 30 lakes",
-      searchTerms: ["parks, lakes"],
+      searchTerms: [
+        {
+          searchTerm: "parks",
+          threshold: 30,
+          progress: 0,
+        },
+        {
+          searchTerm: "lakes",
+          threshold: 30,
+          progress: 0,
+        }
+      ],
       searchTermStrings: ["parks, lakes"],
       earned: false,
       progress: 0,

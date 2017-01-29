@@ -28,6 +28,8 @@ class FavoriteDetailScreen extends Component {
       <ViewContainer>
         <StatusBar  style={styles.statusBar} barStyle="light-content" />
         <View style={styles.discoveryViewContainer}>
+          <ScrollView style={styles.locationDetailScrollView}>
+
           <View style={styles.discoveryPhotoContainer}>
             <Image style={styles.venuePhoto} source={{uri: this.props.selectedFavorite.imageUrl}} />
           </View>
@@ -58,7 +60,6 @@ class FavoriteDetailScreen extends Component {
               <Text>{this.props.detailsData.hours}</Text>
             </View>
           </View>
-          <ScrollView style={styles.locationDetailScrollView}>
             <View style={styles.locationDetailAchievementsRow}>
               <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
               <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
@@ -89,7 +90,7 @@ class FavoriteDetailScreen extends Component {
         <DiscoveryNav style={styles.discoveryNavContainer}>
             <View style={styles.titleContainer}>
               <TouchableOpacity style={styles.titleButton} onPress={this.infoPressed.bind(this)}>
-                <Image style={styles.infoIcon} source={require('../img/icons/info.png')} />
+                <Image style={styles.backIcon} source={require('../img/icons/back.png')} />
                 <Text style={styles.locationTitle}>{this.props.detailsData.name}</Text>
               </TouchableOpacity>
             </View>
@@ -98,7 +99,7 @@ class FavoriteDetailScreen extends Component {
               {/*first button*/}
               <TouchableOpacity style={styles.highlightContainer} onPress={this.xPressed.bind(this)}>
                 <View style={styles.xButtonContainer}>
-                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
+                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/delete.png')} />
                 </View>
               </TouchableOpacity>
 
@@ -112,7 +113,7 @@ class FavoriteDetailScreen extends Component {
               {/*third button*/}
               <TouchableOpacity style={styles.highlightContainer} onPress={this.likePressed.bind(this)}>
                 <View style={styles.likeButtonContainer}>
-                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/likeButton.png')} />
+                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/checkin.png')} />
                 </View>
               </TouchableOpacity>
             </View>
@@ -242,6 +243,8 @@ var styles = StyleSheet.create({
   titleButton: {
     borderRadius: 5,
     padding: 5,
+    paddingTop: 9,
+    paddingBottom: 9,
     backgroundColor: 'white',
     alignItems: 'center',
     flexDirection: 'row',
@@ -254,8 +257,8 @@ var styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.5,
   },
-  infoIcon: {
-    height: windowHeight * .075,
+  backIcon: {
+    height: windowHeight * .065,
     marginLeft: 10,
     flex: 1.79,
   },

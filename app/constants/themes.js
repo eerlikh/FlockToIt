@@ -1,4 +1,4 @@
-export const TEST_THEME_1 = ["bar", "lake", "museum", "beach", "lake"];
+export const TEST_THEME_1 = ["bar", "lake", "museum", "beaches", "lake"];
 export const TEST_THEME_2 = ["karts"];
 
 export const CHILL_THEME = ["hookah", "coffee", "billiards", "cafe", "zoo", "beach", "park", "dessert", "lakes", "beaches", "arcade", "gelato", "creperies", "dayspa"];
