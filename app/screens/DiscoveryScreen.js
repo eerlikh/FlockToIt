@@ -114,7 +114,7 @@ class DiscoveryScreen extends Component {
       Alert.alert('Favorite Already Added');
       return;
     }
-    Alert.alert('Favorite Added!');
+    this.props.showLocalAlert(this.props.navigation.currentNavigatorUID, "Favorite Added!", {});
   }
 
   xPressed(){

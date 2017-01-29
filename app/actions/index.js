@@ -12,4 +12,5 @@ export const ActionCreators = Object.assign({},
   {push: NavigationActions.push},
   {pop: NavigationActions.pop},
   {immediatelyResetStack: NavigationActions.immediatelyResetStack},
+  {showLocalAlert: NavigationActions.showLocalAlert},
 );
