@@ -60,8 +60,27 @@ class LocationDetailScreen extends Component {
           </View>
           <ScrollView style={styles.locationDetailScrollView}>
             <View style={styles.locationDetailAchievementsRow}>
-              <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
-              <Image style={styles.achievementsImage} source={require('../img/achievements/Brew.png')} />
+              {renderIf(this.achievementIsRelated("Renaissance Master"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/eiffel-tower.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Elite Brew Master"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Dripping in Culture"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/tah-mahal.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Great Outdoors"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/outdoors.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Teddy Roosevelt"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/rushmore.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Aquaman"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/sea-bottom.png")} />
+              )}
+              {renderIf(this.achievementIsRelated("Master of Mist"))(
+                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+              )}
             </View>
             <View style={styles.locationDetailThemesRow}>
               {renderIf(this.themeIsRelated("culture"))(
@@ -96,7 +115,7 @@ class LocationDetailScreen extends Component {
             <TouchableOpacity onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
               <Text>Navigate Back</Text>
             </TouchableOpacity>
-            
+
           </ScrollView>
 
 
@@ -149,8 +168,8 @@ class LocationDetailScreen extends Component {
   }
 
   achievementIsRelated(achievement) {
-    for (var i = 0; i < this.props.detailsData.relatedThemes.length; i++) {
-      if (theme === this.props.detailsData.relatedThemes[i]) {
+    for (var i = 0; i < this.props.detailsData.relatedAchievements.length; i++) {
+      if (achievement === this.props.detailsData.relatedAchievements[i]) {
         return true;
       }
     }
