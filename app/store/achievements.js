@@ -5,7 +5,8 @@ export default function achievements() {
 
   var achievements = [
     {
-      name: "Art Snob",
+      name: "Renaissance Master",
+      url: "../img/achievements/eiffel-tower.png",
       description: "Check in at 100 Galleries",
       searchTerms: ["artmuseum", "museum", "gallery", "pottery"],
       searchTermStrings: ["artmuseum", "museum", "gallery", "pottery"],
@@ -17,6 +18,7 @@ export default function achievements() {
 
     {
       name: "Elite Brew Master",
+      url: "../img/achievements/pub.png",
       description: "Check in at 100 bars and 10 breweries",
       searchTerms: [
         {
@@ -39,6 +41,7 @@ export default function achievements() {
 
     {
       name: "Dripping in Culture",
+      url: "../img/achievements/tah-mahal.png",
       description: "Visit 10 different museums",
       searchTerms: ["artmuseum", "museum", "gallery"],
       searchTermStrings: ["artmuseum", "museum", "gallery"],
@@ -50,6 +53,7 @@ export default function achievements() {
 
     {
       name: "Great Outdoors",
+      url: "../img/achievements/outdoors.png",
       description: "Visit a National Park",
       searchTerms: ["nationalpark"],
       searchTermStrings: ["nationalpark"],
@@ -61,6 +65,7 @@ export default function achievements() {
 
     {
       name: "Teddy Roosevelt",
+      url: "../img/achievements/rushmore.png",
       description: "Visit 10 National Parks",
       searchTerms: ["nationalpark"],
       searchTermStrings: ["nationalpark"],
@@ -72,6 +77,7 @@ export default function achievements() {
 
     {
       name: "Aquaman",
+      url: "../img/achievements/sea-bottom.png",
       description: "Vist 50 lakes and 50 Beaches",
       searchTerms: [
         {
@@ -94,6 +100,7 @@ export default function achievements() {
 
     {
      name: "Master of Mist",
+     url: "../img/achievements/pub.png",
      description: "Check in at 1 hookah bar",
      searchTerms: ["hookah"],
      searchTermStrings: ["hookah"],
