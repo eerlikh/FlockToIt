@@ -62,25 +62,25 @@ class LocationDetailScreen extends Component {
           </View>
             <View style={styles.locationDetailAchievementsRow}>
               {renderIf(this.achievementIsRelated("Renaissance Master"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/eiffel-tower.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/eiffel-tower.png")} />
               )}
               {renderIf(this.achievementIsRelated("Elite Brew Master"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/pub.png")} />
               )}
               {renderIf(this.achievementIsRelated("Dripping in Culture"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/tah-mahal.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/tah-mahal.png")} />
               )}
               {renderIf(this.achievementIsRelated("Great Outdoors"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/outdoors.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/outdoors.png")} />
               )}
               {renderIf(this.achievementIsRelated("Teddy Roosevelt"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/rushmore.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/rushmore.png")} />
               )}
               {renderIf(this.achievementIsRelated("Aquaman"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/sea-bottom.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/sea-bottom.png")} />
               )}
               {renderIf(this.achievementIsRelated("Master of Mist"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/pub.png")} />
               )}
             </View>
             <View style={styles.locationDetailThemesRow}>

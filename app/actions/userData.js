@@ -25,6 +25,8 @@ export function addFavorite() {
         rating: getState().googleData.detailsData.rating,
         relatedAchievements: getState().googleData.detailsData.relatedAchievements,
         relatedThemes: getState().googleData.detailsData.relatedThemes,
+        hours: getState().googleData.detailsData.hours,
+        distance: getState().googleData.detailsData.distance, //TODO: this value should be able to change based on current distance after being set
       },
     });
   }

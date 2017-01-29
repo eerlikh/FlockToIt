@@ -14,6 +14,7 @@ export default function achievements() {
       progress: 0,
       threshold: 100,
       type: "single term or multiple equally weighted terms",
+      id: 1,
     },
     {
       name: "Dripping in Culture",
@@ -25,6 +26,7 @@ export default function achievements() {
       progress: 0,
       threshold: 10,
       type: "single term or multiple equally weighted terms",
+      id: 2,
     },
     {
       name: "Elite Brew Master",
@@ -47,6 +49,7 @@ export default function achievements() {
       progress: 0,
       threshold: 110,
       type: "differently weighted terms",
+      id: 3,
     },
     {
       name: "Great Outdoors",
@@ -69,6 +72,7 @@ export default function achievements() {
       progress: 0,
       threshold: 60,
       type: "single term or multiple equally weighted terms",
+      id: 4,
     },
     {
       name: "Teddy Roosevelt",
@@ -80,6 +84,7 @@ export default function achievements() {
       progress: 0,
       threshold: 10,
       type: "single term or multiple equally weighted terms",
+      id: 5,
     },
     {
       name: "Aquaman",
@@ -101,7 +106,8 @@ export default function achievements() {
       earned: false,
       progress: 0,
       threshold: 50,
-      type: "multiple differently weighted terms",
+      type: "differently weighted terms",
+      id: 6,
     },
 
     {
@@ -114,6 +120,7 @@ export default function achievements() {
      progress: 0,
      threshold: 20,
      type: "single term or multiple equally weighted terms",
+     id: 7,
     },
 
    {
@@ -126,6 +133,7 @@ export default function achievements() {
     progress: 0,
     threshold: 150,
     type: "single term or multiple equally weighted terms",
+    id: 8,
    },
 
   {
@@ -138,6 +146,7 @@ export default function achievements() {
    progress: 0,
    threshold: 100,
    type: "single term or multiple equally weighted terms",
+   id: 9,
   },
 
   {
@@ -150,6 +159,7 @@ export default function achievements() {
    progress: 0,
    threshold: 50,
    type: "single term or multiple equally weighted terms",
+   id: 10,
   },
   ];
 

@@ -57,31 +57,31 @@ class FavoriteDetailScreen extends Component {
               </View>
             </View>
             <View style={styles.locationDetailRowContainer}>
-              <Text>Distance: {this.props.detailsData.distance} mi</Text>
-              <Text>{this.props.detailsData.hours}</Text>
+              <Text>Distance: {this.props.selectedFavorite.distance} mi</Text>
+              <Text>{this.props.selectedFavorite.hours}</Text>
             </View>
           </View>
             <View style={styles.locationDetailAchievementsRow}>
               {renderIf(this.achievementIsRelated("Renaissance Master"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/eiffel-tower.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/eiffel-tower.png")} />
               )}
               {renderIf(this.achievementIsRelated("Elite Brew Master"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/pub.png")} />
               )}
               {renderIf(this.achievementIsRelated("Dripping in Culture"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/tah-mahal.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/tah-mahal.png")} />
               )}
               {renderIf(this.achievementIsRelated("Great Outdoors"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/outdoors.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/outdoors.png")} />
               )}
               {renderIf(this.achievementIsRelated("Teddy Roosevelt"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/rushmore.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/rushmore.png")} />
               )}
               {renderIf(this.achievementIsRelated("Aquaman"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/sea-bottom.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/sea-bottom.png")} />
               )}
               {renderIf(this.achievementIsRelated("Master of Mist"))(
-                <Image style={styles.themesImage} source={require("../img/achievements/pub.png")} />
+                <Image style={styles.achievementsImage} source={require("../img/achievements/pub.png")} />
               )}
             </View>
             <View style={styles.locationDetailThemesRow}>
@@ -105,23 +105,14 @@ class FavoriteDetailScreen extends Component {
               )}
             </View>
 
-            <TouchableOpacity onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
-              <Text>Check In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              this.props.deleteFavorite(this.props.selectedFavorite);
-              this.props.pop(this.props.navigation.currentNavigatorUID);
-            }}>
-              <Text>Delete This Favorite</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
-              <Text>Navigate Back</Text>
-            </TouchableOpacity>
+
           </ScrollView>
         </View>
         <DiscoveryNav style={styles.discoveryNavContainer}>
+
+            {/*title button*/}
             <View style={styles.titleContainer}>
-              <TouchableOpacity style={styles.titleButton} onPress={this.infoPressed.bind(this)}>
+              <TouchableOpacity style={styles.titleButton} onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
                 <Image style={styles.backIcon} source={require('../img/icons/back.png')} />
                 <Text style={styles.locationTitle}>{this.props.detailsData.name}</Text>
               </TouchableOpacity>
@@ -129,7 +120,11 @@ class FavoriteDetailScreen extends Component {
 
             <View style={styles.navContainer}>
               {/*first button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.xPressed.bind(this)}>
+              <TouchableOpacity style={styles.highlightContainer}
+                onPress={() => {
+                this.props.deleteFavorite(this.props.selectedFavorite);
+                this.props.pop(this.props.navigation.currentNavigatorUID);
+              }}>
                 <View style={styles.xButtonContainer}>
                   <Image style={styles.discoveryNavImage} source={require('../img/buttons/delete.png')} />
                 </View>
@@ -143,7 +138,8 @@ class FavoriteDetailScreen extends Component {
               </TouchableOpacity>
 
               {/*third button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.likePressed.bind(this)}>
+              <TouchableOpacity style={styles.highlightContainer}
+                onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
                 <View style={styles.likeButtonContainer}>
                   <Image style={styles.discoveryNavImage} source={require('../img/buttons/checkin.png')} />
                 </View>

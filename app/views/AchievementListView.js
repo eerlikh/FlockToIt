@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import { Image, ListView, StyleSheet, Text, View } from 'react-native'
 import ProgressBar from '../components/ProgressBar'
 
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../actions'
+import { connect } from 'react-redux';
+
 
 const achievements = [
   {id:1, name: "Master of the Myst", description: "The user has visited 100 unique Hookah bars", progress: 68},
@@ -16,27 +20,31 @@ const achievements = [
 
 ]
 var image_urls = [
-  require('../img/achievements/Hookah.png'),
-  require('../img/achievements/Hamburger.png'),
-  require('../img/achievements/WhiteCastle.png'),
-  require('../img/achievements/Brew.png'),
-  require('../img/achievements/Ranger.png'),
-  require('../img/achievements/Gem.png'),
-  require('../img/achievements/GeneralChow.png'),
-  require('../img/achievements/Castle.png'),
+  require("../img/achievements/eiffel-tower.png"),
+  require("../img/achievements/tah-mahal.png"),
+  require("../img/achievements/pub.png"),
+  require("../img/achievements/outdoors.png"),
+  require("../img/achievements/rushmore.png"),
+  require("../img/achievements/sea-bottom.png"),
+  require("../img/achievements/pub.png"),
+  require("../img/achievements/pub.png"),
+  require("../img/achievements/pub.png"),
+  require("../img/achievements/pub.png"),
 ];
-
 
 class AchievementListView extends Component {
   constructor(props){
     super(props)
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    this.state = {
-      achievementsDataSource: ds.cloneWithRows(achievements)
-    }
+    // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    // this.state = {
+    //   achievementsDataSource: ds.cloneWithRows(achievements)
+    // }
   }
 
   render() {
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var achievementsDataSource = ds.cloneWithRows(this.props.achievements);
+
     return (
       <View style={styles.achievementsContainer}>
         <View style={styles.achievementsHeader}>
@@ -44,7 +52,7 @@ class AchievementListView extends Component {
           <Text style={styles.headerText}>Progress</Text>
         </View>
         <ListView
-          dataSource={this.state.achievementsDataSource}
+          dataSource={achievementsDataSource}
           renderRow={(location) => { return this.renderLocationRow(location) }}
         >
         </ListView>
@@ -62,7 +70,7 @@ class AchievementListView extends Component {
           <Text style={styles.achievementDescription}> {location.description}</Text>
         </View>
         <View styles={styles.achievementColumn}>
-          <ProgressBar />
+          <ProgressBar progress={80} />
         </View>
       </View>
     )
@@ -102,4 +110,14 @@ var styles = StyleSheet.create({
 
 })
 
-module.exports = AchievementListView
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(ActionCreators, dispatch);
+}
+
+function mapStateToProps(state) {
+  return {
+    achievements: state.userData.achievements,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AchievementListView);

@@ -42,7 +42,7 @@ class MatchedLocationsView extends Component {
           <Image style={styles.locationImage} source={{uri: location.imageUrl}} />
           <View styles={styles.locationColumn}>
             <Text style={styles.locationName}> {location.name}</Text>
-            <Text style={styles.locationDistance}> {'placeholder'} mi.</Text>
+            <Text style={styles.locationDistance}> {location.distance} mi.</Text>
           </View>
           <View styles={styles.locationColumn}>
             <Text style={styles.locationRating}> {location.rating} out of 5</Text>
