@@ -15,7 +15,17 @@ export default function achievements() {
       threshold: 100,
       type: "single term or multiple equally weighted terms",
     },
-
+    {
+      name: "Dripping in Culture",
+      url: "../img/achievements/tah-mahal.png",
+      description: "Visit 10 different museums",
+      searchTerms: ["artmuseum", "museum", "gallery"],
+      searchTermStrings: ["artmuseum", "museum", "gallery"],
+      earned: false,
+      progress: 0,
+      threshold: 10,
+      type: "single term or multiple equally weighted terms",
+    },
     {
       name: "Elite Brew Master",
       url: "../img/achievements/pub.png",
@@ -38,31 +48,17 @@ export default function achievements() {
       threshold: 110,
       type: "differently weighted terms",
     },
-
-    {
-      name: "Dripping in Culture",
-      url: "../img/achievements/tah-mahal.png",
-      description: "Visit 10 different museums",
-      searchTerms: ["artmuseum", "museum", "gallery"],
-      searchTermStrings: ["artmuseum", "museum", "gallery"],
-      earned: false,
-      progress: 0,
-      threshold: 10,
-      type: "single term or multiple equally weighted terms",
-    },
-
     {
       name: "Great Outdoors",
       url: "../img/achievements/outdoors.png",
-      description: "Visit a National Park",
-      searchTerms: ["nationalpark"],
-      searchTermStrings: ["nationalpark"],
+      description: "Visit 30 parks and 30 lakes",
+      searchTerms: ["parks, lakes"],
+      searchTermStrings: ["parks, lakes"],
       earned: false,
       progress: 0,
-      threshold: 1,
+      threshold: 60,
       type: "single term or multiple equally weighted terms",
     },
-
     {
       name: "Teddy Roosevelt",
       url: "../img/achievements/rushmore.png",
@@ -74,24 +70,23 @@ export default function achievements() {
       threshold: 10,
       type: "single term or multiple equally weighted terms",
     },
-
     {
       name: "Aquaman",
       url: "../img/achievements/sea-bottom.png",
       description: "Vist 50 lakes and 50 Beaches",
       searchTerms: [
         {
-          searchTerm: "lake",
+          searchTerm: "lakes",
           threshold: 50,
           progress: 0,
         },
 	      {
-          searchTerm: "beach",
+          searchTerm: "beaches",
           threshold: 50,
           progress: 0,
         },
       ],
-      searchTermStrings: ["lake", "beach"],
+      searchTermStrings: ["lakes", "beaches"],
       earned: false,
       progress: 0,
       threshold: 50,
@@ -101,15 +96,50 @@ export default function achievements() {
     {
      name: "Master of Mist",
      url: "../img/achievements/pub.png",
-     description: "Check in at 1 hookah bar",
+     description: "Check in at 20 hookah bar",
      searchTerms: ["hookah"],
      searchTermStrings: ["hookah"],
      earned: false,
      progress: 0,
-     threshold: 1,
+     threshold: 20,
      type: "single term or multiple equally weighted terms",
+    },
+
+   {
+    name: "The 1%",
+    url: "../img/achievements/pub.png",
+    description: "Check in at 100 Steak houses, and 50 Museums",
+    searchTerms: ["steakhouse, museum, artmuseum"],
+    searchTermStrings: ["steakhouse, museum, artmuseum"],
+    earned: false,
+    progress: 0,
+    threshold: 150,
+    type: "single term or multiple equally weighted terms",
    },
 
+  {
+   name: "Crusader King",
+   url: "../img/achievements/pub.png",
+   description: "Visit 100 Musuems, LandMark, visit Italy, Spain, Turkey, Iseral, Syria, Former HRE",
+   searchTerms: ["landmark, museum, artmuseum"],
+   searchTermStrings: ["landmark, museum, artmuseum"],
+   earned: false,
+   progress: 0,
+   threshold: 100,
+   type: "single term or multiple equally weighted terms",
+  },
+
+  {
+   name: "Harold and Kumar",
+   url: "../img/achievements/pub.png",
+   description: "Check in at 50 White Castles",
+   searchTerms: ["whitecastle"],
+   searchTermStrings: ["whitecastle"],
+   earned: false,
+   progress: 0,
+   threshold: 50,
+   type: "single term or multiple equally weighted terms",
+  },
   ];
 
 

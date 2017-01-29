@@ -102,20 +102,6 @@ class LocationDetailScreen extends Component {
                 <Image style={styles.themesImage} source={require('../img/themes/Mystery.png')} />
               )}
             </View>
-
-            <TouchableOpacity onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
-              <Text>Check In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              this.props.deleteFavorite(this.props.selectedFavorite);
-              this.props.pop(this.props.navigation.currentNavigatorUID);
-            }}>
-              <Text>Delete This Favorite</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.pop(this.props.navigation.currentNavigatorUID)}>
-              <Text>Navigate Back</Text>
-            </TouchableOpacity>
-
           </ScrollView>
 
 
@@ -124,7 +110,7 @@ class LocationDetailScreen extends Component {
         <DiscoveryNav style={styles.discoveryNavContainer}>
             <View style={styles.titleContainer}>
               <TouchableOpacity style={styles.titleButton} onPress={this.infoPressed.bind(this)}>
-                <Image style={styles.infoIcon} source={require('../img/info.png')} />
+                <Image style={styles.backIcon} source={require('../img/icons/back.png')} />
                 <Text style={styles.locationTitle}>{this.props.detailsData.name}</Text>
               </TouchableOpacity>
             </View>
@@ -187,13 +173,13 @@ class LocationDetailScreen extends Component {
     // Alert.alert('Favorite Added!'); //TODO: add this back at some point
   }
   xPressed(){
-    this.props.pop(this.props.navigation.currentNavigatorUID);
+    this.props.iterateResult()
   }
   flockPressed(){
 
   }
   infoPressed(){
-
+    this.props.pop(this.props.navigation.currentNavigatorUID);
   }
 }
 const windowWidth = Dimensions.get('window').width;
@@ -298,6 +284,8 @@ var styles = StyleSheet.create({
   titleButton: {
     borderRadius: 5,
     padding: 5,
+    paddingTop: 9,
+    paddingBottom: 9,
     backgroundColor: 'white',
     alignItems: 'center',
     flexDirection: 'row',
@@ -310,8 +298,8 @@ var styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: 0.5,
   },
-  infoIcon: {
-    height: windowHeight * .075,
+  backIcon: {
+    height: windowHeight * .065,
     marginLeft: 10,
     flex: 1.79,
   },

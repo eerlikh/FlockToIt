@@ -89,7 +89,7 @@ class FavoriteDetailScreen extends Component {
         <DiscoveryNav style={styles.discoveryNavContainer}>
             <View style={styles.titleContainer}>
               <TouchableOpacity style={styles.titleButton} onPress={this.infoPressed.bind(this)}>
-                <Image style={styles.infoIcon} source={require('../img/info.png')} />
+                <Image style={styles.infoIcon} source={require('../img/icons/info.png')} />
                 <Text style={styles.locationTitle}>{this.props.detailsData.name}</Text>
               </TouchableOpacity>
             </View>
