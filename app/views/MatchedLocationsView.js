@@ -40,13 +40,17 @@ class MatchedLocationsView extends Component {
         }}>
         <View style={styles.locationRow}>
           <Image style={styles.locationImage} source={{uri: location.imageUrl}} />
-          <View styles={styles.locationColumn}>
-            <Text style={styles.locationName}> {location.name}</Text>
-            <Text style={styles.locationDistance}> {location.distance} mi.</Text>
-          </View>
-          <View styles={styles.locationColumn}>
-            <Text style={styles.locationRating}> {location.rating} out of 5</Text>
-            <Text style={styles.locationVisited}> {location.checkIns} visits</Text>
+          <View style={styles.locationInfoRowContainer}>
+            <View style={styles.locationColumn}>
+              <Text style={styles.locationName}> {location.name}</Text>
+              <Text style={styles.locationDistance}> {location.distance} mi.</Text>
+            </View>
+            <View style={styles.spacer}>
+            </View>
+            <View style={styles.locationColumn}>
+              <Text style={styles.locationRating}> {location.rating} out of 5</Text>
+              <Text style={styles.locationVisited}> {location.checkIns} visits</Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -77,6 +81,7 @@ var styles = StyleSheet.create({
     backgroundColor:'transparent'
   },
   locationRow: {
+    flex: 1,
     marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'flex-start',
@@ -84,8 +89,16 @@ var styles = StyleSheet.create({
   locationImage: {
     height: 50,
     width: 50,
-  }
-
+  },
+  locationInfoRowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  locationColumn: {
+  },
+  spacer: {
+    flex: 1,
+  },
 })
 
 function mapDispatchToProps(dispatch) {

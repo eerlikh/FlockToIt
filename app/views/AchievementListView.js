@@ -7,29 +7,18 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 
-
-const achievements = [
-  {id:1, name: "Master of the Myst", description: "The user has visited 100 unique Hookah bars", progress: 68},
-  {id:2, name: "Burger Connoisseur", description: "The user has eaten at 100 unique burger establishments.", progress: 70},
-  {id:3, name: "Harold and Kumar", description: "The user has visited White Castles at least 100 times", progress: 40},
-  {id:4, name: "BrewMaster", description: "The user has gotten drunk at 90 unique bars and 10 breweries", progress: 88},
-  {id:5, name: "Park Ranger", description:"The user has visited 10 unique National Parks", progress: 49},
-  {id:6, name: "The 1%", description:"The user has been to at least 100 Steak Houses and 50 Museums and 50 Art Galleries", progress: 19},
-  {id:7, name: "General Chow", description:"The user has visited 100 unique Chinese resturants", progress: 19},
-  {id:8, name: "Crusader King", description:"The user has pillaged or razed at least 100 mosques", progress: 96},
-
-]
 var image_urls = [
   require("../img/achievements/eiffel-tower.png"),
   require("../img/achievements/tah-mahal.png"),
-  require("../img/achievements/pub.png"),
+  require("../img/achievements/brew-master.png"),
   require("../img/achievements/outdoors.png"),
   require("../img/achievements/rushmore.png"),
   require("../img/achievements/sea-bottom.png"),
-  require("../img/achievements/pub.png"),
-  require("../img/achievements/pub.png"),
-  require("../img/achievements/pub.png"),
-  require("../img/achievements/pub.png"),
+  require("../img/achievements/mist-master.png"),
+  require("../img/achievements/castle.png"),
+  require("../img/achievements/hagia-sophia.png"),
+  require("../img/achievements/hamburger.png"),
+  require("../img/achievements/arcade.png"),
 ];
 
 class AchievementListView extends Component {
@@ -65,13 +54,19 @@ class AchievementListView extends Component {
     return(
       <View style={styles.achievementRow}>
         <Image style={styles.achievementIcon} source={imgSource} />
-        <View styles={styles.achievementColumn}>
-          <Text style={styles.achievementName}> {location.name}</Text>
-          <Text style={styles.achievementDescription}> {location.description}</Text>
+        <View style={styles.achievementColumn}>
+          <Text style={styles.achievementName}>{location.name}</Text>
+          {//<Text style={styles.achievementDescription}> {location.description}</Text>
+          }
+          <View style={styles.achievementProgress}>
+            <ProgressBar progress={80} />
+          </View>
+
+          <View>
+            <Text>Difficulty: Hard</Text>
+          </View>
         </View>
-        <View styles={styles.achievementColumn}>
-          <ProgressBar progress={80} />
-        </View>
+
       </View>
     )
   }
@@ -103,7 +98,12 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
+  achievementColumn: {
+    flex: 1,
+    flexDirection: 'column',
+  },
   achievementIcon: {
+    marginRight: 10,
     height: 50,
     width: 50,
   }

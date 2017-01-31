@@ -30,7 +30,7 @@ export default function achievements() {
     },
     {
       name: "Elite Brew Master",
-      url: "../img/achievements/pub.png",
+      url: "../img/achievements/brew-master.png",
       description: "Check in at 100 bars and 10 breweries",
       searchTerms: [
         {
@@ -112,7 +112,7 @@ export default function achievements() {
 
     {
      name: "Master of Mist",
-     url: "../img/achievements/pub.png",
+     url: "../img/achievements/mist-master.png",
      description: "Check in at 20 hookah bar",
      searchTerms: ["hookah"],
      searchTermStrings: ["hookah"],
@@ -151,7 +151,7 @@ export default function achievements() {
 
   {
    name: "Harold and Kumar",
-   url: "../img/achievements/pub.png",
+   url: "../img/achievements/hamburger.png",
    description: "Check in at 50 White Castles",
    searchTerms: ["whitecastle"],
    searchTermStrings: ["whitecastle"],
@@ -161,6 +161,19 @@ export default function achievements() {
    type: "single term or multiple equally weighted terms",
    id: 10,
   },
+  {
+   name: "Going Retro",
+   url: "../img/achievements/arcade.png",
+   description: "Check in at 25 Arcades",
+   searchTerms: ["arcade"],
+   searchTermStrings: ["arcade"],
+   earned: false,
+   progress: 0,
+   threshold: 25,
+   type: "single term or multiple equally weighted terms",
+   id: 11,
+  },
+
   ];
 
 
