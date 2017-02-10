@@ -1,13 +1,13 @@
 import createReducer from '../utils/createReducer'
 import * as types from '../actions/types'
 import {REHYDRATE} from 'redux-persist/constants'
-import getAchievements from '../store/achievements';
+import getAchievements from '../staticResources/achievements';
 
 export const userData = createReducer({
       favorites: [],
       selectedFavorite: null,
       checkInData: [],
-      // achievements,
+      achievements: [],
   }, {
     [REHYDRATE](state, action) {
       var achievements = getAchievements();
@@ -23,7 +23,7 @@ export const userData = createReducer({
     [types.ADD_FAVORITE](state, action) {
 
       var favorites = [
-        action.payload,
+        action.favorite,
         ...state.favorites
       ]
 

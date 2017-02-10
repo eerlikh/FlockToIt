@@ -15,8 +15,7 @@ export function addFavorite() {
 
     dispatch({
       type: types.ADD_FAVORITE,
-      //TODO: don't name this "payload" u cheeky cunt
-      payload: {
+      favorite: {
         name: getState().googleData.detailsData.name,
         imageUrl: getState().googleData.imageUrls.url1,
         placeId,

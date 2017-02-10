@@ -1,10 +1,12 @@
 //TODO: handle case where there are no results for the first search term displayed (nothing is displayed)
 
-import * as types from './types'
+import * as types from './types';
 import utils from '../utils/googleFetchUtilities';
 import { setTheme, setCurrentLocation } from './settings';
-import {constants} from '../constants'
-import {themesArray} from '../constants/themesArray'
+import {constants} from '../constants';
+import getThemes from '../staticResources/themes';
+
+const themes = getThemes();
 
 export function fetchAllData() {
   return (dispatch, getState) => {
@@ -13,9 +15,9 @@ export function fetchAllData() {
 
     var initialThemeUnset = getState().settings.theme === null;
     if (initialThemeUnset) {
-      dispatch(setTheme(constants.INITIAL_THEME));
+      dispatch(setTheme(themes.chill));
     }
-    var searchTerms = getState().settings.theme;
+    var searchTerms = getState().settings.theme.searchTerms;
 
     dispatch(setCurrentLocation())
     .then(() => {
@@ -45,7 +47,7 @@ export function iterateResult() {
       var currentDetailsIndex = getState().googleData.detailsIndices[resultsIndex];
       var resultObjectLength = getState().googleData.resultsObjects[resultsIndex].names.length;
       var nextPageToken = getState().googleData.resultsObjects[resultsIndex].nextPageToken;
-      var nextSearchTerm = getState().settings.theme[getState().googleData.nextTermInThemeIndex];
+      var nextSearchTerm = getState().settings.theme.searchTerms[getState().googleData.nextTermInThemeIndex];
 
       //checks if there is a least 1 more page of results and handles the different cases
       if (currentDetailsIndex >= resultObjectLength) {
@@ -70,7 +72,7 @@ function fetchNewPage(resultsIndex, nextPageToken) {
 
     var fetchOptions = {
       ...dispatch(buildFetchOptions()),
-      searchTerm: getState().settings.theme[resultsIndex],
+      searchTerm: getState().settings.theme.searchTerms[resultsIndex],
       index: resultsIndex,
       nextPageToken,
       message: "fetching results for new page",
@@ -86,7 +88,7 @@ function fetchNewPage(resultsIndex, nextPageToken) {
 function fetchWithNewTerm(resultsIndex) {
   return (dispatch, getState) => {
     dispatch({type: types.RESET_CURRENT_DETAILS_INDEX});
-    var nextSearchTerm = getState().settings.theme[getState().googleData.nextTermInThemeIndex];
+    var nextSearchTerm = getState().settings.theme.searchTerms[getState().googleData.nextTermInThemeIndex];
 
     var fetchOptions = {
       ...dispatch(buildFetchOptions()),
@@ -216,7 +218,7 @@ function findRelatedAchievements() {
     for (var i = 0; i < achievements.length; i++) {
       for (var x = 0; x < achievements[i].searchTermStrings.length; x++) {
         if (searchTerm === achievements[i].searchTermStrings[x]) {
-          relatedAchievements.push(achievements[i].name);
+          relatedAchievements.push(achievements[i]);
         }
       }
     }
@@ -232,10 +234,18 @@ function findRelatedThemes() {
 
     var relatedThemes = [];
 
-    for (var i = 0; i < themesArray.length; i++) {
-      for (var x = 0; x < themesArray[i].searchTerms.length; x++) {
-        if (searchTerm === themesArray[i].searchTerms[x]) {
-          relatedThemes.push(themesArray[i].name);
+    // for (var i = 0; i < themesArray.length; i++) {
+    //   for (var x = 0; x < themesArray[i].searchTerms.length; x++) {
+    //     if (searchTerm === themesArray[i].searchTerms[x]) {
+    //       relatedThemes.push(themesArray[i].name);
+    //     }
+    //   }
+    // }
+
+    for (var theme in themes) {
+      for (var x = 0; x < themes[theme].searchTerms.length; x++) {
+        if (searchTerm === themes[theme].searchTerms[x]) {
+          relatedThemes.push(themes[theme]);
         }
       }
     }

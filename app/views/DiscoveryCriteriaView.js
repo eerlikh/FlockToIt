@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import {constants} from '../constants'
+import getThemes from '../staticResources/themes';
+
+const themeObjects = getThemes();
 
 class DiscoveryCriteriaView extends Component {
   constructor(props){
@@ -75,7 +78,7 @@ class DiscoveryCriteriaView extends Component {
   //TODO: make it so that the theme is changed only upon navigating off of this screen to protect against button spamming
 
   EatPressed(){
-    this.props.setTheme(constants.EAT_THEME, "eat");
+    this.props.setTheme(themeObjects.eat);
     this.setState({selectEat: true});
     this.setState({selectDrink: false});
     this.setState({selectChill: false});
@@ -85,7 +88,7 @@ class DiscoveryCriteriaView extends Component {
   }
 
   DrinkPressed(){
-    this.props.setTheme(constants.DRINK_THEME, "drink");
+    this.props.setTheme(themeObjects.drink);
     this.setState({selectDrink: true});
     this.setState({selectEat: false});
     this.setState({selectChill: false});
@@ -95,7 +98,7 @@ class DiscoveryCriteriaView extends Component {
   }
 
   ChillPressed(){
-    this.props.setTheme(constants.CHILL_THEME, "chill");
+    this.props.setTheme(themeObjects.chill);
     this.setState({selectChill: true});
     this.setState({selectEat: false});
     this.setState({selectDrink: false});
@@ -105,7 +108,7 @@ class DiscoveryCriteriaView extends Component {
   }
 
   AdventurePressed(){
-    this.props.setTheme(constants.ADVENTURE_THEME, "adventure");
+    this.props.setTheme(themeObjects.adventure);
     this.setState({selectAdventure: true});
     this.setState({selectEat: false});
     this.setState({selectDrink: false});
@@ -115,7 +118,7 @@ class DiscoveryCriteriaView extends Component {
   }
 
   CulturePressed(){
-    this.props.setTheme(constants.CULTURE_THEME, "culture");
+    this.props.setTheme(themeObjects.culture);
     this.setState({selectCulture: true});
     this.setState({selectEat: false});
     this.setState({selectDrink: false});
@@ -123,8 +126,9 @@ class DiscoveryCriteriaView extends Component {
     this.setState({selectAdventure: false});
     this.setState({selectMystery: false});
   }
+
   MysteryPressed(){
-    this.props.setTheme(constants.MYSTERY_THEME, "mystery");
+    this.props.setTheme(themeObjects.mystery);
     this.setState({selectMystery: true});
     this.setState({selectEat: false});
     this.setState({selectDrink: false});

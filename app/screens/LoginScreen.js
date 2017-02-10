@@ -7,7 +7,6 @@ import FBAccessTokenManager from '../utils/FBAccessTokenManager'
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
-import { constants } from '../constants'
 import { Router } from '../containers/Router';
 
 const FBSDK = require('react-native-fbsdk');
