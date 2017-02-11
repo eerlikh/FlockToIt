@@ -46,7 +46,7 @@ class GlobalRankView extends Component {
     return(
       <View style={styles.userRow}>
         <Text>{this.state.rank++}</Text>
-        <View styles={styles.userColumn}>
+        <View style={styles.userColumn}>
           <Text style={styles.userName}> {user.name}</Text>
           <Text style={styles.userDistance}> {user.score}</Text>
         </View>
@@ -82,6 +82,9 @@ var styles = StyleSheet.create({
   userImage: {
     height: 50,
     width: 50,
+  },
+  userColumn: {
+    flexDirection: 'row',
   }
 
 })

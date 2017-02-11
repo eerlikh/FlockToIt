@@ -42,7 +42,9 @@ class AchievementProfileView extends Component {
             </Text>
           </View>
         </View>
-        <ProgressBar />
+        <View style={styles.achievementProgress}>
+          <ProgressBar />
+        </View>
       </View>
     )
   }
@@ -101,6 +103,9 @@ var styles = StyleSheet.create({
     flexWrap: 'wrap',
     fontSize: 12,
     justifyContent: 'flex-start',
+  },
+  achievementProgress: {
+    marginTop: 15,
   },
 
 })

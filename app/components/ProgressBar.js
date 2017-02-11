@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   ProgressBarContainer: {
-    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'center',
   },
