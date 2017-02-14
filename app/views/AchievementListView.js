@@ -1,3 +1,5 @@
+//TODO: refactor this to use images from the static achievement resources
+
 'use strict'
 import React, { Component } from 'react';
 import { Image, ListView, StyleSheet, Text, View } from 'react-native'
@@ -15,9 +17,9 @@ var image_urls = [
   require("../img/achievements/rushmore.png"),
   require("../img/achievements/sea-bottom.png"),
   require("../img/achievements/mist-master.png"),
-  require("../img/achievements/castle.png"),
+  require("../img/achievements/Castle.png"),
   require("../img/achievements/hagia-sophia.png"),
-  require("../img/achievements/hamburger.png"),
+  require("../img/achievements/Hamburger.png"),
   require("../img/achievements/arcade.png"),
 ];
 

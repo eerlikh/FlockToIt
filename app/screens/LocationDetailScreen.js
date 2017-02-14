@@ -5,7 +5,6 @@ import NavBar from '../components/NavBar'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import renderIf from '../components/renderIf'
-import { constants } from '../constants'
 import { NavigationStyles } from '@exponent/ex-navigation';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
@@ -77,47 +76,14 @@ class LocationDetailScreen extends Component {
             </View>
           </View>
             <View style={styles.locationDetailAchievementsRow}>
-              {renderIf(this.achievementIsRelated("Renaissance Master"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/eiffel-tower.png")} />
-              )}
-              {renderIf(this.achievementIsRelated("Elite Brew Master"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/pub.png")} />
-              )}
-              {renderIf(this.achievementIsRelated("Dripping in Culture"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/tah-mahal.png")} />
-              )}
-              {renderIf(this.achievementIsRelated("Great Outdoors"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/outdoors.png")} />
-              )}
-              {renderIf(this.achievementIsRelated("Teddy Roosevelt"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/rushmore.png")} />
-              )}
-              {renderIf(this.achievementIsRelated("Aquaman"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/sea-bottom.png")} />
-              )}
-              {renderIf(this.achievementIsRelated("Master of Mist"))(
-                <Image style={styles.achievementsImage} source={require("../img/achievements/pub.png")} />
-              )}
+              {this.props.detailsData.relatedAchievements.map((achievement) => {
+                return <Image style={styles.achievementsImage} source={achievement.staticImageSource} key={achievement.id} />
+              })}
             </View>
             <View style={styles.locationDetailThemesRow}>
-              {renderIf(this.themeIsRelated("culture"))(
-                <Image style={styles.themesImage} source={require('../img/themes/notCulture.png')} />
-              )}
-              {renderIf(this.themeIsRelated("adventure"))(
-                <Image style={styles.themesImage} source={require('../img/themes/notAdventure.png')} />
-              )}
-              {renderIf(this.themeIsRelated("chill"))(
-                <Image style={styles.themesImage} source={require('../img/themes/notChill.png')} />
-              )}
-              {renderIf(this.themeIsRelated("drink"))(
-                <Image style={styles.themesImage} source={require('../img/themes/notDrink.png')} />
-              )}
-              {renderIf(this.themeIsRelated("eat"))(
-                <Image style={styles.themesImage} source={require('../img/themes/notEat.png')} />
-              )}
-              {renderIf(this.themeIsRelated("mystery"))(
-                <Image style={styles.themesImage} source={require('../img/themes/Mystery.png')} />
-              )}
+              {this.props.detailsData.relatedThemes.map((theme) => {
+                return <Image style={styles.themesImage} source={theme.staticImageSource} key={theme.id} />
+              })}
             </View>
           </ScrollView>
 
@@ -159,27 +125,6 @@ class LocationDetailScreen extends Component {
     );
   }
 
-  //TODO: refactor this trash:
-  themeIsRelated(theme) {
-    for (var i = 0; i < this.props.detailsData.relatedThemes.length; i++) {
-      if (theme === this.props.detailsData.relatedThemes[i]) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  achievementIsRelated(achievement) {
-    for (var i = 0; i < this.props.detailsData.relatedAchievements.length; i++) {
-      if (achievement === this.props.detailsData.relatedAchievements[i]) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   likePressed(){
     try {
       this.props.addFavorite();
@@ -187,7 +132,7 @@ class LocationDetailScreen extends Component {
       Alert.alert('Favorite Already Added');
       return;
     }
-    // Alert.alert('Favorite Added!'); //TODO: add this back at some point
+    // Alert.alert('Favorite Added!'); //TODO: find a better solution for sending an alert
   }
   xPressed(){
     this.props.iterateResult()
@@ -199,6 +144,7 @@ class LocationDetailScreen extends Component {
     this.props.pop(this.props.navigation.currentNavigatorUID);
   }
 }
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 var styles = StyleSheet.create({
@@ -279,7 +225,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
   },
   themesImage: {
-    borderRadius: 30,
+    borderRadius: 5,
     margin: 5,
     height: 60,
     width: 60,

@@ -1,8 +1,6 @@
-//TODO: Figure out a way to cache images from URLs because its making the app slow as fuck to load images
 'use strict';
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
-import {constants} from '../constants'
 import DiscoveryNav from '../components/DiscoveryNav'
 import ViewContainer from '../components/ViewContainer'
 import NavButton from '../components/NavButton'
@@ -35,6 +33,7 @@ class DiscoveryScreen extends Component {
     if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
       this.setState({
         isCaching: true,
+        //TODO: test this chaching placeholder method on ed's computer and see if background color still appears before image:
         url1: this.props.imageUrls.url1,
         url2: this.props.imageUrls.url2,
         url3: this.props.imageUrls.url3,
@@ -48,7 +47,6 @@ class DiscoveryScreen extends Component {
       });
     }
   }
-
   render(){
 
     return (

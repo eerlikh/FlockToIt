@@ -9,7 +9,6 @@ import HelpSupportView from '../views/HelpSupportView'
 import LegalPrivacyView from '../views/LegalPrivacyView'
 import renderIf from '../components/renderIf'
 import Login from '../components/Login'
-import {constants} from '../constants'
 import { NavigationStyles } from '@exponent/ex-navigation';
 import NavButton from '../components/NavButton'
 import { Router } from '../containers/Router';
@@ -246,7 +245,6 @@ function mapStateToProps(state) {
   return {
     navigation: state.navigation,
     hacks: state.hacks,
-    themeName: state.settings.themeName
   }
 }
 

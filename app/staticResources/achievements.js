@@ -1,12 +1,24 @@
-//TODO: eventually redo most of the achievements here, the discriptions vs the actual behavior is all fucked up and wrong thanks to alex not understand how programming works the fucking ignorant fuck
-//TODO: put this file in a place that makes more sense
+//TODO: eventually redo most of the achievements here, the discriptions vs the actual behavior is all fucked up and wrong thanks to alex not understanding how programming works the fucking ignorant fuck
+//TODO: make it so that you don't need the "searchTermStrings" property
 
-export default function achievements() {
+export default function getAchievements() {
+  return loadStaticImages(achievements());
+}
+
+function loadStaticImages(achievements) {
+  achievements.map(
+    (achievement) => {achievement.staticImageSource = achievement.getStaticImageSource();}
+  );
+
+  return achievements
+}
+
+function achievements() {
 
   var achievements = [
     {
       name: "Renaissance Master",
-      url: "../img/achievements/eiffel-tower.png",
+      getStaticImageSource: () => require("../img/achievements/eiffel-tower.png"),
       description: "Check in at 100 Galleries",
       searchTerms: ["artmuseum", "museum", "gallery", "pottery"],
       searchTermStrings: ["artmuseum", "museum", "gallery", "pottery"],
@@ -18,7 +30,7 @@ export default function achievements() {
     },
     {
       name: "Dripping in Culture",
-      url: "../img/achievements/tah-mahal.png",
+      getStaticImageSource: () => require("../img/achievements/tah-mahal.png"),
       description: "Visit 10 different museums",
       searchTerms: ["artmuseum", "museum", "gallery"],
       searchTermStrings: ["artmuseum", "museum", "gallery"],
@@ -30,7 +42,7 @@ export default function achievements() {
     },
     {
       name: "Elite Brew Master",
-      url: "../img/achievements/brew-master.png",
+      getStaticImageSource: () => require("../img/achievements/brew-master.png"),
       description: "Check in at 100 bars and 10 breweries",
       searchTerms: [
         {
@@ -53,7 +65,7 @@ export default function achievements() {
     },
     {
       name: "Great Outdoors",
-      url: "../img/achievements/outdoors.png",
+      getStaticImageSource: () => require("../img/achievements/outdoors.png"),
       description: "Visit 30 parks and 30 lakes",
       searchTerms: [
         {
@@ -76,7 +88,7 @@ export default function achievements() {
     },
     {
       name: "Teddy Roosevelt",
-      url: "../img/achievements/rushmore.png",
+      getStaticImageSource: () => require("../img/achievements/rushmore.png"),
       description: "Visit 10 National Parks",
       searchTerms: ["nationalpark"],
       searchTermStrings: ["nationalpark"],
@@ -88,7 +100,7 @@ export default function achievements() {
     },
     {
       name: "Aquaman",
-      url: "../img/achievements/sea-bottom.png",
+      getStaticImageSource: () => require("../img/achievements/sea-bottom.png"),
       description: "Vist 50 lakes and 50 Beaches",
       searchTerms: [
         {
@@ -112,7 +124,7 @@ export default function achievements() {
 
     {
      name: "Master of Mist",
-     url: "../img/achievements/mist-master.png",
+     getStaticImageSource: () => require("../img/achievements/mist-master.png"),
      description: "Check in at 20 hookah bar",
      searchTerms: ["hookah"],
      searchTermStrings: ["hookah"],
@@ -125,7 +137,7 @@ export default function achievements() {
 
    {
     name: "The 1%",
-    url: "../img/achievements/pub.png",
+    getStaticImageSource: () => require("../img/achievements/pub.png"),
     description: "Check in at 100 Steak houses, and 50 Museums",
     searchTerms: ["steakhouse, museum, artmuseum"],
     searchTermStrings: ["steakhouse, museum, artmuseum"],
@@ -138,7 +150,7 @@ export default function achievements() {
 
   {
    name: "Crusader King",
-   url: "../img/achievements/pub.png",
+   getStaticImageSource: () => require("../img/achievements/pub.png"),
    description: "Visit 100 Musuems, LandMark, visit Italy, Spain, Turkey, Iseral, Syria, Former HRE",
    searchTerms: ["landmark, museum, artmuseum"],
    searchTermStrings: ["landmark, museum, artmuseum"],
@@ -151,7 +163,7 @@ export default function achievements() {
 
   {
    name: "Harold and Kumar",
-   url: "../img/achievements/hamburger.png",
+   getStaticImageSource: () => require("../img/achievements/Hamburger.png"),
    description: "Check in at 50 White Castles",
    searchTerms: ["whitecastle"],
    searchTermStrings: ["whitecastle"],
@@ -163,7 +175,7 @@ export default function achievements() {
   },
   {
    name: "Going Retro",
-   url: "../img/achievements/arcade.png",
+   getStaticImageSource: () => require("../img/achievements/arcade.png"),
    description: "Check in at 25 Arcades",
    searchTerms: ["arcade"],
    searchTermStrings: ["arcade"],
@@ -176,7 +188,5 @@ export default function achievements() {
 
   ];
 
-
   return achievements;
-
 }
