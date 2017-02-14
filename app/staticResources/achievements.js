@@ -163,7 +163,7 @@ function achievements() {
 
   {
    name: "Harold and Kumar",
-   getStaticImageSource: () => require("../img/achievements/Hamburger.png"),
+   getStaticImageSource: () => require("../img/achievements/hamburger.png"),
    description: "Check in at 50 White Castles",
    searchTerms: ["whitecastle"],
    searchTermStrings: ["whitecastle"],

@@ -17,9 +17,9 @@ var image_urls = [
   require("../img/achievements/rushmore.png"),
   require("../img/achievements/sea-bottom.png"),
   require("../img/achievements/mist-master.png"),
-  require("../img/achievements/Castle.png"),
+  require("../img/achievements/castle.png"),
   require("../img/achievements/hagia-sophia.png"),
-  require("../img/achievements/Hamburger.png"),
+  require("../img/achievements/hamburger.png"),
   require("../img/achievements/arcade.png"),
 ];
 
