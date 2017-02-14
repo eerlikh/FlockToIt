@@ -10,10 +10,15 @@ import { NavigationStyles } from '@exponent/ex-navigation';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
+import ImageSlider from 'react-native-image-slider';
+
+
+
 
 class LocationDetailScreen extends Component {
   constructor(props){
     super(props);
+
   }
   static route = {
     navigationBar: {
@@ -30,8 +35,19 @@ class LocationDetailScreen extends Component {
         <View style={styles.discoveryViewContainer}>
           <ScrollView style={styles.locationDetailScrollView}>
 
-          <View style={styles.discoveryPhotoContainer}>
-            <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url1}} />
+          <View style={styles.photoContainer}>
+            <ImageSlider style={styles.imageSlider} images={[
+              this.props.imageUrls.url1,
+              this.props.imageUrls.url2,
+              this.props.imageUrls.url3,
+                ]}
+                height={450}
+                />
+
+
+              {
+                // <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url1}} />
+              }
           </View>
           <View style={styles.locationDetailColumnContainer}>
             <View style={styles.locationDetailRatingContainer}>
@@ -191,13 +207,15 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 11.5,
   },
-  discoveryPhotoContainer: {
+  photoContainer: {
     flexDirection: 'row',
     flex: 4,
     flexWrap: 'wrap',
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  imageSlider: {
   },
   venuePhoto: {
     width: windowWidth * 1,
