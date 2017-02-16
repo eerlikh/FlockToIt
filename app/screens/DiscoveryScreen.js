@@ -99,7 +99,6 @@ class DiscoveryScreen extends Component {
                 </TouchableOpacity>
               </View>
           </DiscoveryNav>
-
         </View>
       </ViewContainer>
     );
@@ -112,6 +111,7 @@ class DiscoveryScreen extends Component {
       Alert.alert('Favorite Already Added');
       return;
     }
+    this.props.iterateResult()
     this.props.showLocalAlert(this.props.navigation.currentNavigatorUID, "Favorite Added!", {});
   }
 
@@ -120,7 +120,7 @@ class DiscoveryScreen extends Component {
   }
 
   flockPressed(){
-    this.props.deleteAllFavorites()
+    // this.props.deleteAllFavorites()
   }
   infoPressed(){
     this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('locationDetail'));

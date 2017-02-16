@@ -109,6 +109,7 @@ module.exports = {
     var url2 = "https://placehold.it/400x400";
     var url3 = "https://placehold.it/400x400";
     var url4 = "https://placehold.it/400x400";
+    var url5 = "https://placehold.it/400x400";
 
     if (json.result.photos) {
 
@@ -140,13 +141,21 @@ module.exports = {
           "&maxheight=" + maxHeight +
           "&key=" + apiKey;
       }
+      if (json.result.photos[4]) {
+        var photoReference = json.result.photos[4].photo_reference;
+        url5 = "https://maps.googleapis.com/maps/api/place/photo?" +
+          "photoreference=" + photoReference +
+          "&maxheight=" + maxHeight +
+          "&key=" + apiKey;
+      }
     }
 
     return {
       url1,
       url2,
       url3,
-      url4
+      url4,
+      url5
     }
   },
 

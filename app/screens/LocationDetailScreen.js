@@ -39,6 +39,8 @@ class LocationDetailScreen extends Component {
               this.props.imageUrls.url1,
               this.props.imageUrls.url2,
               this.props.imageUrls.url3,
+              this.props.imageUrls.url4,
+              this.props.imageUrls.url5,
                 ]}
                 height={450}
                 />

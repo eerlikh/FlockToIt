@@ -20,6 +20,7 @@ export const googleData = createReducer({
       url2: "http://i.imgur.com/lJdVn5N.png",
       url3: "http://i.imgur.com/lJdVn5N.png",
       url4: "http://i.imgur.com/lJdVn5N.png",
+      url5: "http://i.imgur.com/lJdVn5N.png",
     }
 
   }, {
@@ -196,6 +197,7 @@ export const googleData = createReducer({
           url2: "https://placehold.it/400x400",
           url3: "https://placehold.it/400x400",
           url4: "https://placehold.it/400x400",
+          url5: "https://placehold.it/400x400",
         }
       }
     },
