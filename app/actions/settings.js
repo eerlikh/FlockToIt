@@ -18,37 +18,14 @@ export function setTheme(theme) {
 export function setCurrentLocation() {
   return (dispatch, getState) => {
 
-    // requestLocationPermission = async () => {
-    //   try {
-    //     const granted = await PermissionsAndroid.requestPermission(
-    //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    //       {
-    //         'title': 'Enable location',
-    //         'message': 'Location is good \o/',
-    //       },
-    //     );
-    //
-    //     if (granted) {
-    //       console.log('You can use the location');
-    //       // this.getLocation();
-    //     } else {
-    //       console.log('Location permission denied');
-    //     }
-    //   } catch (err) {
-    //     console.warn(err);
-    //   }
-    // };
-    //
-    // requestLocationPermission();
-
     return new Promise(function(resolve, reject) {
 
-      if (Platform.OS === 'android') {
-        dispatch(setLocation(37.422, -122.084));
-        resolve();
+      //uncomment the commented out code in this method to test on an emulator
 
-      //TODO: this doesn't work on android hence the above placeholder code; fix it
-      } else if (Platform.OS === 'ios') {
+      // if (Platform.OS === 'android') {
+      //   dispatch(setLocation(37.422, -122.084));
+      //   resolve();
+      // } else if (Platform.OS === 'ios') {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             var latitude = JSON.stringify(position.coords.latitude);
@@ -59,7 +36,7 @@ export function setCurrentLocation() {
           (error) => alert(JSON.stringify(error)),
           {enableHighAccuracy: false, timeout: 10000, maximumAge: 0}
         );
-      }
+      // }
     });
   }
 }

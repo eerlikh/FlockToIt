@@ -11,9 +11,6 @@ import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 import ImageSlider from 'react-native-image-slider';
 
-
-
-
 class LocationDetailScreen extends Component {
   constructor(props){
     super(props);

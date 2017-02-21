@@ -33,7 +33,6 @@ class MatchedLocationsView extends Component {
 
   renderLocationRow(location) {
     return(
-      // <TouchableOpacity onPress={()=>this.props.deleteFavorite(location)}>
       <TouchableOpacity onPress={ () => {
           this.props.updateSelectedFavorite(location);
           this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('favoriteDetail'));
