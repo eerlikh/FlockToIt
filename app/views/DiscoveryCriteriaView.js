@@ -79,31 +79,42 @@ class DiscoveryCriteriaView extends Component {
         </View>
 
         <View style={styles.discoveryButtonContainer}>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.boldText}>Bike</Text>
-            <Image style={styles.buttonImageBike}
-                   source={ require('../img/buttons/bicycle.png') } />
-            <Text>Nearby</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.boldText}>Car</Text>
-            <Image style={styles.buttonImageCar}
-                   source={ require('../img/buttons/car.png') } />
-            <Text>Medium</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.boldText}>Airplane</Text>
-            <Image style={styles.buttonImageAirplane}
-                   source={ require('../img/buttons/airplane.png') } />
-            <Text>Far</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.boldText}>Rocket</Text>
-            <Image style={styles.buttonImageRocket}
-                   source={ require('../img/buttons/rocket.png') } />
-            <Text>Distant</Text>
-          </View>
+          <TouchableOpacity onPress={this.bicyclePressed.bind(this)}>
+            <View style={styles.buttonContainer}>
+              <Text style={styles.boldText}>Bike</Text>
+              <Image style={styles.buttonImageBike}
+                     source={ require('../img/buttons/bicycle.png') } />
+              <Text>Nearby</Text>
+            </View>
+          </TouchableOpacity>
 
+          <TouchableOpacity onPress={this.carPressed.bind(this)}>
+            <View style={styles.buttonContainer}>
+              <Text style={styles.boldText}>Car</Text>
+              <Image style={styles.buttonImageCar}
+                     source={ require('../img/buttons/car.png') } />
+              <Text>Medium</Text>
+            </View>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity onPress={this.airplanePressed.bind(this)}>
+            <View style={styles.buttonContainer}>
+              <Text style={styles.boldText}>Airplane</Text>
+              <Image style={styles.buttonImageAirplane}
+                     source={ require('../img/buttons/airplane.png') } />
+              <Text>Far</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={this.rocketPressed.bind(this)}>
+            <View style={styles.buttonContainer}>
+              <Text style={styles.boldText}>Rocket</Text>
+              <Image style={styles.buttonImageRocket}
+                     source={ require('../img/buttons/rocket.png') } />
+              <Text>Distant</Text>
+            </View>
+          </TouchableOpacity>
 
         </View>
 
@@ -172,6 +183,20 @@ class DiscoveryCriteriaView extends Component {
     this.setState({selectAdventure: false});
     this.setState({selectCulture: false});
   }
+
+  bicyclePressed(){
+
+  }
+  carPressed(){
+
+  }
+  airplanePressed(){
+
+  }
+  rocketPressed(){
+    
+  }
+
 
 }
 
