@@ -10,19 +10,25 @@ class DiscoveryCriteriaView extends Component {
   constructor(props){
     super(props);
     this.themes = {
-    'Eat': require('../img/themes/Eat.png'),
-    'Drink': require('../img/themes/Drink.png'),
-    'Chill': require('../img/themes/Chill.png'),
-    'Adventure': require('../img/themes/Adventure.png'),
-    'Culture': require('../img/themes/Culture.png'),
-    'Mystery': require('../img/themes/Mystery.png'),
-    'unselectedEat': require('../img/themes/unselectedEat.png'),
-    'unselectedDrink': require('../img/themes/unselectedDrink.png'),
-    'unselectedChill': require('../img/themes/unselectedChill.png'),
-    'unselectedAdventure': require('../img/themes/unselectedAdventure.png'),
-    'unselectedCulture': require('../img/themes/unselectedCulture.png'),
-    'unselectedMystery': require('../img/themes/unselectedMystery.png'),
+      'Eat': require('../img/themes/Eat.png'),
+      'Drink': require('../img/themes/Drink.png'),
+      'Chill': require('../img/themes/Chill.png'),
+      'Adventure': require('../img/themes/Adventure.png'),
+      'Culture': require('../img/themes/Culture.png'),
+      'Mystery': require('../img/themes/Mystery.png'),
+      'unselectedEat': require('../img/themes/unselectedEat.png'),
+      'unselectedDrink': require('../img/themes/unselectedDrink.png'),
+      'unselectedChill': require('../img/themes/unselectedChill.png'),
+      'unselectedAdventure': require('../img/themes/unselectedAdventure.png'),
+      'unselectedCulture': require('../img/themes/unselectedCulture.png'),
+      'unselectedMystery': require('../img/themes/unselectedMystery.png'),
     };
+    // this.buttons = {
+    //   'bicycle': require('../img/buttons/bicycle.png'),
+    //   'car': require('../img/buttons/car.png'),
+    //   'airplane': require('../img/buttons/airplane.png'),
+    //   'rocket': require('../img/buttons/rocket.png'),
+    // }
     this.state = {
       distance: 1,
       price: 1,
@@ -64,13 +70,43 @@ class DiscoveryCriteriaView extends Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={this.CulturePressed.bind(this)}>
             <Image style={styles.discoveryImage}
-              source={ this.state.selectCulture ? this.themes['Culture'] : this.themes['unselectedCulture'] } />
+                   source={ this.state.selectCulture ? this.themes['Culture'] : this.themes['unselectedCulture'] } />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.MysteryPressed.bind(this)}>
             <Image style={styles.discoveryImage}
                    source={ this.state.selectMystery ? this.themes['Mystery'] : this.themes['unselectedMystery'] } />
           </TouchableOpacity>
         </View>
+
+        <View style={styles.discoveryButtonContainer}>
+          <View style={styles.buttonContainer}>
+            <Text style={styles.boldText}>Bike</Text>
+            <Image style={styles.buttonImageBike}
+                   source={ require('../img/buttons/bicycle.png') } />
+            <Text>Nearby</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Text style={styles.boldText}>Car</Text>
+            <Image style={styles.buttonImageCar}
+                   source={ require('../img/buttons/car.png') } />
+            <Text>Medium</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Text style={styles.boldText}>Airplane</Text>
+            <Image style={styles.buttonImageAirplane}
+                   source={ require('../img/buttons/airplane.png') } />
+            <Text>Far</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <Text style={styles.boldText}>Rocket</Text>
+            <Image style={styles.buttonImageRocket}
+                   source={ require('../img/buttons/rocket.png') } />
+            <Text>Distant</Text>
+          </View>
+
+
+        </View>
+
       </View>
     )
   }
@@ -157,6 +193,11 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
   },
+  discoveryButtonContainer: {
+    marginTop: 15,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
   discoveryImage: {
     margin: 5,
     width: windowWidth * 0.2,
@@ -173,6 +214,33 @@ var styles = StyleSheet.create({
     alignItems: 'stretch',
     justifyContent: 'center',
   },
+  buttonContainer: {
+    width: 80,
+    alignItems: 'center',
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  buttonImageBike: {
+    margin: 5,
+    height: 25,
+    width: 43,
+  },
+  buttonImageCar: {
+    margin: 5,
+    height: 26,
+    width: 50,
+  },
+  buttonImageAirplane: {
+    margin: 5,
+    height: 20,
+    width: 70,
+  },
+  buttonImageRocket: {
+    margin: 5,
+    height: 25,
+    width: 68,
+  }
 
 })
 
