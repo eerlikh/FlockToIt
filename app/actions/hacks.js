@@ -1,7 +1,7 @@
 import * as types from './types'
 
-export function resetStack() {
+export function attemptResetStack() {
   return {
-    type: types.RESET_STACK
+    type: types.ATTEMPT_RESET_STACK
   }
 }

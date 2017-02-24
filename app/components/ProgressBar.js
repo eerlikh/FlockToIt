@@ -5,19 +5,15 @@ import { StyleSheet, Text, View} from 'react-native'
 class ProgressBar extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      progress: 40
-    }
   }
-
 
   render() {
     return (
       <View style={styles.ProgressBarContainer}>
         <Text>Progress: </Text>
         <View style={[styles.flexBox, styles.progressBar]}>
-          <View style={[styles.progressBar_left, {flex:this.state.progress}]} />
-          <View style={[styles.progressBar_right, {flex:100 - this.state.progress}]} />
+          <View style={[styles.progressBar_left, {flex:this.props.progress}]} />
+          <View style={[styles.progressBar_right, {flex:100 - this.props.progress}]} />
         </View>
       </View>
     )

@@ -27,7 +27,7 @@ class DashboardScreen extends Component {
     navigationBar: {
       title: 'Dashboard',
       renderLeft: (route, props) =>
-        <NavButton destination={"discoveryLeft"} direction={"left"} navigatorLevel={"current"}/>,
+        <NavButton destination={"discoveryLeft"} direction={"left"} />,
     },
   }
 

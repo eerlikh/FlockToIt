@@ -7,7 +7,7 @@ module.exports = {
       (fetchOptions.nextPageToken ? ("pagetoken=" + fetchOptions.nextPageToken + "&") : "") +
       "radius=" + fetchOptions.radius +
       "&name=" + fetchOptions.searchTerm +
-      //"&maxprice=" + maxPrice + //TODO: handle missing price data (searching for it will omit results so dont do it)
+      //"&maxprice=" + maxPrice + //FIXME: handle missing price data (searching for it will omit results so dont do it)
       "&location=" + fetchOptions.latitude + "," + fetchOptions.longitude +
       "&key=" + fetchOptions.apiKey
     );
@@ -23,31 +23,19 @@ module.exports = {
   extractResultsData(json, searchTerm) {
     var nextPageToken = json.next_page_token;
 
-    // var placeIds = new Array(json.results.length);
-    // for (var i = 0; i < placeIds.length; i++) {
-    //   placeIds[i] = json.results[i].place_id;
-    // }
-    //
-    // var names = new Array(json.results.length);
-    // for (var i = 0; i < names.length; i++) {
-    //   names[i] = json.results[i].name;
-    // }
-
-    //this is all temporary for the demo:
     var placeIds = new Array();
     for (var i = 0; i < json.results.length; i++) {
-      if (json.results[i].photos) {
+      if (json.results[i].photos) { //this skips results with no images
         placeIds.push(json.results[i].place_id);
       }
     }
 
     var names = new Array();
     for (var i = 0; i < json.results.length; i++) {
-      if (json.results[i].photos) {
+      if (json.results[i].photos) { //this skips results with no images
         names.push(json.results[i].name);
       }
     }
-    //temp code ends here
 
     return {
       searchTerm,
@@ -87,6 +75,8 @@ module.exports = {
       rating,
       distance,
       placeId,
+      latitude: lat1,
+      longitude: lon1,
     }
   },
 
@@ -101,6 +91,7 @@ module.exports = {
   	dist = dist * 60 * 1.1515
   	if (unit=="K") { dist = dist * 1.609344 }
   	if (unit=="N") { dist = dist * 0.8684 }
+    if (unit=="m") { dist = dist * 1609.34 }
   	return dist
   },
 

@@ -1,5 +1,3 @@
-//TODO: refactor this to use images from the static achievement resources
-
 'use strict'
 import React, { Component } from 'react';
 import { Image, ListView, StyleSheet, Text, View } from 'react-native'
@@ -9,27 +7,9 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 
-var image_urls = [
-  require("../img/achievements/eiffel-tower.png"),
-  require("../img/achievements/tah-mahal.png"),
-  require("../img/achievements/brew-master.png"),
-  require("../img/achievements/outdoors.png"),
-  require("../img/achievements/rushmore.png"),
-  require("../img/achievements/sea-bottom.png"),
-  require("../img/achievements/mist-master.png"),
-  require("../img/achievements/castle.png"),
-  require("../img/achievements/hagia-sophia.png"),
-  require("../img/achievements/hamburger.png"),
-  require("../img/achievements/arcade.png"),
-];
-
 class AchievementListView extends Component {
   constructor(props){
     super(props)
-    // var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    // this.state = {
-    //   achievementsDataSource: ds.cloneWithRows(achievements)
-    // }
   }
 
   render() {
@@ -44,28 +24,29 @@ class AchievementListView extends Component {
         </View>
         <ListView
           dataSource={achievementsDataSource}
-          renderRow={(location) => { return this.renderLocationRow(location) }}
+          renderRow={(achievement) => { return this.renderAchievementRow(achievement) }}
         >
         </ListView>
       </View>
     )
   }
 
-  renderLocationRow(location) {
-    var imgSource = image_urls[location.id - 1];
+  renderAchievementRow(achievement) {
+    var progress = achievement.progress / achievement.threshold * 100;
+
     return(
       <View style={styles.achievementRow}>
-        <Image style={styles.achievementIcon} source={imgSource} />
+        <Image style={styles.achievementIcon} source={achievement.staticImageSource} />
         <View style={styles.achievementColumn}>
-          <Text style={styles.achievementName}>{location.name}</Text>
-          {//<Text style={styles.achievementDescription}> {location.description}</Text>
+          <Text style={styles.achievementName}>{achievement.name}</Text>
+          {//<Text style={styles.achievementDescription}> {achievement.description}</Text>
           }
           <View style={styles.achievementProgress}>
-            <ProgressBar progress={80} />
+            <ProgressBar progress={progress} />
           </View>
 
           <View>
-            <Text>Difficulty: Hard</Text>
+            <Text>Difficulty: {achievement.difficulty}</Text>
           </View>
         </View>
 
@@ -74,7 +55,6 @@ class AchievementListView extends Component {
   }
 
 }
-
 
 var styles = StyleSheet.create({
 

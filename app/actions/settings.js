@@ -64,9 +64,9 @@ function shuffleCurrentTheme() {
 }
 
 export function setRadius(radius) {
-  return {
-    type: types.SET_RADIUS,
-    radius
+  return (dispatch, getState) => {
+    dispatch({type: types.SET_RADIUS, radius})
+    dispatch(fetchAllData());
   }
 }
 

@@ -23,9 +23,9 @@ class DiscoveryScreen extends Component {
     navigationBar: {
       title: 'Flock',
       renderRight: (route, props) =>
-        <NavButton destination={"dashboard"} direction={"right"} navigatorLevel={"current"}/>,
+        <NavButton destination={"dashboard"} direction={"right"} />,
       renderLeft: (route, props) =>
-        <NavButton destination={"settings"} direction={"left"} navigatorLevel={"current"}/>,
+        <NavButton destination={"settings"} direction={"left"} />,
     },
   }
 
@@ -33,7 +33,6 @@ class DiscoveryScreen extends Component {
     if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
       this.setState({
         isCaching: true,
-        //TODO: test this chaching placeholder method on ed's computer and see if background color still appears before image:
         url1: this.props.imageUrls.url1,
         url2: this.props.imageUrls.url2,
         url3: this.props.imageUrls.url3,
@@ -48,6 +47,7 @@ class DiscoveryScreen extends Component {
     }
   }
   render(){
+    console.log("render called");
 
     return (
       <ViewContainer>

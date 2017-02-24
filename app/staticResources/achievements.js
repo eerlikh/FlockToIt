@@ -1,5 +1,4 @@
-//TODO: eventually redo most of the achievements here, the discriptions vs the actual behavior is all fucked up and wrong thanks to alex not understanding how programming works the fucking ignorant fuck
-//TODO: make it so that you don't need the "searchTermStrings" property
+//FIXME: eventually redo most of the achievements here, the discriptions vs the actual behavior is all fucked up and wrong thanks to alex not understanding how programming works the fucking ignorant fuck
 
 export default function getAchievements() {
   return loadStaticImages(achievements());
@@ -27,6 +26,7 @@ function achievements() {
       threshold: 100,
       type: "single term or multiple equally weighted terms",
       id: 1,
+      difficulty: "Hard",
     },
     {
       name: "Dripping in Culture",
@@ -39,6 +39,7 @@ function achievements() {
       threshold: 10,
       type: "single term or multiple equally weighted terms",
       id: 2,
+      difficulty: "Hard",
     },
     {
       name: "Elite Brew Master",
@@ -62,6 +63,7 @@ function achievements() {
       threshold: 110,
       type: "differently weighted terms",
       id: 3,
+      difficulty: "Hard",
     },
     {
       name: "Great Outdoors",
@@ -69,22 +71,23 @@ function achievements() {
       description: "Visit 30 parks and 30 lakes",
       searchTerms: [
         {
-          searchTerm: "parks",
+          searchTerm: "park",
           threshold: 30,
           progress: 0,
         },
         {
-          searchTerm: "lakes",
+          searchTerm: "lake",
           threshold: 30,
           progress: 0,
         }
       ],
-      searchTermStrings: ["parks, lakes"],
+      searchTermStrings: ["park, lake"],
       earned: false,
       progress: 0,
       threshold: 60,
-      type: "single term or multiple equally weighted terms",
+      type: "differently weighted terms",
       id: 4,
+      difficulty: "Hard",
     },
     {
       name: "Teddy Roosevelt",
@@ -97,6 +100,7 @@ function achievements() {
       threshold: 10,
       type: "single term or multiple equally weighted terms",
       id: 5,
+      difficulty: "Hard",
     },
     {
       name: "Aquaman",
@@ -120,6 +124,7 @@ function achievements() {
       threshold: 50,
       type: "differently weighted terms",
       id: 6,
+      difficulty: "Hard",
     },
 
     {
@@ -133,11 +138,12 @@ function achievements() {
      threshold: 20,
      type: "single term or multiple equally weighted terms",
      id: 7,
+     difficulty: "Hard",
     },
 
    {
     name: "The 1%",
-    getStaticImageSource: () => require("../img/achievements/pub.png"),
+    getStaticImageSource: () => require("../img/achievements/castle.png"),
     description: "Check in at 100 Steak houses, and 50 Museums",
     searchTerms: ["steakhouse, museum, artmuseum"],
     searchTermStrings: ["steakhouse, museum, artmuseum"],
@@ -146,11 +152,12 @@ function achievements() {
     threshold: 150,
     type: "single term or multiple equally weighted terms",
     id: 8,
+    difficulty: "Hard",
    },
 
   {
    name: "Crusader King",
-   getStaticImageSource: () => require("../img/achievements/pub.png"),
+   getStaticImageSource: () => require("../img/achievements/hagia-sophia.png"),
    description: "Visit 100 Musuems, LandMark, visit Italy, Spain, Turkey, Iseral, Syria, Former HRE",
    searchTerms: ["landmark, museum, artmuseum"],
    searchTermStrings: ["landmark, museum, artmuseum"],
@@ -159,6 +166,7 @@ function achievements() {
    threshold: 100,
    type: "single term or multiple equally weighted terms",
    id: 9,
+   difficulty: "Hard",
   },
 
   {
@@ -172,6 +180,7 @@ function achievements() {
    threshold: 50,
    type: "single term or multiple equally weighted terms",
    id: 10,
+   difficulty: "Hard",
   },
   {
    name: "Going Retro",
@@ -184,6 +193,7 @@ function achievements() {
    threshold: 25,
    type: "single term or multiple equally weighted terms",
    id: 11,
+   difficulty: "Hard",
   },
 
   ];

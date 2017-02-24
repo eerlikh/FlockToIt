@@ -1,4 +1,3 @@
-//TODO: remove or fix the parent/child functionality of this component
 'use strict'
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native'
@@ -33,25 +32,9 @@ class NavButton extends Component {
     }
 
     if (this.props.direction === "right") {
-      // this.setState({ buttonStyle: styles.navButtonFavorites });
-      // this.setState({ buttonImage: require('../img/buttons/favoritesIcon.png') });
-      if (this.props.navigatorLevel === "current") {
-        this.setState({ onPress: () => {this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute(this.props.destination))} });
-      } else if (this.props.navigatorLevel === "parent") {
-        var parentNavigatorUID = this.props.navigation.navigators[this.props.navigation.currentNavigatorUID].parentNavigatorUID;
-        this.setState({ onPress: () => {this.props.push(parentNavigatorUID, Router.getRoute(this.props.destination))} });
-      }
+      this.setState({ onPress: () => {this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute(this.props.destination))} });
     } else if (this.props.direction === "left") {
-      // this.setState({ buttonStyle: styles.navButtonSettings });
-      // this.setState({ buttonImage: require('../img/buttons/settingsIcon.png') });
-      if (this.props.navigatorLevel === "current") {
-        this.setState({ onPress: () => {this.props.pop(this.props.navigation.currentNavigatorUID)} });
-      } else if (this.props.navigatorLevel === "parent") {
-        console.log(this.props.navigation.currentNavigatorUID);
-        var parentNavigatorUID = this.props.navigation.navigators[this.props.navigation.currentNavigatorUID].parentNavigatorUID;
-        console.log(parentNavigatorUID);
-        this.setState({ onPress: () => {this.props.pop(parentNavigatorUID)} });
-      }
+      this.setState({ onPress: () => {this.props.pop(this.props.navigation.currentNavigatorUID)} });
     }
   }
 

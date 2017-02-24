@@ -19,7 +19,7 @@ export const SHUFFLE_CURRENT_THEME = 'SHUFFLE_CURRENT_THEME';
 export const ITERATE_THEME_INDEX = 'ITERATE_THEME_INDEX';
 
 //hacks
-export const RESET_STACK = 'RESET_STACK';
+export const ATTEMPT_RESET_STACK = 'ATTEMPT_RESET_STACK';
 
 //user data
 export const ADD_FAVORITE = 'ADD_FAVORITE';

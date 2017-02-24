@@ -131,7 +131,6 @@ class LocationDetailScreen extends Component {
       Alert.alert('Favorite Already Added');
       return;
     }
-    // Alert.alert('Favorite Added!'); //TODO: find a better solution for sending an alert
   }
   xPressed(){
     this.props.iterateResult()
