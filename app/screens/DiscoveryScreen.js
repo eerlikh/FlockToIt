@@ -1,15 +1,35 @@
 'use strict';
 import React, { Component } from 'react';
 import { Alert, Dimensions, Image, StyleSheet, StatusBar, Text, TouchableOpacity, View } from 'react-native';
-import DiscoveryNav from '../components/DiscoveryNav'
-import ViewContainer from '../components/ViewContainer'
-import NavButton from '../components/NavButton'
+import DiscoveryNav from '../components/DiscoveryNav';
+import ViewContainer from '../components/ViewContainer';
+import NavButton from '../components/NavButton';
 import { NavigationStyles } from '@exponent/ex-navigation';
-import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../actions'
+import { bindActionCreators } from 'redux';
+import { ActionCreators } from '../actions';
 import { connect } from 'react-redux';
 import { Router } from '../containers/Router';
-import renderIf from '../components/renderIf'
+import renderIf from '../components/renderIf';
+import SwipeCards from 'react-native-swipe-cards';
+
+let Card = React.createClass({
+  render() {
+    return (
+      <View style={[styles.card, {backgroundColor: this.props.backgroundColor}]}>
+        <Text>{this.props.text}</Text>
+      </View>
+    )
+  }
+})
+
+const Cards = [
+  {text: 'Tomato', backgroundColor: 'red'},
+  {text: 'Aubergine', backgroundColor: 'purple'},
+  {text: 'Courgette', backgroundColor: 'green'},
+  {text: 'Blueberry', backgroundColor: 'blue'},
+  {text: 'Umm...', backgroundColor: 'cyan'},
+  {text: 'orange', backgroundColor: 'orange'},
+]
 
 class DiscoveryScreen extends Component {
   constructor(props){
@@ -17,7 +37,10 @@ class DiscoveryScreen extends Component {
 
     this.state = {
       isCaching: false,
+      cards: Cards
+
     }
+
   }
   static route = {
     navigationBar: {
@@ -29,6 +52,12 @@ class DiscoveryScreen extends Component {
     },
   }
 
+  handleYup (card) {
+    console.log(`Yup for ${card.text}`)
+  }
+  handleNope (card) {
+    console.log(`Nope for ${card.text}`)
+  }
   componentWillReceiveProps(nextProps) {
     if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
       this.setState({
@@ -47,11 +76,23 @@ class DiscoveryScreen extends Component {
       });
     }
   }
-  render(){
 
+  render(){
     return (
       <ViewContainer>
+
+
+
       <StatusBar barStyle="light-content"/>
+        <SwipeCards
+            cards={this.state.cards}
+
+            renderCard={(cardData) => <Card {...cardData} />}
+            renderNoMoreCards={() => <View />}
+
+            handleYup={this.handleYup}
+            handleNope={this.handleNope}
+          />
         <View style={styles.discoveryViewContainer}>
           {renderIf(!this.state.isCaching)(
             <View style={styles.discoveryPhotoContainer}>
@@ -131,6 +172,13 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 var styles = StyleSheet.create({
+  card: {
+   flex: 1,
+   justifyContent: 'center',
+   alignItems: 'center',
+   width: 300,
+   height: 300,
+ },
   NavBar: {
     paddingTop: 25,
     paddingBottom: 25,
