@@ -49,6 +49,7 @@ export function iterateResult() {
       var nextPageToken = getState().googleData.resultsObjects[resultsIndex].nextPageToken;
       var nextSearchTerm = getState().settings.theme.searchTerms[getState().googleData.nextTermInThemeIndex];
 
+      //TODO: possibly put the following complex boolean test into it's own function
       //checks if there is a least 1 more page of results and handles the different cases
       if (currentDetailsIndex >= resultObjectLength) {
         if (nextPageToken) {

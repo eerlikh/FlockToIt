@@ -28,10 +28,10 @@ class DiscoveryCriteriaView extends Component {
       'medium': require('../img/buttons/car.png'),
       'far': require('../img/buttons/airplane.png'),
       'distant': require('../img/buttons/rocket.png'),
-      'unselectedNearby': require('../img/buttons/bicycle.png'),
-      'unselectedMedium': require('../img/buttons/car.png'),
-      'unselectedFar': require('../img/buttons/airplane.png'),
-      'unselectedDistant': require('../img/buttons/rocket.png'),
+      'unselectedNearby': require('../img/buttons/blacked_bicycle.png'),
+      'unselectedMedium': require('../img/buttons/blacked_car.png'),
+      'unselectedFar': require('../img/buttons/blacked_airplane.png'),
+      'unselectedDistant': require('../img/buttons/blacked_rocket.png'),
     };
 
     // this.buttons = {

@@ -102,7 +102,7 @@ class FavoriteDetailScreen extends Component {
               {/*third button*/}
               <TouchableOpacity style={styles.highlightContainer} onPress={this.checkInPressed.bind(this)}>
                 <View style={styles.likeButtonContainer}>
-                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/checkIn.png')} />
+                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/checkin.png')} />
                 </View>
               </TouchableOpacity>
             </View>
