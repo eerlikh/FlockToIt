@@ -86,11 +86,7 @@ class FavoriteDetailScreen extends Component {
 
             <View style={styles.navContainer}>
               {/*first button*/}
-              <TouchableOpacity style={styles.highlightContainer}
-                onPress={() => {
-                this.props.deleteFavorite(this.props.selectedFavorite);
-                this.props.pop(this.props.navigation.currentNavigatorUID);
-              }}>
+              <TouchableOpacity style={styles.highlightContainer} onPress={this.deletePressed.bind(this)}>
                 <View style={styles.xButtonContainer}>
                   <Image style={styles.discoveryNavImage} source={require('../img/buttons/delete.png')} />
                 </View>
@@ -104,10 +100,9 @@ class FavoriteDetailScreen extends Component {
               </TouchableOpacity>
 
               {/*third button*/}
-              <TouchableOpacity style={styles.highlightContainer}
-                onPress={() => this.props.checkIn(this.props.selectedFavorite)}>
+              <TouchableOpacity style={styles.highlightContainer} onPress={this.checkInPressed.bind(this)}>
                 <View style={styles.likeButtonContainer}>
-                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/checkin.png')} />
+                  <Image style={styles.discoveryNavImage} source={require('../img/buttons/checkIn.png')} />
                 </View>
               </TouchableOpacity>
             </View>
@@ -116,23 +111,18 @@ class FavoriteDetailScreen extends Component {
     );
   }
 
-  likePressed(){
-    try {
-      this.props.addFavorite();
-    } catch (error) {
-      Alert.alert('Favorite Already Added');
-      return;
-    }
-    // Alert.alert('Favorite Added!'); //TODO: find a better solution for sending an alert
-  }
-  xPressed(){
+  deletePressed(){
+    this.props.deleteFavorite(this.props.selectedFavorite);
     this.props.pop(this.props.navigation.currentNavigatorUID);
   }
+
   flockPressed(){
 
   }
-  infoPressed(){
 
+  //TODO: replace "checkIn" with "checkIn" (lowercase 'i') throughout app for consistency and grammatic correctness (watch out - you can't undo a replace all in atom)
+  checkInPressed() {
+    this.props.checkIn(this.props.selectedFavorite);
   }
 }
 const windowWidth = Dimensions.get('window').width;

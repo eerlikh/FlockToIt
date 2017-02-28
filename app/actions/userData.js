@@ -1,4 +1,6 @@
 import * as types from './types'
+import {constants} from '../constants';
+import utils from '../utils/googleFetchUtilities';
 
 export function addFavorite() {
   return (dispatch, getState) => {
@@ -25,7 +27,9 @@ export function addFavorite() {
         relatedAchievements: getState().googleData.detailsData.relatedAchievements,
         relatedThemes: getState().googleData.detailsData.relatedThemes,
         hours: getState().googleData.detailsData.hours,
-        distance: getState().googleData.detailsData.distance, //TODO: this value should be able to change based on current distance after being set
+        distance: getState().googleData.detailsData.distance,
+        latitude: getState().googleData.detailsData.latitude,
+        longitude: getState().googleData.detailsData.longitude,
       },
     });
   }
@@ -51,11 +55,16 @@ export function updateSelectedFavorite(favorite) {
 
 export function checkIn(favorite) {
   return (dispatch, getState) => {
-    dispatch({
-      type: types.CHECK_IN,
-      favorite,
+
+    dispatch(checkProximity(favorite.latitude, favorite.longitude)).then((userIsCloseEnough) => {
+      if (userIsCloseEnough) {
+        dispatch({type: types.CHECK_IN, favorite});
+        dispatch(updateAllAchievements());
+      } else {
+        alert("You are not close enough to this location to check in.");
+      }
     });
-    dispatch(updateAllAchievements());
+
   }
 }
 
@@ -119,6 +128,7 @@ function updateSingleOrMultipleEquallyWeightedTerms(achievement) {
 }
 
 function updateDifferentlyWeightedTerms(achievement) {
+  console.log(achievement.name);
   return (dispatch, getState) => {
     var earned = false;
     var progress = 0;
@@ -152,5 +162,28 @@ function updateDifferentlyWeightedTerms(achievement) {
       searchTerms,
     }
 
+  }
+}
+
+function checkProximity(favoriteLatitude, favoriteLongitude) {
+  return (dispatch, getState) => {
+
+    return new Promise(function(resolve, reject) {
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var userLatitude = JSON.stringify(position.coords.latitude);
+          var userLongitude = JSON.stringify(position.coords.longitude);
+
+        var distance = utils.distance(userLatitude, userLongitude, favoriteLatitude, favoriteLongitude, "m");
+
+          var userIsCloseEnough = distance <= constants.MAXIMUM_CHECKIN_DISTANCE;
+
+          resolve(userIsCloseEnough);
+        },
+        (error) => {alert(JSON.stringify(error)); reject();},
+        {enableHighAccuracy: false, timeout: 10000, maximumAge: 0}
+      );
+    });
   }
 }

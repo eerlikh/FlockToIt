@@ -443,7 +443,7 @@ export function getInitialState() {
             profile_photo_url: '//lh3.googleusercontent.com/-mT27uv7XJ70/AAAAAAAAAAI/AAAAAAAAVA4/81k9SUsOf5c/photo.jpg',
             rating: 4,
             relative_time_description: '3 months ago',
-            text: 'Unassuming restaurant on busy Geary Street. Small and cosy when you go in, with a mood lighting fit for date night. Attentive staff and yummy homemade food - pasta is made fresh daily. Tried the lasagna, squid ink spaghetti, tiramisu and panna cotta, plus drinks. Everything delicious except panna cotta (I don\'t really dig balsamic vinegar in my desserts though). Worth checking out, you\'ll be stuffed afterwards.',
+            text: 'Unassuming restaurant on busy Geary Street. Small and cosy when you go in, with a mood lighting fit for date night. Attentive staff and yummy homemade food - pasta is made fresh daily. Tried the lasagna, squid ink spaghetti, tiramisu and panna cotta, plus drinks. Everything delicious except panna cotta (I don\'t really dig balsamic vinegar in my desserts though). Worth checkIng out, you\'ll be stuffed afterwards.',
             time: 1472410141
           },
           {

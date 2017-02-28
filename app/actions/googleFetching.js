@@ -1,4 +1,4 @@
-//TODO: handle case where there are no results for the first search term displayed (nothing is displayed)
+//FIXME: handle case where there are no results for the first search term displayed (nothing is displayed)
 
 import * as types from './types';
 import utils from '../utils/googleFetchUtilities';
@@ -122,7 +122,6 @@ function removeResultsObject(resultsIndex) {
     }
   }
 }
-
 
 function fetchResults(fetchOptions) {
   return (dispatch, getState) => {

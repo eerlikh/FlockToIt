@@ -1,4 +1,3 @@
-//TODO: make the sliders for price and radius respond to the redux state
 'use strict';
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Image, TouchableOpacity, ActivityIndicator, StatusBar} from 'react-native';
@@ -24,14 +23,7 @@ class SettingsScreen extends Component {
     'down': require('../img/buttons/ArrowDown.png')
     };
     this.state = {
-      showProgress: false,
-      showDiscoveryCriteria: true,
-      showSuggestAchievement: false,
-      showHelpSupport: false,
-      showLegalPrivacy: false,
-      showLogOut: false,
-      criteriaArrow: false,
-      suggestArrow: false,
+      currentDropdown: "discovery criteria"
     }
   }
 
@@ -40,7 +32,7 @@ class SettingsScreen extends Component {
   }
 
   fixNavigationStack(){
-    this.props.resetStack();//TODO: change name to "attemptResetStack" or something more descriptive
+    this.props.attemptResetStack();
 
     if (this.props.hacks.stackIsReset === 0) {
       this.props.immediatelyResetStack(this.props.navigation.currentNavigatorUID,
@@ -52,7 +44,7 @@ class SettingsScreen extends Component {
     navigationBar: {
       title: 'Settings',
       renderRight: (route, props) =>
-        <NavButton destination={"discovery"} direction={"right"} navigatorLevel={"current"}/>,
+        <NavButton destination={"discovery"} direction={"right"} />,
     },
   }
 
@@ -69,11 +61,11 @@ class SettingsScreen extends Component {
             <TouchableOpacity onPress={()=>this.DiscoveryCriteriaPressed()}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Discovery Criterias</Text>
-                <Image style={ this.state.showDiscoveryCriteria ? styles.optionButtonDown : styles.optionButtonRight }
-                  source={ this.state.showDiscoveryCriteria ? this.icons['down'] : this.icons['right'] } />
+                <Image style={ this.state.currentDropdown === "discovery criteria" ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.currentDropdown === "discovery criteria" ? this.icons['down'] : this.icons['right'] } />
               </View>
             </TouchableOpacity>
-            {renderIf(this.state.showDiscoveryCriteria)(
+            {renderIf(this.state.currentDropdown === "discovery criteria")(
               <DiscoveryCriteriaView {...this.props} style={styles.DiscoveryCriteriaView} />
             )}
           </View>
@@ -82,11 +74,11 @@ class SettingsScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Suggest Achievement </Text>
-                <Image style={ this.state.showSuggestAchievement ? styles.optionButtonDown : styles.optionButtonRight }
-                  source={ this.state.showSuggestAchievement ? this.icons['down'] : this.icons['right'] } />
+                <Image style={ this.state.currentDropdown === "suggest achievement" ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.currentDropdown === "suggest achievement" ? this.icons['down'] : this.icons['right'] } />
               </View>
 
-              {renderIf(this.state.showSuggestAchievement)(
+              {renderIf(this.state.currentDropdown === "suggest achievement")(
                 <SuggestAchievementView style={styles.SuggestAchievementView} />
               )}
             </View>
@@ -96,11 +88,11 @@ class SettingsScreen extends Component {
             <TouchableOpacity onPress={()=>this.HelpSupportPressed()}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Help & Support </Text>
-                <Image style={ this.state.showHelpSupport ? styles.optionButtonDown : styles.optionButtonRight }
-                  source={ this.state.showHelpSupport ? this.icons['down'] : this.icons['right'] } />
+                <Image style={ this.state.currentDropdown === "help and support" ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.currentDropdown === "help and support" ? this.icons['down'] : this.icons['right'] } />
               </View>
             </TouchableOpacity>
-              {renderIf(this.state.showHelpSupport)(
+              {renderIf(this.state.currentDropdown === "help and support")(
                 <HelpSupportView style={styles.HelpSupportView} />
               )}
           </View>
@@ -109,11 +101,11 @@ class SettingsScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>Legal & Privacy </Text>
-                <Image style={ this.state.showLegalPrivacy ? styles.optionButtonDown : styles.optionButtonRight }
-                  source={ this.state.showLegalPrivacy ? this.icons['down'] : this.icons['right'] } />
+                <Image style={ this.state.currentDropdown === "legal and privacy" ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.currentDropdown === "legal and privacy" ? this.icons['down'] : this.icons['right'] } />
               </View>
 
-            {renderIf(this.state.showLegalPrivacy)(
+            {renderIf(this.state.currentDropdown === "legal and privacy")(
               <LegalPrivacyView style={styles.LegalPrivacyView} />
             )}
             </View>
@@ -123,13 +115,13 @@ class SettingsScreen extends Component {
             <View style={styles.settingOptionColumn}>
               <View style={styles.settingOptionRow}>
                 <Text style={styles.optionText}>LogOut</Text>
-                <Image style={ this.state.showLogOut ? styles.optionButtonDown : styles.optionButtonRight }
-                  source={ this.state.showLogOut ? this.icons['down'] : this.icons['right'] } />
+                <Image style={ this.state.currentDropdown === "logout" ? styles.optionButtonDown : styles.optionButtonRight }
+                  source={ this.state.currentDropdown === "logout" ? this.icons['down'] : this.icons['right'] } />
               </View>
 
-            {renderIf(this.state.showLogOut)(
+            {renderIf(this.state.currentDropdown === "logout")(
               <Login style={styles.logOutView} onLogoutFinishedFunction={() =>
-                { //TODO: insert a navigation action creator from props
+                { //insert a navigation action creator from props
                 }
               }/>
             )}
@@ -141,39 +133,20 @@ class SettingsScreen extends Component {
   }
 
   DiscoveryCriteriaPressed(){
-    this.setState({showDiscoveryCriteria: true});
-    this.setState({showSuggestAchievement: false});
-    this.setState({showHelpSupport: false});
-    this.setState({showLegalPrivacy: false});
-    this.setState({showLogOut: false});
+    this.setState({currentDropdown: "discovery criteria"});
+
   }
   SuggestAchievementPressed(){
-    this.setState({showSuggestAchievement: true});
-    this.setState({showDiscoveryCriteria: false});
-    this.setState({showHelpSupport: false});
-    this.setState({showLegalPrivacy: false});
-    this.setState({showLogOut: false});
+    this.setState({currentDropdown: "suggest achievement"});
   }
   HelpSupportPressed(){
-    this.setState({showHelpSupport: true});
-    this.setState({showSuggestAchievement: false});
-    this.setState({showDiscoveryCriteria: false});
-    this.setState({showLegalPrivacy: false});
-    this.setState({showLogOut: false});
+    this.setState({currentDropdown: "help and support"});
   }
   LegalPrivacyPressed(){
-    this.setState({showLegalPrivacy: true});
-    this.setState({showHelpSupport: false});
-    this.setState({showSuggestAchievement: false});
-    this.setState({showDiscoveryCriteria: false});
-    this.setState({showLogOut: false});
+    this.setState({currentDropdown: "legal and privacy"});
   }
   LogOutPressed(){
-    this.setState({showLogOut: true});
-    this.setState({showLegalPrivacy: false});
-    this.setState({showHelpSupport: false});
-    this.setState({showSuggestAchievement: false});
-    this.setState({showDiscoveryCriteria: false});
+    this.setState({currentDropdown: "logout"});
   }
 
 }
