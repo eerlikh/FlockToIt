@@ -15,25 +15,15 @@ import SwipeCards from 'react-native-swipe-cards';
 let Card = React.createClass({
   render() {
     return (
-      <View>
         <View style={styles.discoveryPhotoContainer}>
           <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
           <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
           <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
         </View>
-      </View>
     )
   }
 })
 
-const Cards = [
-  {text: 'Tomato', backgroundColor: 'red'},
-  {text: 'Aubergine', backgroundColor: 'purple'},
-  {text: 'Courgette', backgroundColor: 'green'},
-  {text: 'Blueberry', backgroundColor: 'blue'},
-  {text: 'Umm...', backgroundColor: 'cyan'},
-  {text: 'orange', backgroundColor: 'orange'},
-]
 
 class DiscoveryScreen extends Component {
   constructor(props){
@@ -41,11 +31,18 @@ class DiscoveryScreen extends Component {
 
     this.state = {
       isCaching: false,
-      cards: Cards
+      cards: []
 
     }
 
   }
+
+  componentWillMount() {
+    this.setState({
+      cards: [{...this.props}]
+    })
+  }
+
   static route = {
     navigationBar: {
       title: 'Flock',
@@ -78,26 +75,20 @@ class DiscoveryScreen extends Component {
   render(){
     return (
       <ViewContainer>
-
-
-
       <StatusBar barStyle="light-content"/>
-        <SwipeCards
-
-            cards={this.state.cards}
-
-            renderCard={(cardData) =>
-
-              <Card {...this.props} />
-
-
-          }
-            renderNoMoreCards={() => <View />}
-
-            handleYup={this.handleYup}
-            handleNope={this.handleNope}
-          />
         <View style={styles.discoveryViewContainer}>
+          <SwipeCards
+              cards={this.state.cards}
+              loop={true}
+              renderCard={
+                (cardData) =>
+                <Card {...this.props} />
+              }
+              renderNoMoreCards={() => <View />}
+
+              handleYup={this.handleYup}
+              handleNope={this.handleNope}
+            />
           {
             // {renderIf(!this.state.isCaching)(
             //   <View style={styles.discoveryPhotoContainer}>
@@ -175,17 +166,17 @@ class DiscoveryScreen extends Component {
   }
   handleYup (card) {
     try {
-      this.props.addFavorite();
+      card.addFavorite();
     } catch (error) {
       Alert.alert('Favorite Already Added');
       return;
     }
-    this.props.iterateResult()
-    this.props.showLocalAlert(this.props.navigation.currentNavigatorUID, "Favorite Added!", {});
-    console.log(`Yup for ${card.text}`)
+    card.iterateResult()
+    card.showLocalAlert(card.navigation.currentNavigatorUID, "Favorite Added!", {});
+    // console.log(`Yup for ${card.text}`)
   }
   handleNope (card) {
-    this.props.iterateResult()
+    card.iterateResult()
     // console.log(`Nope for ${card.text}`)
   }
 
@@ -233,7 +224,7 @@ var styles = StyleSheet.create({
   },
   discoveryPhotoContainer: {
     flexDirection: 'row',
-    flex: 10,
+    flex: 1,
     flexWrap: 'wrap',
     backgroundColor: 'white',
     justifyContent: 'center',
@@ -252,7 +243,7 @@ var styles = StyleSheet.create({
     backgroundColor: 'grey',
   },
   discoveryNavContainer: {
-    flex: 3.2,
+    flex: .32,
   },
   titleContainer: {
     backgroundColor: 'lightgrey',
