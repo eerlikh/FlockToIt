@@ -15,8 +15,12 @@ import SwipeCards from 'react-native-swipe-cards';
 let Card = React.createClass({
   render() {
     return (
-      <View style={[styles.card, {backgroundColor: this.props.backgroundColor}]}>
-        <Text>{this.props.text}</Text>
+      <View>
+        <View style={styles.discoveryPhotoContainer}>
+          <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
+          <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
+          <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
+        </View>
       </View>
     )
   }
@@ -52,12 +56,7 @@ class DiscoveryScreen extends Component {
     },
   }
 
-  handleYup (card) {
-    console.log(`Yup for ${card.text}`)
-  }
-  handleNope (card) {
-    console.log(`Nope for ${card.text}`)
-  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.imageUrls.url1 !== nextProps.imageUrls.url1) {
       this.setState({
@@ -75,7 +74,7 @@ class DiscoveryScreen extends Component {
       });
     }
   }
-  
+
   render(){
     return (
       <ViewContainer>
@@ -84,29 +83,38 @@ class DiscoveryScreen extends Component {
 
       <StatusBar barStyle="light-content"/>
         <SwipeCards
+
             cards={this.state.cards}
 
-            renderCard={(cardData) => <Card {...cardData} />}
+            renderCard={(cardData) =>
+
+              <Card {...this.props} />
+
+
+          }
             renderNoMoreCards={() => <View />}
 
             handleYup={this.handleYup}
             handleNope={this.handleNope}
           />
         <View style={styles.discoveryViewContainer}>
-          {renderIf(!this.state.isCaching)(
-            <View style={styles.discoveryPhotoContainer}>
-              <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
-              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
-              <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
-            </View>
-          )}
-          {renderIf(this.state.isCaching)(
-            <View style={styles.discoveryPhotoContainer}>
-              <Image style={styles.venuePhotoMain} source={require('../img/placeholder.png')} />
-              <Image style={styles.venuePhoto} source={require('../img/placeholder.png')} />
-              <Image style={styles.venuePhoto} source={require('../img/placeholder.png')} />
-            </View>
-          )}
+          {
+            // {renderIf(!this.state.isCaching)(
+            //   <View style={styles.discoveryPhotoContainer}>
+            //     <Image style={styles.venuePhotoMain} source={{uri: this.props.imageUrls.url1}} />
+            //     <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url2}} />
+            //     <Image style={styles.venuePhoto} source={{uri: this.props.imageUrls.url3}} />
+            //   </View>
+            // )}
+            // {renderIf(this.state.isCaching)(
+            //   <View style={styles.discoveryPhotoContainer}>
+            //     <Image style={styles.venuePhotoMain} source={require('../img/placeholder.png')} />
+            //     <Image style={styles.venuePhoto} source={require('../img/placeholder.png')} />
+            //     <Image style={styles.venuePhoto} source={require('../img/placeholder.png')} />
+            //   </View>
+            // )}
+          }
+
 
           <DiscoveryNav style={styles.discoveryNavContainer}>
               <View style={styles.titleContainer}>
@@ -164,6 +172,21 @@ class DiscoveryScreen extends Component {
   }
   infoPressed(){
     this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('locationDetail'));
+  }
+  handleYup (card) {
+    try {
+      this.props.addFavorite();
+    } catch (error) {
+      Alert.alert('Favorite Already Added');
+      return;
+    }
+    this.props.iterateResult()
+    this.props.showLocalAlert(this.props.navigation.currentNavigatorUID, "Favorite Added!", {});
+    console.log(`Yup for ${card.text}`)
+  }
+  handleNope (card) {
+    this.props.iterateResult()
+    // console.log(`Nope for ${card.text}`)
   }
 
 }
