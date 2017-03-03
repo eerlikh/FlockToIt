@@ -2,7 +2,7 @@
 
 import * as types from './types';
 import utils from '../utils/googleFetchUtilities';
-import { setTheme, setCurrentLocation } from './settings';
+import { setTheme, setCurrentLocation, setRadius } from './settings';
 import {constants} from '../constants';
 import getThemes from '../staticResources/themes';
 
@@ -16,6 +16,12 @@ export function fetchAllData() {
     var initialThemeUnset = getState().settings.theme === null;
     if (initialThemeUnset) {
       dispatch(setTheme(themes.chill));
+    }
+    var searchTerms = getState().settings.theme.searchTerms;
+
+    var initialRadiusUnset = getState().settings.radius === 0;
+    if (initialRadiusUnset) {
+      dispatch(setRadius(constants.MEDIUM_SEARCH_RADIUS));
     }
     var searchTerms = getState().settings.theme.searchTerms;
 

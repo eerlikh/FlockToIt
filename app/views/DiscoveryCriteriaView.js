@@ -43,8 +43,8 @@ class DiscoveryCriteriaView extends Component {
     this.state = {
       distance: 1,
       price: 1,
-      currentTheme: "", //TODO: use a prop from redux here instead
-      currentDistance: "",
+      // currentTheme: this.props.settings.theme.name,
+      // currentRadius: this.props.settings.radiusName,
     }
   }
 
@@ -56,32 +56,32 @@ class DiscoveryCriteriaView extends Component {
 
           <TouchableOpacity onPress={this.EatPressed.bind(this)}>
             <Image style={styles.discoveryImage}
-                   source={ this.state.currentTheme === "eat" ? this.themes['Eat'] : this.themes['unselectedEat'] } />
+                   source={ this.props.settings.theme.name === "eat" ? this.themes['Eat'] : this.themes['unselectedEat'] } />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this.DrinkPressed.bind(this)}>
             <Image style={styles.discoveryImage}
-                   source={ this.state.currentTheme === "drink" ? this.themes['Drink'] : this.themes['unselectedDrink'] } />
+                   source={ this.props.settings.theme.name === "drink" ? this.themes['Drink'] : this.themes['unselectedDrink'] } />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this.ChillPressed.bind(this)}>
             <Image style={styles.discoveryImage}
-                   source={ this.state.currentTheme === "chill" ? this.themes['Chill'] : this.themes['unselectedChill'] } />
+                   source={ this.props.settings.theme.name === "chill" ? this.themes['Chill'] : this.themes['unselectedChill'] } />
           </TouchableOpacity>
 
         </View>
         <View style={styles.discoveryImageContainer}>
           <TouchableOpacity onPress={this.AdventurePressed.bind(this)}>
             <Image style={styles.discoveryImage}
-                   source={ this.state.currentTheme === "adventure" ? this.themes['Adventure'] : this.themes['unselectedAdventure'] } />
+                   source={ this.props.settings.theme.name === "adventure" ? this.themes['Adventure'] : this.themes['unselectedAdventure'] } />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.CulturePressed.bind(this)}>
             <Image style={styles.discoveryImage}
-                   source={ this.state.currentTheme === "culture" ? this.themes['Culture'] : this.themes['unselectedCulture'] } />
+                   source={ this.props.settings.theme.name === "culture" ? this.themes['Culture'] : this.themes['unselectedCulture'] } />
           </TouchableOpacity>
           <TouchableOpacity onPress={this.MysteryPressed.bind(this)}>
             <Image style={styles.discoveryImage}
-                   source={ this.state.currentTheme === "mystery" ? this.themes['Mystery'] : this.themes['unselectedMystery'] } />
+                   source={ this.props.settings.theme.name === "mystery" ? this.themes['Mystery'] : this.themes['unselectedMystery'] } />
           </TouchableOpacity>
         </View>
 
@@ -90,7 +90,7 @@ class DiscoveryCriteriaView extends Component {
             <View style={styles.buttonContainer}>
               <Text style={styles.boldText}>Bike</Text>
               <Image style={styles.buttonImageBike}
-                source={ this.state.currentDistance === "nearby" ? this.distanceIcons['nearby'] : this.distanceIcons['unselectedNearby'] } />
+                source={ this.props.settings.radiusName === "nearby" ? this.distanceIcons['nearby'] : this.distanceIcons['unselectedNearby'] } />
               <Text>Nearby</Text>
             </View>
           </TouchableOpacity>
@@ -99,7 +99,7 @@ class DiscoveryCriteriaView extends Component {
             <View style={styles.buttonContainer}>
               <Text style={styles.boldText}>Car</Text>
               <Image style={styles.buttonImageCar}
-                source={ this.state.currentDistance === "medium" ? this.distanceIcons['medium'] : this.distanceIcons['unselectedMedium'] } />
+                source={ this.props.settings.radiusName === "medium" ? this.distanceIcons['medium'] : this.distanceIcons['unselectedMedium'] } />
               <Text>Medium</Text>
             </View>
           </TouchableOpacity>
@@ -109,7 +109,7 @@ class DiscoveryCriteriaView extends Component {
             <View style={styles.buttonContainer}>
               <Text style={styles.boldText}>Airplane</Text>
               <Image style={styles.buttonImageAirplane}
-                source={ this.state.currentDistance === "far" ? this.distanceIcons['far'] : this.distanceIcons['unselectedFar'] } />
+                source={ this.props.settings.radiusName === "far" ? this.distanceIcons['far'] : this.distanceIcons['unselectedFar'] } />
               <Text>Far</Text>
             </View>
           </TouchableOpacity>
@@ -118,7 +118,7 @@ class DiscoveryCriteriaView extends Component {
             <View style={styles.buttonContainer}>
               <Text style={styles.boldText}>Rocket</Text>
               <Image style={styles.buttonImageRocket}
-                source={ this.state.currentDistance === "distant" ? this.distanceIcons['distant'] : this.distanceIcons['unselectedDistant'] } />
+                source={ this.props.settings.radiusName === "distant" ? this.distanceIcons['distant'] : this.distanceIcons['unselectedDistant'] } />
               <Text>Distant</Text>
             </View>
           </TouchableOpacity>
@@ -131,52 +131,52 @@ class DiscoveryCriteriaView extends Component {
 
   EatPressed(){
     this.props.setTheme(themeObjects.eat);
-    this.setState({currentTheme: "eat"});
+    //this.setState({currentTheme: "eat"}); //TODO: you may not need these setState calls anymore
   }
 
   DrinkPressed(){
     this.props.setTheme(themeObjects.drink);
-    this.setState({currentTheme: "drink"});
+    //this.setState({currentTheme: "drink"});
   }
 
   ChillPressed(){
     this.props.setTheme(themeObjects.chill);
-    this.setState({currentTheme: "chill"});
+    //this.setState({currentTheme: "chill"});
   }
 
   AdventurePressed(){
     this.props.setTheme(themeObjects.adventure);
-    this.setState({currentTheme: "adventure"});
+    //this.setState({currentTheme: "adventure"});
   }
 
   CulturePressed(){
     this.props.setTheme(themeObjects.culture);
-    this.setState({currentTheme: "culture"});
+    //this.setState({currentTheme: "culture"});
   }
 
   MysteryPressed(){
     this.props.setTheme(themeObjects.mystery);
-    this.setState({currentTheme: "mystery"});
+    //this.setState({currentTheme: "mystery"});
   }
 
   bicyclePressed(){
     this.props.setRadius(constants.NEARBY_SEARCH_RADIUS);
-    this.setState({currentDistance: "nearby"});
+    //this.setState({currentRadius: "nearby"});
   }
 
   carPressed(){
     this.props.setRadius(constants.MEDIUM_SEARCH_RADIUS);
-    this.setState({currentDistance: "medium"});
+    //this.setState({currentRadius: "medium"});
   }
 
   airplanePressed(){
     this.props.setRadius(constants.FAR_SEARCH_RADIUS);
-    this.setState({currentDistance: "far"});
+    //this.setState({currentRadius: "far"});
   }
 
   rocketPressed(){
     this.props.setRadius(constants.DISTANT_SEARCH_RADIUS);
-    this.setState({currentDistance: "distant"});
+    //this.setState({currentRadius: "distant"});
   }
 
 }

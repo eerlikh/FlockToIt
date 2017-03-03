@@ -120,8 +120,8 @@ class SettingsScreen extends Component {
               </View>
 
             {renderIf(this.state.currentDropdown === "logout")(
-              <Login style={styles.logOutView} onLogoutFinishedFunction={() =>
-                { //insert a navigation action creator from props
+              <Login onLogoutFinishedFunction={() =>
+                { this.props.pop(this.props.navigation.navigators[this.props.navigation.currentNavigatorUID].parentNavigatorUID);
                 }
               }/>
             )}
@@ -218,6 +218,7 @@ function mapStateToProps(state) {
   return {
     navigation: state.navigation,
     hacks: state.hacks,
+    settings: state.settings,
   }
 }
 

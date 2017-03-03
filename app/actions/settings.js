@@ -1,6 +1,7 @@
 import * as types from './types'
 import { fetchAllData, fetchAllResults } from './googleFetching';
 import { Platform, PermissionsAndroid } from 'react-native';
+import {constants} from '../constants'
 
 export function setTheme(theme) {
   return (dispatch, getState) => {
@@ -65,7 +66,23 @@ function shuffleCurrentTheme() {
 
 export function setRadius(radius) {
   return (dispatch, getState) => {
-    dispatch({type: types.SET_RADIUS, radius})
+    var radiusName = "";
+    switch (radius) {
+      case constants.NEARBY_SEARCH_RADIUS:
+        radiusName = "nearby";
+        break;
+      case constants.MEDIUM_SEARCH_RADIUS:
+        radiusName = "medium";
+        break;
+      case constants.FAR_SEARCH_RADIUS:
+        radiusName = "far";
+        break;
+      case constants.DISTANT_SEARCH_RADIUS:
+        radiusName = "distant";
+        break;
+    }
+
+    dispatch({type: types.SET_RADIUS, radius, radiusName})
     dispatch(fetchAllData());
   }
 }

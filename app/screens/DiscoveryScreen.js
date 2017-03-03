@@ -31,16 +31,9 @@ class DiscoveryScreen extends Component {
 
     this.state = {
       isCaching: false,
-      cards: []
-
+      cards: [{...props}],
     }
 
-  }
-
-  componentWillMount() {
-    this.setState({
-      cards: [{...this.props}]
-    })
   }
 
   static route = {

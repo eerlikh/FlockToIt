@@ -3,8 +3,9 @@ import * as types from '../actions/types'
 
 export const settings = createReducer({
     theme: null,
-    radius: 50000,
-    maxPrice: 4
+    radius: 0,
+    radiusName: "",
+    maxPrice: 4,
   }, {
 
     [types.SET_THEME](state, action) {
@@ -18,6 +19,7 @@ export const settings = createReducer({
       return {
         ...state,
         radius: action.radius,
+        radiusName: action.radiusName,
       }
     },
 
