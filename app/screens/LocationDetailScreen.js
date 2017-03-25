@@ -10,12 +10,17 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 import ImageSlider from 'react-native-image-slider';
+import BugReportPrompt from '../components/BugReportPrompt';
 
 class LocationDetailScreen extends Component {
   constructor(props){
     super(props);
 
+    this.state = {
+      promptVisible: false,
+    }
   }
+
   static route = {
     navigationBar: {
       visible: false,
@@ -24,6 +29,7 @@ class LocationDetailScreen extends Component {
     ...NavigationStyles.Fade,
     },
   }
+
   render(){
     return (
       <ViewContainer>
@@ -99,7 +105,8 @@ class LocationDetailScreen extends Component {
 
             <View style={styles.navContainer}>
               {/*first button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.xPressed.bind(this)}>
+              <TouchableOpacity style={styles.highlightContainer} onPress={this.xPressed.bind(this)}
+                onLongPress={() => this.setState.bind(this)({promptVisible: true})} delayLongPress={3000}>
                 <View style={styles.xButtonContainer}>
                   <Image style={styles.discoveryNavImage} source={require('../img/buttons/xButton.png')} />
                 </View>
@@ -120,6 +127,11 @@ class LocationDetailScreen extends Component {
               </TouchableOpacity>
             </View>
         </DiscoveryNav>
+        <BugReportPrompt
+          promptVisible={this.state.promptVisible}
+          onSubmit={() => this.setState({promptVisible: false})}
+          onCancel={() => this.setState({promptVisible: false})}
+        />
       </ViewContainer>
     );
   }

@@ -9,9 +9,14 @@
 
 #import "AppDelegate.h"
 
+<<<<<<< ours
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+=======
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
+>>>>>>> theirs
 
 @implementation AppDelegate
 

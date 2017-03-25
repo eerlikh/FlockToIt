@@ -82,6 +82,13 @@ export function updateAllAchievements() {
   }
 }
 
+export function setUserName(userName) {
+  return {
+    type: types.SET_USER_NAME,
+    userName,
+  }
+}
+
 function updateAchievement(achievement) {
   return (dispatch, getState) => {
 

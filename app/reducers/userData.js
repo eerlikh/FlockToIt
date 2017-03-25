@@ -8,14 +8,16 @@ export const userData = createReducer({
       selectedFavorite: null,
       checkInData: [],
       achievements: [],
+      userName: "no name",
   }, {
     [REHYDRATE](state, action) {
-      var achievements = getAchievements();
+      var achievements = getAchievements(); //non-static values associated with different achievements are made correct whenever "update achievements" is called, so there is no need to make this persistant
       var incoming = action.payload.userData
       if (incoming) return {
         ...state,
         ...incoming,
         achievements,
+        userName: "no name",
       }
       return state
     },
@@ -123,6 +125,15 @@ export const userData = createReducer({
       return {
         ...state,
         achievements: action.achievements,
+      }
+
+    },
+
+    [types.SET_USER_NAME](state, action) {
+
+      return {
+        ...state,
+        userName: action.userName,
       }
 
     },

@@ -13,9 +13,8 @@ var {
 
 module.exports = {
 
-  // getFacebookData(callback) {
   setFacebookData(callback) {
-    AccessToken.getCurrentAccessToken().then(
+    return AccessToken.getCurrentAccessToken().then(
       (data) => {
         let accessToken = data.accessToken
         const responseInfoCallback = (error, result) => {
@@ -23,16 +22,13 @@ module.exports = {
             console.log(error)
             alert('Error fetching data: ' + error.toString());
           } else {
+            // AsyncStorage.setItem("name", result.name);
 
-            //store the user's name in AsyncStorage (you should put this in its
-            //own method along with other AsyncStorage calls when you eventually
-            //need to save more values)
+            // return new Promise((resolve, reject) => {
+            //   resolve("fuckface");
+            // });
 
-            // callback({
-            //   name: result.name
-            // })
-
-            AsyncStorage.setItem("name", result.name);
+            callback(result.name);
           }
         }
 

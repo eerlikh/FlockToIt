@@ -60,7 +60,7 @@ class LoginScreen extends Component {
   }
 
   LoginPressed(){
-    FBAccessTokenManager.setFacebookData();
+    FBAccessTokenManager.setFacebookData(this.props.setUserName.bind(this));
     this.props.fetchAllData();
     this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('MainNavigator'));
   }

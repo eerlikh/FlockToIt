@@ -9,11 +9,15 @@ import { NavigationStyles } from '@exponent/ex-navigation';
 import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
-
+import BugReportPrompt from '../components/BugReportPrompt';
 
 class FavoriteDetailScreen extends Component {
   constructor(props){
     super(props);
+
+    this.state = {
+      promptVisible: false,
+    }
   }
   static route = {
     navigationBar: {
@@ -86,7 +90,8 @@ class FavoriteDetailScreen extends Component {
 
             <View style={styles.navContainer}>
               {/*first button*/}
-              <TouchableOpacity style={styles.highlightContainer} onPress={this.deletePressed.bind(this)}>
+              <TouchableOpacity style={styles.highlightContainer} onPress={this.deletePressed.bind(this)}
+                onLongPress={() => this.setState.bind(this)({promptVisible: true})} delayLongPress={3000}>
                 <View style={styles.xButtonContainer}>
                   <Image style={styles.discoveryNavImage} source={require('../img/buttons/delete.png')} />
                 </View>
@@ -107,6 +112,11 @@ class FavoriteDetailScreen extends Component {
               </TouchableOpacity>
             </View>
         </DiscoveryNav>
+        <BugReportPrompt
+          promptVisible={this.state.promptVisible}
+          onSubmit={() => this.setState({promptVisible: false})}
+          onCancel={() => this.setState({promptVisible: false})}
+        />
       </ViewContainer>
     );
   }

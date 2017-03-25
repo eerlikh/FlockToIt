@@ -1,6 +1,7 @@
 //development
 export const LATITUDE = "38.900271";
 export const LONGITUDE = "-76.989289";
+export const CRASH_REPORTING_IS_ENABLED = false;
 
 //fetching
 export const API_KEY = "AIzaSyCcKq_C0pCs5P1N1HtjKRvG6Ublw53w4h0";

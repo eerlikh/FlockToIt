@@ -25,6 +25,7 @@ class MatchedLocationsView extends Component {
         <ListView
           dataSource={matchedLocationsDataSource}
           renderRow={(location) => { return this.renderLocationRow(location) }}
+          showsVerticalScrollIndicator={false}
         >
         </ListView>
       </View>

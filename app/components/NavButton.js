@@ -5,10 +5,15 @@ import { bindActionCreators } from 'redux'
 import { ActionCreators } from '../actions'
 import { connect } from 'react-redux';
 import { Router } from '../containers/Router';
+import BugReportPrompt from '../components/BugReportPrompt';
 
 class NavButton extends Component {
   constructor(props){
     super(props);
+
+    this.state = {
+      promptVisible: false,
+    }
   }
 
   componentWillMount(){
@@ -39,12 +44,22 @@ class NavButton extends Component {
   }
 
   render() {
+    //this.setState.bind(this)({promptVisible: true})
     return (
-      <TouchableOpacity onPress={this.state.onPress} activeOpacity={1}>
-        <Image style={this.state.buttonStyle} source={this.state.buttonImage} />
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity onPress={this.state.onPress} activeOpacity={1}
+          onLongPress={() => this.setState({promptVisible: true})} delayLongPress={3000}>
+          <Image style={this.state.buttonStyle} source={this.state.buttonImage} />
+        </TouchableOpacity>
+        <BugReportPrompt
+          promptVisible={this.state.promptVisible}
+          onSubmit={() => this.setState({promptVisible: false})}
+          onCancel={() => this.setState({promptVisible: false})}
+        />
+      </View>
     )
   }
+
 }
 
 var styles = StyleSheet.create({

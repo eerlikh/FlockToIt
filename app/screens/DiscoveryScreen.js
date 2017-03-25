@@ -152,7 +152,7 @@ class DiscoveryScreen extends Component {
   }
 
   flockPressed(){
-    // this.props.deleteAllFavorites()
+    // throw new Error('test crash');
   }
   infoPressed(){
     this.props.push(this.props.navigation.currentNavigatorUID, Router.getRoute('locationDetail'));
@@ -350,7 +350,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    // navigationState: state.navigationState,
     navigation: state.navigation,
     detailsData: state.googleData.detailsData,
     imageUrls: state.googleData.imageUrls,
