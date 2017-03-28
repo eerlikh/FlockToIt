@@ -10,7 +10,7 @@
     "babel-preset-react-native-stage-0": "^1.0.1",
     "express": "^4.13.0",
     "react": "^15.4.2",
-    "react-native": "^0.39.2",
+    "react-native": "^0.42.3",
     "react-native-fbsdk": "^0.3.0",
     "react-native-image-slider": "^1.1.5",
     "react-native-linear-gradient": "^1.5.15",
